@@ -1,0 +1,41 @@
+<p-table #dt [value]="students">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>First Name
+                <input pInputText type="text" placeholder="Contains" class="ui-column-filter" style="width: 100%;"
+                (input)="dt.filter($event.target.value, 'firstName', 'contains')">
+            </th>
+            <th >Last Name
+                <input pInputText type="text" placeholder="Contains" class="ui-column-filter" style="width: 100%;"
+                (input)="dt.filter($event.target.value, 'lastName', 'contains')">
+            </th>
+            <th>
+                Class
+                <p-multiSelect [options]="grades" [filter]="false" styleClass="ui-column-filter"
+                    [style]="{'width':'100%'}" 
+                    defaultLabel="Select Class"
+                    optionLabel="name"
+                    dataKey="_links.self"
+                    (onChange)="filter($event, dt)"></p-multiSelect>
+            </th>
+            <th>Birthday</th>
+            <th style="width: 8em; text-align: center;">
+                <a [routerLink]="'/students/new'">
+                    <button pButton type="button" icon="pi pi-plus"></button>
+                </a>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-studnet>
+        <tr>
+            <td>{{studnet.firstName}}</td>
+            <td>{{studnet.lastName}}</td>
+            <td>{{studnet.grade?.name}}</td>
+            <td>{{studnet.birthday}}</td>
+            <td style="text-align: center;">
+                <button class="justify-content-center" (click)="studnetDetails(studnet)" pButton type="button"
+                    icon="pi pi-search"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

@@ -1,0 +1,29 @@
+<p-table #dt [value]="lessons">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Day</th>
+            <th>Hour</th>
+            <th>Class</th>
+            <th>Subject</th>
+            <th>Teacher</th>
+            <th style="width: 8em; text-align: center;">
+                <a [routerLink]="'/lessons/new'">
+                    <button pButton type="button" icon="pi pi-plus"></button>
+                </a>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-lesson>
+        <tr>
+            <td>{{lesson.lessonTime.dayOfWeek}}</td>
+            <td>{{lesson.lessonTime.hour}}</td>
+            <td>{{lesson.grade.name}}</td>
+            <td>{{lesson.subject.name}}</td>
+            <td>{{(lesson.teacher.gender == "FEMALE"? "Ms. " : "Mr. " )+ lesson.teacher.lastName}}</td>
+            <td style="text-align: center;">
+                <button class="justify-content-center" (click)="lessonDetails(lesson)" pButton type="button"
+                    icon="pi pi-search"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

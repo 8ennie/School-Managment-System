@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" routerLinkActive="active" [routerLink]="''">Shool Managment</a>
+
+        <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
+            &#9776;
+        </button>
+
+        <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+            <ul ngbNav class="navbar-nav">
+                <li ngbNavItem>
+                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated" [routerLink]="'classes'"
+                        (click)="isMenuCollapsed = true">Classes</a>
+                </li>
+                <li ngbNavItem>
+                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated" [routerLink]="'students'"
+                        (click)="isMenuCollapsed = true">Students</a>
+                </li>
+                <li ngbNavItem>
+                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated" [routerLink]="'teachers'"
+                        (click)="isMenuCollapsed = true">Teachers</a>
+                </li>
+                <li ngbNavItem>
+                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated" [routerLink]="'lessons'"
+                        (click)="isMenuCollapsed = true">Lessons</a>
+                </li>
+            </ul>
+
+            <ul ngbNav class="navbar-nav ml-auto">
+                <li ngbDropdown class="nav-item">
+                    <a href (click)="false" class="nav-link" ngbDropdownToggle *ngIf="isAuthenticated">{{user.username}}</a>
+                    <div ngbDropdownMenu>
+                        <a ngbDropdownItem [routerLink]="'auth'" class="dropdown-item"
+                            (click)="onLogout()">Logout</a>
+                    </div>
+                  </li>
+                <li ngbNavItem>
+                    <a ngbNavLink routerLinkActive="active" *ngIf="!isAuthenticated" [routerLink]="'auth'"
+                        (click)="isMenuCollapsed = true">Log In</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<p-toast></p-toast>
