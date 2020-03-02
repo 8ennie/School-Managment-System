@@ -6,9 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import { GridsterModule } from 'angular-gridster2';
-
-import {MatIconModule} from '@angular/material/icon';
 
 import { AppRoutingModule } from './app-routing.module';
 import { PrimeNGModule } from './primeNG.module';
@@ -49,8 +46,6 @@ import { LessonsComponent } from './lessons/lessons.component';
     BrowserAnimationsModule,
     PrimeNGModule,
     DragDropModule,
-    GridsterModule,
-    MatIconModule,
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
