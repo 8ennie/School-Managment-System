@@ -6,6 +6,8 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import {MenuModule} from 'primeng/menu';
 
 @NgModule({
     imports: [
@@ -14,7 +16,9 @@ import { MessageService } from 'primeng/api';
         TableModule,
         ButtonModule,
         DropdownModule,
-        ToastModule
+        ToastModule,
+        ContextMenuModule,
+        MenuModule
 
     ],
     exports: [
@@ -23,7 +27,9 @@ import { MessageService } from 'primeng/api';
         TableModule,
         ButtonModule,
         DropdownModule,
-        ToastModule
+        ToastModule,
+        ContextMenuModule,
+        MenuModule
     ],
     providers: [MessageService]
 })

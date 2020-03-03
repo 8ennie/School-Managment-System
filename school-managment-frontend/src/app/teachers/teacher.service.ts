@@ -23,6 +23,9 @@ export class TeacherService {
     fetchTeacher() {
         this.http.get<any>(environment.apiUrl + 'teachers').pipe(map(data => data._embedded.teachers)).subscribe((teachers: Teacher[]) => {
             this.teacherList = teachers;
+            teachers.forEach(t => t.fullName = t.firstName + ' ' + t.lastName);
+            console.log(this.teacherList);
+            
             this.sendUpdate();
         });
     }

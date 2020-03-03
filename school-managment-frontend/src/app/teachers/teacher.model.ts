@@ -1,4 +1,5 @@
 export class Teacher {
+    fullName?: string;
 
     public id?: number;
     firstName: string;
