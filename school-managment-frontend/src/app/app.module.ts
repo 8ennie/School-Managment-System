@@ -20,6 +20,11 @@ import { EditTeacherComponent } from './teachers/edit-teacher/edit-teacher.compo
 import { authInterceptorProviders } from './_helper/auth.interceptor';
 import { ClassesComponent } from './classes/classes.component';
 import { LessonsComponent } from './lessons/lessons.component';
+import { LessonGridComponent } from './lessons/lesson-grid/lesson-grid.component';
+import { DraggableDirective } from './shared/drap-drop/draggable.directive';
+import { DropTargetDirective } from './shared/drap-drop/drop-target.directive';
+import { InsertDirective } from './_directives/insert-point.directive';
+import { DropBoxComponent } from './lessons/drop-box/drop-box.component';
 
 
 
@@ -35,6 +40,11 @@ import { LessonsComponent } from './lessons/lessons.component';
     ClassesComponent,
     EditTeacherComponent,
     LessonsComponent,
+    LessonGridComponent,
+    DraggableDirective,
+    DropTargetDirective,
+    InsertDirective,
+    DropBoxComponent
   ],
   imports: [
     FormsModule,

@@ -1,0 +1,17 @@
+<div class="card m-3" [appDraggable]="{data:lesson}" *ngIf="lesson">
+    <p>Subject: {{lesson.subject.name}}</p>
+    <p>Teacher: {{lesson.teacher.firstName}} {{lesson.teacher.lastName}}</p>
+</div>
+<div class="card m-3" style="min-width: 140px;min-height: 80px;" [appDraggable]="{data:lesson}" *ngIf="!lesson">
+    <form [formGroup]="lessonForm" (ngSubmit)="onSubmit()">
+        <p>Subject:
+            <p-dropdown [options]="allSubjects" formControlName="subject" placeholder="Choose Subject"
+                [showClear]="true" [autoDisplayFirst]=false optionLabel="name"></p-dropdown>
+        </p>
+        <p>Teacher:
+            <p-dropdown [options]="teacherOptions" formControlName="subject" placeholder="Choose Subject"
+                [showClear]="true" [autoDisplayFirst]=false (onChange)="teacherChanged($event)"></p-dropdown>
+        </p>
+    </form>
+
+</div>

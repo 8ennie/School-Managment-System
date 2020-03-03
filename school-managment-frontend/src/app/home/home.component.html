@@ -1,5 +1,4 @@
 <p>home works!</p>
-
 <div class="row container">
     <div class="card">
         <div class="card"> Houres </div>
@@ -10,17 +9,17 @@
 
     <div *ngFor="let day of days">
         <div class="card"> {{day}} </div>
-        <div id="{{day}}-{{hour}}"*ngFor="let hour of houres" class="card subjects"   (drop)="onDrop($event, day,hour)" (dragover)="onDragOver($event)">
+        <div id="{{day}}-{{hour}}" *ngFor="let hour of houres" class="card subjects" appDropTarget>
             Drop Here
         </div>
     </div>
 
-    
+
 
     <div class="card">
         <div class="card"> Drag </div>
         <div *ngFor="let hour of houres" class="card subjects">
-            <div draggable="true">
+            <div [appDraggable]="{data: 'test'}">
                 Empty
             </div>
         </div>

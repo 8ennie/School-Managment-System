@@ -15,6 +15,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-lesson>
         <tr>
+            
             <td>{{lesson.lessonTime.dayOfWeek}}</td>
             <td>{{lesson.lessonTime.hour}}</td>
             <td>{{lesson.grade.name}}</td>
@@ -24,6 +25,23 @@
                 <button class="justify-content-center" (click)="lessonDetails(lesson)" pButton type="button"
                     icon="pi pi-search"></button>
             </td>
+            <td><app-lesson-grid [lesson]=lesson></app-lesson-grid></td>
         </tr>
     </ng-template>
 </p-table>
+<div class="row container">
+    <div class="card">
+        <div class="card"> Houres </div>
+        <div *ngFor="let hour of houres" class="card subjects mt-3 mr-1 ml-1 mb-3" style="min-height: 80px; text-align: center;">
+            {{hour}}
+        </div>
+    </div>
+
+    <div *ngFor="let day of days" class="card">
+        <div class="card" style="text-align: center;"> {{day}} </div>
+        <div *ngFor="let hour of houres" >
+            <app-drop-box></app-drop-box>
+        </div>
+    </div>
+</div>
+

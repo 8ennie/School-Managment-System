@@ -40,6 +40,9 @@ export class TeacherService {
     }
 
     getTeachers() {
+        if (this.teacherList.length < 1) {
+            this.fetchTeacher();
+        }
         return this.teacherList.slice();
     }
 
