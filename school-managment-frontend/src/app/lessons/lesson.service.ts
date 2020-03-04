@@ -36,4 +36,15 @@ export class LessonService {
     getLessonsForGrade(grade) {
         return this.http.get(this.url + '/search/findByGrade?name=' + grade + '&&projection=lessonProjection');
     }
+
+    saveLesson(lesson:Lesson){
+        let newLesson:Lesson = new Lesson;
+        newLesson.grade = lesson.grade;
+        newLesson.teacher = lesson.teacher._links.self.href;
+        newLesson.subject = lesson.subject._links.self.href;
+        newLesson.lessonTime = lesson.lessonTime._links.self.href;
+
+
+        return this.http.post(this.url,lesson);
+    }
 }

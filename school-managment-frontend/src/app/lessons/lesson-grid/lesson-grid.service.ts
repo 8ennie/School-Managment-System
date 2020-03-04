@@ -17,8 +17,6 @@ export class LessonGridService {
     ) {
         this.lessonTimeService.getAllLessonTimes().subscribe((time: { _embedded }) => {
             this.lessonTime = time._embedded.lessonTimes;
-            console.log(this.lessonTime);
-
         });
     }
 
@@ -26,6 +24,8 @@ export class LessonGridService {
         this.lessonService.getLessonsForGrade(grade).subscribe((data: { _embedded }) => {
             this.listLessons = data._embedded?.lessons;
             this.lessonsChanged.next(this.listLessons.slice());
+            console.log(this.listLessons);
+            
         }, (error) => {
             console.log('No Lessons for Class Found');
             this.listLessons = [];
@@ -38,9 +38,10 @@ export class LessonGridService {
         if (!lesson.id) {
             lesson.lessonTime = this.lessonTime.filter(l =>
                 l.hour === config.hour && l.dayOfWeek.toLowerCase() === config.day.toLowerCase()
-            );
+            )[0];
             lesson.grade = config.class;
             console.log(lesson);
+            this.lessonService.saveLesson(lesson).subscribe();
         }
     }
 }
