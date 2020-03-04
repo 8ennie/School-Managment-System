@@ -2,7 +2,7 @@
     <p>Subject: {{lesson.subject.name}}</p>
     <p>Teacher: {{lesson.teacher.firstName}} {{lesson.teacher.lastName}}</p>
 </div>
-<div class="card" style="min-width: 140px;min-height: 80px;" [appDraggable]="{data:lessonForm.value}"
+<div class="card" style="min-width: 140px;min-height: 80px;"
     *ngIf="editMode">
     <form [formGroup]="lessonForm" (ngSubmit)="onSubmit()" class="container">
         <div>
@@ -18,7 +18,7 @@
             </p-dropdown>
         </div>
         <div class="container d-flex justify-content-center m-1">
-            <button pbutton>Save</button>
+            <button [disabled]="!lessonForm.valid"pbutton>Save</button>
         </div>
     </form>
 </div>

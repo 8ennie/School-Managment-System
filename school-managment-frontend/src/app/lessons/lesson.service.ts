@@ -30,8 +30,10 @@ export class LessonService {
     }
 
     sendUpdate() {
-        console.log(this.lessonList);
-
         this.lessonsChanged.next(this.lessonList.slice());
+    }
+
+    getLessonsForGrade(grade) {
+        return this.http.get(this.url + '/search/findByGrade?name=' + grade + '&&projection=lessonProjection');
     }
 }

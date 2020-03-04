@@ -1,5 +1,6 @@
 package com.schoolManagment.Backend.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +12,5 @@ import com.schoolManagment.Backend.model.school.LessonTime;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RepositoryRestResource()
 public interface LessonTimeRepository extends JpaRepository<LessonTime, Long>{
-	Optional<LessonTime>findByHour(int hour);
+	Optional<List<LessonTime>>findByHour(int hour);
 }

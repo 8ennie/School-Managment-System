@@ -5,6 +5,7 @@ import { take } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TeacherService } from 'src/app/teachers/teacher.service';
 import { Teacher } from 'src/app/teachers/teacher.model';
+import { LessonGridService } from './lesson-grid.service';
 
 @Component({
   selector: 'app-lesson-grid',
@@ -15,9 +16,13 @@ export class LessonGridComponent implements OnInit {
 
   @Input() lesson: Lesson;
 
-  editMode= false;
+  @Input() config: { day: string, hour: number, class: string };
 
-  constructor(private subjectService: SubjectService, private teacherService: TeacherService) { }
+  editMode = false;
+
+  constructor(private subjectService: SubjectService,
+    private teacherService: TeacherService,
+    private lessonGridService: LessonGridService) { }
 
   private allSubjects = [];
   private subjectOptions = [];
@@ -31,7 +36,7 @@ export class LessonGridComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    if(!this.lesson){
+    if (!this.lesson) {
       this.editMode = true;
     }
     this.lessonForm.reset(this.lesson);
@@ -55,13 +60,14 @@ export class LessonGridComponent implements OnInit {
     }
   }
 
-  setSubjectObtions(filter?: string) {
+  setSubjectObtions() {
     this.subjectOptions = [];
+    const filter = this.lessonForm.value.teacher?._links?.self?.href;
     if (filter) {
       this.allTeachers.forEach(t => {
         if (t._links.self.href === filter) {
           this.allSubjects.forEach(s => {
-            if (t.subjects.map(s => s = s._links.self.href).includes(s._links.self.href)) {
+            if (t.subjects.map(sub => sub = sub._links.self.href).includes(s._links.self.href)) {
               this.subjectOptions.push(s);
             }
           });
@@ -75,24 +81,25 @@ export class LessonGridComponent implements OnInit {
     this.lessonForm.reset(this.lessonForm.value);
   }
 
-  setTeacherValues(filter?: string) {
+  setTeacherValues() {
     this.teacherOptions = [];
+    const filter = this.lessonForm.value.subject?._links.self.href;
     if (filter) {
       this.allTeachers.forEach(t => {
         if (t.subjects.map(s => s = s._links.self.href).includes(filter)) {
-          this.teacherOptions.push(t)
+          this.teacherOptions.push(t);
         }
       });
     } else {
       this.allTeachers.forEach(t => {
-        this.teacherOptions.push(t)
+        this.teacherOptions.push(t);
       });
     }
   }
 
   teacherChanged(event) {
     if (event.value) {
-      this.setSubjectObtions(event.value._links.self.href);
+      this.setSubjectObtions();
     } else {
       this.setSubjectObtions();
     }
@@ -101,18 +108,19 @@ export class LessonGridComponent implements OnInit {
 
   subjectChange(event) {
     if (event.value) {
-      this.setTeacherValues(event.value._links.self.href);
+      this.setTeacherValues();
     } else {
       this.setTeacherValues();
     }
   }
 
-  onSubmit(){
+  onSubmit() {
     this.lesson = this.lessonForm.value;
     this.editMode = false;
+    this.lessonGridService.saveLesson(this.lesson, this.config);
   }
 
-  onClick(){
+  onClick() {
     this.editMode = true;
   }
 

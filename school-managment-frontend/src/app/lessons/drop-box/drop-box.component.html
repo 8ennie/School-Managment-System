@@ -1,9 +1,9 @@
 <p-contextMenu *ngIf="hide" [target]="item" appendTo="body" [model]="items" ></p-contextMenu>
-<div #item class="card" (dblclick)="op.toggle($event)" style="position: relative;">
+<div #item class="card" style="min-width: 210px;">
     <div appInsert>
-        <div *ngIf="!hide" appDropTarget (myDrop)="onDrop($event)" class="card"
-            style="min-width: 175px;min-height: 125px; text-align: center; display: inherit;">
-            <button pButton type="button" icon="pi pi-plus" class="mt-4" (click)="addLesson()"></button>
+        <div *ngIf="!hide" appDropTarget (myDrop)="onDrop($event)" 
+        style="text-align: center; display: inherit; height: inherit;">
+            <button pButton type="button" icon="pi pi-plus" class="mt-3 mb-4" (click)="addLesson()"></button>
         </div>
     </div>
 </div>
