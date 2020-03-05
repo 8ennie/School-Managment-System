@@ -8,13 +8,13 @@
         <div>
             <h6>Subject:</h6>
             <p-dropdown [options]="subjectOptions" formControlName="subject" placeholder="Choose Subject"
-                [showClear]="true" (onChange)="subjectChange($event)" optionLabel="name">
+                [showClear]="true" (onChange)="subjectChange($event)" optionLabel="name" dataKey="id">
             </p-dropdown>
         </div>
         <div>
             <h6>Teacher:</h6>
-            <p-dropdown [options]="teacherOptions" formControlName="teacher" placeholder="Choose Subject"
-                [showClear]="true" (onChange)="teacherChanged($event)" optionLabel="fullName">
+            <p-dropdown [options]="teacherOptions" formControlName="teacher" placeholder="Choose Teacher"
+                [showClear]="true" (onChange)="teacherChanged($event)" optionLabel="fullName" dataKey="id">
             </p-dropdown>
         </div>
         <div class="container d-flex justify-content-center m-1">

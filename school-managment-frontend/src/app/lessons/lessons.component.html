@@ -29,22 +29,37 @@
         </tr>
     </ng-template>
 </p-table> -->
-<p-dropdown [options]="allGrades" [(ngModel)]="class" placeholder="Choose Class" [showClear]="true"
-    (onChange)="onGradeChange($event)">
-</p-dropdown>
 
-<div class="d-flex justify-content-center mt-5" *ngIf="class">
-    <div class="row container" style="max-width: 1200px;">
-        <div class="card">
-            <div class="card"> Houres </div>
-            <div *ngFor="let hour of houres" class="card subjects" style=" text-align: center;">
-                <p class="mt-5">{{hour}}</p>
+
+<div class="mt-5 container">
+    <div class="row">
+        <div class="col d-flex ">
+            <h3>Choose a Class: </h3>
+            <p-dropdown [options]="allGrades" [(ngModel)]="class" placeholder="Choose Class" [showClear]="true"
+                class="ml-3" (onChange)="onGradeChange($event)">
+            </p-dropdown>
+        </div>
+        <div class="col d-flex ">
+            <h3>Choose a Teacher: </h3>
+            <p-dropdown [options]="allTeachers" [(ngModel)]="teacher" placeholder="Choose Teacher" [showClear]="true"
+                class="ml-3" (onChange)="onTeacherChange($event)">
+            </p-dropdown>
+        </div>
+
+    </div>
+</div>
+<div class="d-flex justify-content-center mt-5 container" *ngIf="class">
+    <div style="max-width: 1200px;">
+        <div class="row">
+            <div class="p-2 card" style="width: 75px; text-align: center;"> Houres </div>
+            <div *ngFor="let day of days" class="p-2 card" style="min-width: 210px; text-align: center;">
+                {{day}}
             </div>
         </div>
 
-        <div *ngFor="let day of days" class="card">
-            <div class="card" style="text-align: center;"> {{day}} </div>
-            <div *ngFor="let hour of houres">
+        <div *ngFor="let hour of houres" class="row" style="min-height: 85px;">
+            <div class="card" style=" max-width: 210px;width: 75px; text-align: center;"> {{hour}} </div>
+            <div *ngFor="let day of days" class=" card" style=" max-width: 210px;">
                 <app-drop-box [config]="{day:day, hour:hour, class:class}"></app-drop-box>
             </div>
         </div>

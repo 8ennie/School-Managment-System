@@ -38,6 +38,9 @@ export class LessonGridComponent implements OnInit {
   ngOnInit(): void {
     if (!this.lesson) {
       this.editMode = true;
+      this.lesson = new Lesson();
+    } else if (!this.lesson.id) {
+      this.editMode = true;
     }
     this.lessonForm.reset(this.lesson);
     this.allSubjects = this.subjectService.getSubjects();
@@ -54,20 +57,22 @@ export class LessonGridComponent implements OnInit {
       this.teacherService.teacherChanged.pipe(take(1)).subscribe((data: []) => {
         this.allTeachers = data;
         this.setTeacherValues();
+        this.setSubjectObtions();
       });
     } else {
       this.setTeacherValues();
+      this.setSubjectObtions();
     }
   }
 
   setSubjectObtions() {
     this.subjectOptions = [];
-    const filter = this.lessonForm.value.teacher?._links?.self?.href;
+    const filter = this.lessonForm.value.teacher?._links?.self?.href.replace('{?projection}', '');
     if (filter) {
       this.allTeachers.forEach(t => {
         if (t._links.self.href === filter) {
           this.allSubjects.forEach(s => {
-            if (t.subjects.map(sub => sub = sub._links.self.href).includes(s._links.self.href)) {
+            if (t.subjects.map(sub => sub = sub._links.self.href.replace('{?projection}', '')).includes(s._links.self.href)) {
               this.subjectOptions.push(s);
             }
           });
@@ -83,10 +88,10 @@ export class LessonGridComponent implements OnInit {
 
   setTeacherValues() {
     this.teacherOptions = [];
-    const filter = this.lessonForm.value.subject?._links.self.href;
+    const filter = this.lessonForm.value.subject?._links.self.href.replace('{?projection}', '');
     if (filter) {
       this.allTeachers.forEach(t => {
-        if (t.subjects.map(s => s = s._links.self.href).includes(filter)) {
+        if (t.subjects.map(s => s = s._links.self.href.replace('{?projection}', '')).includes(filter)) {
           this.teacherOptions.push(t);
         }
       });
@@ -98,26 +103,22 @@ export class LessonGridComponent implements OnInit {
   }
 
   teacherChanged(event) {
-    if (event.value) {
-      this.setSubjectObtions();
-    } else {
-      this.setSubjectObtions();
-    }
-
+    this.setSubjectObtions();
   }
 
   subjectChange(event) {
-    if (event.value) {
-      this.setTeacherValues();
-    } else {
-      this.setTeacherValues();
-    }
+    this.setTeacherValues();
   }
 
   onSubmit() {
-    this.lesson = this.lessonForm.value;
+    this.lesson.subject = this.lessonForm.value.subject;
+    this.lesson.teacher = this.lessonForm.value.teacher;
     this.editMode = false;
-    this.lessonGridService.saveLesson(this.lesson, this.config);
+    this.lessonGridService.saveLesson(this.lesson, this.config).then((l) => {
+      if (l) {
+        this.lesson = l;
+      }
+    });
   }
 
   onClick() {

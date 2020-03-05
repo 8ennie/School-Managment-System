@@ -25,12 +25,14 @@ export class DropBoxComponent implements OnInit, OnDestroy {
     private vrc: ViewContainerRef;
     private lessonSub = new Subscription();
 
+    private lesson: Lesson;
+
     ngOnInit() {
         this.items = [
             {
                 label: 'Remove',
                 icon: 'pi pi-fw pi-chevron-right',
-                command: (event) => { this.removeLesson(); }
+                command: (event) => { this.deleteLesson(); }
             }
         ];
         this.lessonSub = this.lessonGridService.lessonsChanged.subscribe(lessons => {
@@ -41,7 +43,7 @@ export class DropBoxComponent implements OnInit, OnDestroy {
                     present = true;
                 }
             });
-            if (!present) {
+            if (!present && this.vrc) {
                 this.removeLesson();
             }
         });
@@ -49,6 +51,7 @@ export class DropBoxComponent implements OnInit, OnDestroy {
 
     onDrop(event) {
         const data = event.data;
+        this.lesson = data;
         data.id = null;
         this.addLesson(data);
     }
@@ -61,8 +64,16 @@ export class DropBoxComponent implements OnInit, OnDestroy {
         this.hide = true;
         if (data) {
             (componentRef.instance as LessonGridComponent).lesson = data;
+            this.lesson = data;
         }
         (componentRef.instance as LessonGridComponent).config = this.config;
+    }
+
+    deleteLesson() {
+        if (this.lesson.id) {
+            this.lessonGridService.removeLesson(this.lesson);
+        }
+        this.removeLesson();
     }
 
     removeLesson() {
@@ -71,7 +82,6 @@ export class DropBoxComponent implements OnInit, OnDestroy {
             this.vrc = null;
             this.hide = false;
         }
-
     }
 
     ngOnDestroy() {

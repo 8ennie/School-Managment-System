@@ -107,7 +107,7 @@ public class LoadData implements ApplicationRunner {
 		log.info("Preload: " + teacherRepository.save(Teacher.builder().firstName("Nick").lastName("Pattar")
 				.gender(Gender.FEMALE).subjects(Arrays.asList(deutsch, math)).build()));
 
-		Teacher amy = teacherRepository.getOne(Long.valueOf(14));
+		Teacher amy = teacherRepository.findById(Long.valueOf(13)).get();
 
 		for (DayOfWeek day : DayOfWeek.values()) {
 			if (day != DayOfWeek.SATURDAY && day != DayOfWeek.SUNDAY) {

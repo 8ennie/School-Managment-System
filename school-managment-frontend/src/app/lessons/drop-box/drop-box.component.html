@@ -1,5 +1,5 @@
 <p-contextMenu *ngIf="hide" [target]="item" appendTo="body" [model]="items" ></p-contextMenu>
-<div #item class="card" style="min-width: 210px;">
+<div #item style="min-width: 210px;">
     <div appInsert>
         <div *ngIf="!hide" appDropTarget (myDrop)="onDrop($event)" 
         style="text-align: center; display: inherit; height: inherit;">

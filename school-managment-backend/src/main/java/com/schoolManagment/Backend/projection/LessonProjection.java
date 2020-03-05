@@ -12,7 +12,7 @@ public interface LessonProjection {
 
 	Long getId();
 	
-	Teacher getTeacher();
+	TeacherProjection getTeacher();
 	
 	Grade getGrade();
 	

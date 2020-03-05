@@ -37,14 +37,25 @@ export class LessonService {
         return this.http.get(this.url + '/search/findByGrade?name=' + grade + '&&projection=lessonProjection');
     }
 
-    saveLesson(lesson:Lesson){
-        let newLesson:Lesson = new Lesson;
+    saveLesson(lesson: Lesson) {
+        const newLesson: Lesson = new Lesson();
         newLesson.grade = lesson.grade;
         newLesson.teacher = lesson.teacher._links.self.href;
         newLesson.subject = lesson.subject._links.self.href;
         newLesson.lessonTime = lesson.lessonTime._links.self.href;
+        return this.http.post(this.url, newLesson);
+    }
+    updateLesson(lesson: Lesson) {
+        lesson.teacher = lesson.teacher._links.self.href;
+        lesson.subject = lesson.subject._links.self.href;
+        lesson.lessonTime = lesson.lessonTime._links.self.href;
+        return this.http.patch(lesson._links.self.href, lesson);
+    }
+    getLessonWithUrl(url: string) {
+        return this.http.get(url + '?projection=lessonProjection');
+    }
 
-
-        return this.http.post(this.url,lesson);
+    removeLesson(lesson: Lesson) {
+        return this.http.delete(lesson._links.self.href);
     }
 }

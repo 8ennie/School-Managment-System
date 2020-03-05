@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Lesson } from '../lesson.model';
 import { LessonService } from '../lesson.service';
-import { Subscription, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { LessonTimeService } from 'src/app/_services/lesson-time.service';
+
 
 @Injectable({ providedIn: 'root' })
 export class LessonGridService {
@@ -10,6 +11,8 @@ export class LessonGridService {
     private listLessons: Lesson[] = [];
 
     lessonsChanged = new Subject<Lesson[]>();
+
+    saveLessons = new Subject<boolean>();
 
     private lessonTime = [];
     constructor(private lessonService: LessonService,
@@ -24,8 +27,6 @@ export class LessonGridService {
         this.lessonService.getLessonsForGrade(grade).subscribe((data: { _embedded }) => {
             this.listLessons = data._embedded?.lessons;
             this.lessonsChanged.next(this.listLessons.slice());
-            console.log(this.listLessons);
-            
         }, (error) => {
             console.log('No Lessons for Class Found');
             this.listLessons = [];
@@ -34,14 +35,30 @@ export class LessonGridService {
     }
 
     saveLesson(lesson: Lesson, config) {
-        console.log(lesson);
-        if (!lesson.id) {
+        const promise = new Promise<Lesson>((resolve, reject) => {
             lesson.lessonTime = this.lessonTime.filter(l =>
                 l.hour === config.hour && l.dayOfWeek.toLowerCase() === config.day.toLowerCase()
             )[0];
             lesson.grade = config.class;
-            console.log(lesson);
-            this.lessonService.saveLesson(lesson).subscribe();
-        }
+            if (lesson.id) {
+                this.lessonService.updateLesson(lesson).subscribe(() => {
+                    setTimeout(() => {
+                        this.lessonService.getLessonWithUrl(lesson._links.self.href).subscribe((le: Lesson) => {
+                            resolve(le);
+                        });
+                    },
+                        100);
+
+                });
+            } else {
+                this.lessonService.saveLesson(lesson).subscribe();
+                resolve(null);
+            }
+        });
+        return promise;
+    }
+
+    removeLesson(lesson: Lesson) {
+        this.lessonService.removeLesson(lesson).subscribe();
     }
 }
