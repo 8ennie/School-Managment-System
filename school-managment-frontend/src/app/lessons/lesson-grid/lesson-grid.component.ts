@@ -6,6 +6,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TeacherService } from 'src/app/teachers/teacher.service';
 import { Teacher } from 'src/app/teachers/teacher.model';
 import { LessonGridService } from './lesson-grid.service';
+import { ClassService } from 'src/app/classes/class.service';
 
 @Component({
   selector: 'app-lesson-grid',
@@ -16,13 +17,14 @@ export class LessonGridComponent implements OnInit {
 
   @Input() lesson: Lesson;
 
-  @Input() config: { day: string, hour: number, class: string };
+  @Input() config: { day: string, hour: number, class: string, teacher: string };
 
   editMode = false;
 
   constructor(private subjectService: SubjectService,
     private teacherService: TeacherService,
-    private lessonGridService: LessonGridService) { }
+    private lessonGridService: LessonGridService,
+    private classService: ClassService) { }
 
   private allSubjects = [];
   private subjectOptions = [];
@@ -30,15 +32,20 @@ export class LessonGridComponent implements OnInit {
   private allTeachers: Teacher[] = [];
   private teacherOptions: Teacher[] = [];
 
+  private allClasses = [];
+
   lessonForm = new FormGroup({
     subject: new FormControl('', Validators.required),
     teacher: new FormControl('', Validators.required),
+    grade: new FormControl('', Validators.required)
   });
 
   ngOnInit(): void {
     if (!this.lesson) {
       this.editMode = true;
       this.lesson = new Lesson();
+      this.lesson.grade = this.config.class;
+      //this.lesson.teacher = this.config.teacher;
     } else if (!this.lesson.id) {
       this.editMode = true;
     }
@@ -63,6 +70,12 @@ export class LessonGridComponent implements OnInit {
       this.setTeacherValues();
       this.setSubjectObtions();
     }
+
+    this.classService.getAllClasses().pipe(take(1)).subscribe(data => {
+      this.allClasses = data._embedded.grades;
+    });
+
+
   }
 
   setSubjectObtions() {

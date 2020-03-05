@@ -29,7 +29,8 @@ export class TeacherService {
     }
 
     getTeacher(id: number) {
-        return this.http.get<Teacher>(environment.apiUrl + 'teachers/' + id + '?projection=teacherProjection');
+        return this.http.get<Teacher>(environment.apiUrl + 'teachers/' + id + '?projection=teacherProjection')
+        .pipe(tap(t => t.fullName = t.firstName + ' ' + t.lastName));
     }
 
     sendUpdate() {

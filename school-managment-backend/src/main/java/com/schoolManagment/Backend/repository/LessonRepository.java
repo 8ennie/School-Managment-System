@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.schoolManagment.Backend.model.school.Grade;
 import com.schoolManagment.Backend.model.school.Lesson;
+import com.schoolManagment.Backend.model.school.Teacher;
 import com.schoolManagment.Backend.projection.LessonProjection;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RepositoryRestResource(excerptProjection = LessonProjection.class)
 public interface LessonRepository extends JpaRepository<Lesson,Long>{
-	Optional<List<Lesson>> findByGrade(@PathVariable("grade")Grade name);
+	Optional<List<Lesson>> findByGrade(@PathVariable("grade")Grade grade);
+	
+	Optional<List<Lesson>> findByTeacher(@PathVariable("teacher")Teacher teacher);
 }

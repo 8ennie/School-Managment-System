@@ -23,7 +23,7 @@ export class LessonGridService {
         });
     }
 
-    featchLessons(grade: string) {
+    featchLessonsForGrade(grade: string) {
         this.lessonService.getLessonsForGrade(grade).subscribe((data: { _embedded }) => {
             this.listLessons = data._embedded?.lessons;
             this.lessonsChanged.next(this.listLessons.slice());
@@ -34,12 +34,31 @@ export class LessonGridService {
         });
     }
 
+    featchLessonsForTeacher(teacher: string) {
+        console.log(teacher);
+        this.lessonService.getLessonsForTeacher(teacher).subscribe((data: { _embedded }) => {
+            this.listLessons = data._embedded?.lessons;
+            this.lessonsChanged.next(this.listLessons.slice());
+        }, (error) => {
+            console.log('No Lessons for Teacher Found');
+            this.listLessons = [];
+            this.lessonsChanged.next(this.listLessons.slice());
+        });
+    }
+
     saveLesson(lesson: Lesson, config) {
         const promise = new Promise<Lesson>((resolve, reject) => {
             lesson.lessonTime = this.lessonTime.filter(l =>
                 l.hour === config.hour && l.dayOfWeek.toLowerCase() === config.day.toLowerCase()
             )[0];
-            lesson.grade = config.class;
+            if (config.class) {
+                lesson.grade = config.class;
+            } else if (config.teacher) {
+
+                lesson.teacher = config.teacher;
+            }
+
+
             if (lesson.id) {
                 this.lessonService.updateLesson(lesson).subscribe(() => {
                     setTimeout(() => {

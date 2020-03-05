@@ -1,6 +1,7 @@
 <div class="card" [appDraggable]="{data:lesson}" *ngIf="!editMode" (dblclick)="onClick()">
     <p>Subject: {{lesson.subject.name}}</p>
-    <p>Teacher: {{lesson.teacher.firstName}} {{lesson.teacher.lastName}}</p>
+    <p *ngIf="!config.teacher">Teacher: {{lesson.teacher.firstName}} {{lesson.teacher.lastName}}</p>
+    <p *ngIf="!config.class">Class: {{lesson.grade.name}}</p>
 </div>
 <div class="card" style="min-width: 140px;min-height: 80px;"
     *ngIf="editMode">
@@ -11,10 +12,16 @@
                 [showClear]="true" (onChange)="subjectChange($event)" optionLabel="name" dataKey="id">
             </p-dropdown>
         </div>
-        <div>
+        <div *ngIf="!config.teacher">
             <h6>Teacher:</h6>
             <p-dropdown [options]="teacherOptions" formControlName="teacher" placeholder="Choose Teacher"
                 [showClear]="true" (onChange)="teacherChanged($event)" optionLabel="fullName" dataKey="id">
+            </p-dropdown>
+        </div>
+        <div *ngIf="!config.class">
+            <h6>Class:</h6>
+            <p-dropdown [options]="allClasses" formControlName="grade" placeholder="Choose Class"
+                [showClear]="true" optionLabel="name" dataKey="id">
             </p-dropdown>
         </div>
         <div class="container d-flex justify-content-center m-1">

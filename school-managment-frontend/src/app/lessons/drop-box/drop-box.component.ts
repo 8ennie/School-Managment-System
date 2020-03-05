@@ -16,7 +16,7 @@ export class DropBoxComponent implements OnInit, OnDestroy {
         private lessonGridService: LessonGridService
     ) { }
 
-    @Input() config: { day: string, hour: number, class: string };
+    @Input() config: { day: string, hour: number, class: string , teacher: string};
 
     @ViewChild(InsertDirective, { static: true }) inCom: InsertDirective;
     private hide = false;

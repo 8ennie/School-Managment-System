@@ -34,7 +34,11 @@ export class LessonService {
     }
 
     getLessonsForGrade(grade) {
-        return this.http.get(this.url + '/search/findByGrade?name=' + grade + '&&projection=lessonProjection');
+        return this.http.get(this.url + '/search/findByGrade?grade=' + grade + '&&projection=lessonProjection');
+    }
+
+    getLessonsForTeacher(grade) {
+        return this.http.get(this.url + '/search/findByTeacher?teacher=' + grade + '&&projection=lessonProjection');
     }
 
     saveLesson(lesson: Lesson) {

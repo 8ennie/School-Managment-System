@@ -47,7 +47,9 @@ export class EditTeacherComponent implements OnInit {
             if (this.editMode) {
                 this.teacherService.getTeacher(this.id).subscribe((teacher: Teacher) => {
                     const editTeacher: Teacher = teacher;
-                    editTeacher.subjects = teacher.subjects.map((sub: { _links }) => sub = sub._links.self.href);
+                    editTeacher.subjects = teacher.subjects.map((sub: { _links }) =>
+                        sub = sub._links.self.href.replace('{?projection}', '')
+                    );
                     this.teacherForm.reset(editTeacher);
                 });
             }
@@ -61,6 +63,9 @@ export class EditTeacherComponent implements OnInit {
                     this.teacherService.getTeacher(this.id).subscribe(updatedTeacher => {
                         this.teacherService.changeTeacher(updatedTeacher);
                         this.teacherForm.reset(updatedTeacher);
+                        this.teacherForm.patchValue({subjects: updatedTeacher.subjects.map(subject =>
+                            subject = subject._links.self.href.replace('{?projection}', '')
+                        )});
                         this.messageService.add({
                             severity: 'success',
                             summary: 'Successfull Change',
@@ -74,6 +79,8 @@ export class EditTeacherComponent implements OnInit {
             this.teacherService.saveTeacher(this.teacherForm.value).subscribe(newTeacher => {
                 const url = newTeacher._links.self.href;
                 this.teacherService.getTeacher(url.substring(url.lastIndexOf('/') + 1)).subscribe(nT => {
+                    console.log(nT);
+                    
                     this.teacherService.addTeacher(nT);
                     this.messageService.add({
                         severity: 'success',
