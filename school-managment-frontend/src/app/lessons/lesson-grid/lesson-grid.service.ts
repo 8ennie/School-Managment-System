@@ -35,9 +35,9 @@ export class LessonGridService {
     }
 
     featchLessonsForTeacher(teacher: string) {
-        console.log(teacher);
         this.lessonService.getLessonsForTeacher(teacher).subscribe((data: { _embedded }) => {
             this.listLessons = data._embedded?.lessons;
+            console.log(this.listLessons);
             this.lessonsChanged.next(this.listLessons.slice());
         }, (error) => {
             console.log('No Lessons for Teacher Found');
@@ -54,8 +54,7 @@ export class LessonGridService {
             if (config.class) {
                 lesson.grade = config.class;
             } else if (config.teacher) {
-
-                lesson.teacher = config.teacher;
+                lesson.teacher._links.self.href = config.teacher;
             }
 
 

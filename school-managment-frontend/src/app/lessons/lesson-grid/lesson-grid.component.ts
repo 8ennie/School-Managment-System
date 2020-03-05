@@ -44,8 +44,15 @@ export class LessonGridComponent implements OnInit {
     if (!this.lesson) {
       this.editMode = true;
       this.lesson = new Lesson();
-      this.lesson.grade = this.config.class;
-      //this.lesson.teacher = this.config.teacher;
+      if (this.config.class) {
+        this.lesson.grade = this.config.class;
+      }
+      if (this.config.teacher) {
+        this.lesson.teacher = new Teacher();
+        this.lesson.teacher._links = {};
+        this.lesson.teacher._links.self = {};
+        this.lesson.teacher._links.self.href = this.config.teacher;
+      }
     } else if (!this.lesson.id) {
       this.editMode = true;
     }
@@ -80,7 +87,7 @@ export class LessonGridComponent implements OnInit {
 
   setSubjectObtions() {
     this.subjectOptions = [];
-    const filter = this.lessonForm.value.teacher?._links?.self?.href.replace('{?projection}', '');
+    const filter = this.lessonForm.value.teacher?._links?.self?.href?.replace('{?projection}', '');
     if (filter) {
       this.allTeachers.forEach(t => {
         if (t._links.self.href === filter) {
@@ -126,6 +133,7 @@ export class LessonGridComponent implements OnInit {
   onSubmit() {
     this.lesson.subject = this.lessonForm.value.subject;
     this.lesson.teacher = this.lessonForm.value.teacher;
+    this.lesson.grade = this.lessonForm.value.grade;
     this.editMode = false;
     this.lessonGridService.saveLesson(this.lesson, this.config).then((l) => {
       if (l) {

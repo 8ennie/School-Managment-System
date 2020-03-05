@@ -1,4 +1,4 @@
-import { Directive, Output, HostListener, EventEmitter, HostBinding, Input } from '@angular/core';
+import { Directive, Output, HostListener, EventEmitter, HostBinding, Input, ElementRef } from '@angular/core';
 import { DragService } from './drag.service';
 
 @Directive({
@@ -31,6 +31,7 @@ export class DropTargetDirective {
         const transData = JSON.parse(event.dataTransfer.getData('Text'));
         this.myDrop.next({ data: transData, dropEvent: event });
     }
+
 }
 
 export interface DropTargetOptions {
