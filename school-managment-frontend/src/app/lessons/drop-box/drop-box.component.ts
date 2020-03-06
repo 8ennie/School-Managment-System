@@ -1,7 +1,7 @@
 import { Component, ViewContainerRef, ViewChild, ComponentFactoryResolver, OnInit, Input, OnDestroy } from '@angular/core';
 import { InsertDirective } from 'src/app/_directives/insert-point.directive';
 import { LessonGridComponent } from 'src/app/lessons/lesson-grid/lesson-grid.component';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { LessonGridService } from '../lesson-grid/lesson-grid.service';
 import { Subscription } from 'rxjs';
 import { Lesson } from '../lesson.model';
@@ -13,13 +13,15 @@ import { Lesson } from '../lesson.model';
 export class DropBoxComponent implements OnInit, OnDestroy {
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
-        private lessonGridService: LessonGridService
+        private lessonGridService: LessonGridService,
+        private messageService: MessageService
     ) { }
 
-    @Input() config: { day: string, hour: number, class: string , teacher: string};
+    @Input() config: { day: string, hour: number, class: string, teacher: string };
 
     @ViewChild(InsertDirective, { static: true }) inCom: InsertDirective;
-    private hide = false;
+
+    hide = false;
 
     items: MenuItem[];
     private vrc: ViewContainerRef;
@@ -50,10 +52,33 @@ export class DropBoxComponent implements OnInit, OnDestroy {
     }
 
     onDrop(event) {
-        const data = event.data;
-        this.lesson = data;
-        data.id = null;
-        this.addLesson(data);
+        this.lessonGridService.featchLessonsForLessonTimeWC(this.config).then((lessons) => {
+            const data = event.data;
+            if (lessons) {
+                let tacherPressent = false;
+                lessons.forEach(l => {
+                    if (data.teacher._links.self.href === l.teacher._links.self.href) {
+                        tacherPressent = true;
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'The Teacher unavalibale',
+                            detail: 'The teacher already has a class at this time'
+                        });
+                    }
+                });
+                if (!tacherPressent) {
+                    this.lesson = data;
+                    data.id = null;
+                    this.addLesson(data);
+                }
+            } else {
+                this.lesson = data;
+                data.id = null;
+                this.addLesson(data);
+            }
+
+
+        });
     }
 
     addLesson(data?: Lesson) {
@@ -67,10 +92,13 @@ export class DropBoxComponent implements OnInit, OnDestroy {
             this.lesson = data;
         }
         (componentRef.instance as LessonGridComponent).config = this.config;
+        (componentRef.instance as LessonGridComponent).lessonChange.subscribe(lesson => {
+            this.lesson = lesson;
+        });
     }
 
     deleteLesson() {
-        if (this.lesson.id) {
+        if (this.lesson?.id) {
             this.lessonGridService.removeLesson(this.lesson);
         }
         this.removeLesson();

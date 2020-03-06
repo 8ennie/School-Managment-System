@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" routerLinkActive="active" [routerLink]="''">Shool Managment</a>
+        <a class="navbar-brand" [routerLink]="''" i18n>Shool Managment</a>
 
         <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
             &#9776;
@@ -9,20 +9,20 @@
         <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
             <ul ngbNav class="navbar-nav">
                 <li ngbNavItem>
-                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated" [routerLink]="'classes'"
-                        (click)="isMenuCollapsed = true">Classes</a>
+                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated" [routerLink]="[ 'classes' ]"
+                        (click)="isMenuCollapsed = true" i18n>Classes</a>
                 </li>
                 <li ngbNavItem>
-                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated" [routerLink]="'students'"
-                        (click)="isMenuCollapsed = true">Students</a>
+                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated" [routerLink]="['students']"
+                        (click)="isMenuCollapsed = true" i18n>Students</a>
                 </li>
                 <li ngbNavItem>
-                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated" [routerLink]="'teachers'"
-                        (click)="isMenuCollapsed = true">Teachers</a>
+                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated" [routerLink]="['teachers']"
+                        (click)="isMenuCollapsed = true" i18n>Teachers</a>
                 </li>
                 <li ngbNavItem>
-                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated" [routerLink]="'lessons'"
-                        (click)="isMenuCollapsed = true">Lessons</a>
+                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated" [routerLink]="['lessons']"
+                        (click)="isMenuCollapsed = true" i18n>Lessons</a>
                 </li>
             </ul>
 
@@ -31,12 +31,12 @@
                     <a href (click)="false" class="nav-link" ngbDropdownToggle *ngIf="isAuthenticated">{{user.username}}</a>
                     <div ngbDropdownMenu>
                         <a ngbDropdownItem [routerLink]="'auth'" class="dropdown-item"
-                            (click)="onLogout()">Logout</a>
+                            (click)="onLogout()" i18n>Logout</a>
                     </div>
                   </li>
                 <li ngbNavItem>
                     <a ngbNavLink routerLinkActive="active" *ngIf="!isAuthenticated" [routerLink]="'auth'"
-                        (click)="isMenuCollapsed = true">Log In</a>
+                        (click)="isMenuCollapsed = true" i18n>Log In</a>
                 </li>
             </ul>
         </div>

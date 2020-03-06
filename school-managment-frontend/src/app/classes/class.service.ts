@@ -8,7 +8,7 @@ export class ClassService {
     constructor(private http: HttpClient) { }
 
     getAllClasses() {
-        return this.http.get<RestResponse>('http://localhost:8080/api/grades');
+        return this.http.get<RestResponse>('http://localhost:8080/api/grades' + '?size=30');
     }
 
 }

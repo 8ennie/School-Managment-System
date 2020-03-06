@@ -1,6 +1,4 @@
 export class Teacher {
-    fullName?: string;
-
     public id?: number;
     firstName: string;
     lastName: string;
@@ -12,4 +10,7 @@ export class Teacher {
 
     _links;
 
+    // HelperFields
+    fullName?: string;
+    optionLable?;
 }

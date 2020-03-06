@@ -14,7 +14,7 @@ public interface LessonProjection {
 	
 	TeacherProjection getTeacher();
 	
-	Grade getGrade();
+	GradeProjection getGrade();
 	
 	LessonTime getLessonTime();
 	

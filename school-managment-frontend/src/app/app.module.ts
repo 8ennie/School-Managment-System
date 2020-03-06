@@ -25,6 +25,8 @@ import { DraggableDirective } from './shared/drap-drop/draggable.directive';
 import { DropTargetDirective } from './shared/drap-drop/drop-target.directive';
 import { InsertDirective } from './_directives/insert-point.directive';
 import { DropBoxComponent } from './lessons/drop-box/drop-box.component';
+import { httpErrorInterceptorProviders } from './_helper/http-error.interceptor';
+import { LessonsDetailsComponent } from './lessons/lessons-details/lessons-details.component';
 
 
 
@@ -44,7 +46,8 @@ import { DropBoxComponent } from './lessons/drop-box/drop-box.component';
     DraggableDirective,
     DropTargetDirective,
     InsertDirective,
-    DropBoxComponent
+    DropBoxComponent,
+    LessonsDetailsComponent
   ],
   imports: [
     FormsModule,
@@ -57,7 +60,7 @@ import { DropBoxComponent } from './lessons/drop-box/drop-box.component';
     PrimeNGModule,
     DragDropModule,
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders, httpErrorInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule {

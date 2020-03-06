@@ -1,5 +1,6 @@
 package com.schoolManagment.Backend.repository;
 
+import java.time.DayOfWeek;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,4 +14,8 @@ import com.schoolManagment.Backend.model.school.LessonTime;
 @RepositoryRestResource()
 public interface LessonTimeRepository extends JpaRepository<LessonTime, Long>{
 	Optional<List<LessonTime>>findByHour(int hour);
+	
+	Optional<List<LessonTime>>findByDayOfWeek(DayOfWeek dayOfWeek);
+	
+	Optional<LessonTime>findByDayOfWeekAndHour(DayOfWeek dayOfWeek, int hour);
 }

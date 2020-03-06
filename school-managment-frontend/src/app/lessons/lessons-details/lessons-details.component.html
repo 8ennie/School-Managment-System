@@ -1,0 +1,22 @@
+<h4>Details:</h4>
+<div *ngIf="model === 'c'">
+    <h5>Subjects:</h5>
+    <ul>
+        <li *ngFor="let sub of allSubjects">
+            <h6> Subject: {{sub.name}}</h6>
+            <div>Teacher: {{sub.teacher.gender === 'MALE' ? 'Mr. ': 'Ms. '}}{{sub.teacher.lastName}}</div>
+            <div>Amount: {{sub.amount}}</div>
+        </li>
+    </ul>
+</div>
+
+<div *ngIf="model === 't'">
+    <h5>Classes:</h5>
+    <ul>
+        <li *ngFor="let clas of allClasses">
+            <h6> Class: {{clas.name}}</h6>
+            <div>Amount: {{clas.amount}}</div>
+        </li>
+    </ul>
+</div>
+

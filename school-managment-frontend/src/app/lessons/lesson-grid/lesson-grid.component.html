@@ -15,7 +15,7 @@
         <div *ngIf="!config.teacher">
             <h6>Teacher:</h6>
             <p-dropdown [options]="teacherOptions" formControlName="teacher" placeholder="Choose Teacher"
-                [showClear]="true" (onChange)="teacherChanged($event)" optionLabel="fullName" dataKey="id">
+                [showClear]="true" (onChange)="teacherChanged($event)" optionLabel="optionLable" dataKey="id">
             </p-dropdown>
         </div>
         <div *ngIf="!config.class">
@@ -25,7 +25,7 @@
             </p-dropdown>
         </div>
         <div class="container d-flex justify-content-center m-1">
-            <button [disabled]="!lessonForm.valid"pbutton>Save</button>
+            <button [disabled]="!lessonForm.valid" pbutton>Save</button>
         </div>
     </form>
 </div>

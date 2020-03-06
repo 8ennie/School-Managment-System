@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.schoolManagment.Backend.model.school.Grade;
 import com.schoolManagment.Backend.model.school.Lesson;
+import com.schoolManagment.Backend.model.school.LessonTime;
 import com.schoolManagment.Backend.model.school.Teacher;
 import com.schoolManagment.Backend.projection.LessonProjection;
 
@@ -19,4 +20,6 @@ public interface LessonRepository extends JpaRepository<Lesson,Long>{
 	Optional<List<Lesson>> findByGrade(@PathVariable("grade")Grade grade);
 	
 	Optional<List<Lesson>> findByTeacher(@PathVariable("teacher")Teacher teacher);
+	
+	Optional<List<Lesson>> findByLessonTime(@PathVariable("lessonTime")LessonTime lessonTime);
 }

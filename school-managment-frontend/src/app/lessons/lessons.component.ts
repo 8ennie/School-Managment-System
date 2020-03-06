@@ -1,12 +1,8 @@
-import { Component, OnInit, OnDestroy, ComponentFactoryResolver } from '@angular/core';
-import { LessonService } from './lesson.service';
-import { Lesson } from './lesson.model';
-import { Subscription } from 'rxjs';
+import { Component, OnInit} from '@angular/core';
 import { LessonGridService } from './lesson-grid/lesson-grid.service';
 import { map, take } from 'rxjs/operators';
 import { ClassService } from '../classes/class.service';
 import { TeacherService } from '../teachers/teacher.service';
-import { Teacher } from '../teachers/teacher.model';
 
 @Component({
   selector: 'app-lessons',
@@ -22,7 +18,7 @@ export class LessonsComponent implements OnInit {
   class;
   teacher;
 
-  constructor(private lessonService: LessonService,
+  constructor(
     private lessonGridService: LessonGridService,
     private classService: ClassService,
     private teacherService: TeacherService
@@ -33,7 +29,14 @@ export class LessonsComponent implements OnInit {
     this.classService.getAllClasses().pipe(
       map(data => data._embedded.grades)).
       subscribe(classes => {
-        this.allGrades = classes.map(classValue => classValue = { label: classValue.name, value: classValue._links.self.href });
+        this.allGrades.push({ label: 'Elementary', items: [] = [] });
+        this.allGrades.push({ label: 'Real', items: [] = [] });
+        this.allGrades.push({ label: 'Middle', items: [] = [] });
+        this.allGrades.push({ label: 'High', items: [] = [] });
+        classes.forEach(classValue => {
+          const classOption = { label: classValue.name, value: classValue._links.self.href };
+          this.allGrades.filter(g => g.label.toUpperCase() === classValue.educationalStage)[0].items.push(classOption);
+        });
       });
     this.allTeachers = this.teacherService.getTeachers();
     if (this.allTeachers.length < 1) {

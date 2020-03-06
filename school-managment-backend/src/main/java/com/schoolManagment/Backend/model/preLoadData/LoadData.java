@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.schoolManagment.Backend.model.adminestration.ERole;
 import com.schoolManagment.Backend.model.adminestration.Role;
 import com.schoolManagment.Backend.model.adminestration.User;
+import com.schoolManagment.Backend.model.school.EducationalStage;
 import com.schoolManagment.Backend.model.school.Gender;
 import com.schoolManagment.Backend.model.school.Grade;
 import com.schoolManagment.Backend.model.school.Lesson;
@@ -66,49 +67,93 @@ public class LoadData implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
+
+		// Roles
 		log.info("Preload: " + roleRepository.save(new Role(ERole.ROLE_ADMIN)));
 		log.info("Preload: " + roleRepository.save(new Role(ERole.ROLE_USER)));
 		log.info("Preload: " + roleRepository.save(new Role(ERole.ROLE_STUDENT)));
 		log.info("Preload: " + roleRepository.save(new Role(ERole.ROLE_TEACHER)));
-
-		User admin = new User("admin", "admin@admin.com", encoder.encode("adminadmin"));
-		Set<Role> roles = new HashSet<>();
 		Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
 				.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-		;
+
+		// Users
+		User admin = new User("admin", "admin@admin.com", encoder.encode("adminadmin"));
+		Set<Role> roles = new HashSet<>();
 		roles.add(adminRole);
 		admin.setRoles(roles);
 		log.info("Preload: " + userRepository.save(admin));
 
-		log.info("Preload: " + gradeRepository.save(new Grade("5Ga")));
-		log.info("Preload: " + gradeRepository.save(new Grade("5Gb")));
-		log.info("Preload: " + gradeRepository.save(new Grade("5R")));
-		log.info("Preload: " + gradeRepository.save(new Grade("6Ga")));
-		log.info("Preload: " + gradeRepository.save(new Grade("6Gb")));
-		log.info("Preload: " + gradeRepository.save(new Grade("6R")));
+		// Grade
+		Grade grade1a = gradeRepository.save(Grade.builder().name("1a").educationalStage(EducationalStage.ELEMENTARY).build());
+		gradeRepository.save(Grade.builder().name("1b").educationalStage(EducationalStage.ELEMENTARY).build());
+		gradeRepository.save(Grade.builder().name("2a").educationalStage(EducationalStage.ELEMENTARY).build());
+		gradeRepository.save(Grade.builder().name("2b").educationalStage(EducationalStage.ELEMENTARY).build());
+		gradeRepository.save(Grade.builder().name("3a").educationalStage(EducationalStage.ELEMENTARY).build());
+		gradeRepository.save(Grade.builder().name("3b").educationalStage(EducationalStage.ELEMENTARY).build());
+		gradeRepository.save(Grade.builder().name("4a").educationalStage(EducationalStage.ELEMENTARY).build());
+		gradeRepository.save(Grade.builder().name("4b").educationalStage(EducationalStage.ELEMENTARY).build());
 
-		Grade grade1 = gradeRepository.getOne(Long.valueOf(4));
+		gradeRepository.save(Grade.builder().name("5Ga").educationalStage(EducationalStage.MIDDLE).build());
+		gradeRepository.save(Grade.builder().name("5Gb").educationalStage(EducationalStage.MIDDLE).build());
+		gradeRepository.save(Grade.builder().name("5R").educationalStage(EducationalStage.REAL).build());
+		gradeRepository.save(Grade.builder().name("6Ga").educationalStage(EducationalStage.MIDDLE).build());
+		gradeRepository.save(Grade.builder().name("6Gb").educationalStage(EducationalStage.MIDDLE).build());
+		gradeRepository.save(Grade.builder().name("6R").educationalStage(EducationalStage.REAL).build());
+		gradeRepository.save(Grade.builder().name("7Ga").educationalStage(EducationalStage.MIDDLE).build());
+		gradeRepository.save(Grade.builder().name("7Gb").educationalStage(EducationalStage.MIDDLE).build());
+		gradeRepository.save(Grade.builder().name("7R").educationalStage(EducationalStage.REAL).build());
+		gradeRepository.save(Grade.builder().name("8Ga").educationalStage(EducationalStage.MIDDLE).build());
+		gradeRepository.save(Grade.builder().name("8Gb").educationalStage(EducationalStage.MIDDLE).build());
+		gradeRepository.save(Grade.builder().name("8R").educationalStage(EducationalStage.REAL).build());
+		gradeRepository.save(Grade.builder().name("9Ga").educationalStage(EducationalStage.MIDDLE).build());
+		gradeRepository.save(Grade.builder().name("9Gb").educationalStage(EducationalStage.MIDDLE).build());
+		gradeRepository.save(Grade.builder().name("9R").educationalStage(EducationalStage.REAL).build());
+		gradeRepository.save(Grade.builder().name("10Ga").educationalStage(EducationalStage.MIDDLE).build());
+		gradeRepository.save(Grade.builder().name("10Gb").educationalStage(EducationalStage.MIDDLE).build());
+		gradeRepository.save(Grade.builder().name("10R").educationalStage(EducationalStage.REAL).build());
+
+		gradeRepository.save(Grade.builder().name("11a").educationalStage(EducationalStage.HIGH).build());
+		gradeRepository.save(Grade.builder().name("11b").educationalStage(EducationalStage.HIGH).build());
+		gradeRepository.save(Grade.builder().name("12a").educationalStage(EducationalStage.HIGH).build());
+		gradeRepository.save(Grade.builder().name("12b").educationalStage(EducationalStage.HIGH).build());
+		gradeRepository.save(Grade.builder().name("13a").educationalStage(EducationalStage.HIGH).build());
+		gradeRepository.save(Grade.builder().name("13b").educationalStage(EducationalStage.HIGH).build());
+
+
+		// Students
 		log.info("Preload: " + studentRepository.save(
-				Student.builder().grade(grade1).firstName("Alice").lastName("Gray").gender(Gender.FEMALE).build()));
+				Student.builder().grade(grade1a).firstName("Alice").lastName("Gray").gender(Gender.FEMALE).build()));
 		log.info("Preload: " + studentRepository.save(
-				Student.builder().grade(grade1).firstName("Simon").lastName("Great").gender(Gender.MALE).build()));
+				Student.builder().grade(grade1a).firstName("Simon").lastName("Great").gender(Gender.MALE).build()));
 		log.info("Preload: " + studentRepository
-				.save(Student.builder().grade(grade1).firstName("Bobby").lastName("Gras").gender(Gender.MALE).build()));
+				.save(Student.builder().grade(grade1a).firstName("Bobby").lastName("Gras").gender(Gender.MALE).build()));
 
-		log.info("Preload: " + subjectRepository.save(Subject.builder().name("German").build()));
-		log.info("Preload: " + subjectRepository.save(Subject.builder().name("English").build()));
-		log.info("Preload: " + subjectRepository.save(Subject.builder().name("Math").build()));
+		// Subjects
+		Subject deutsch = subjectRepository.save(Subject.builder().name("German").build());
+		Subject english = subjectRepository.save(Subject.builder().name("Englisch").build());
+		Subject french = subjectRepository.save(Subject.builder().name("French").build());
+		Subject latin = subjectRepository.save(Subject.builder().name("Latin").build());
 
-		Subject deutsch = subjectRepository.findByName("German").get().get(0);
-		Subject english = subjectRepository.findByName("English").get().get(0);
-		Subject math = subjectRepository.findByName("Math").get().get(0);
-		log.info("Preload: " + teacherRepository.save(Teacher.builder().firstName("Amy").lastName("Tod")
-				.gender(Gender.FEMALE).subjects(Arrays.asList(deutsch, english)).build()));
-		log.info("Preload: " + teacherRepository.save(Teacher.builder().firstName("Nick").lastName("Pattar")
-				.gender(Gender.FEMALE).subjects(Arrays.asList(deutsch, math)).build()));
+		Subject math = subjectRepository.save(Subject.builder().name("Math").build());
+		Subject physics = subjectRepository.save(Subject.builder().name("Physics").build());
+		Subject chemistry = subjectRepository.save(Subject.builder().name("Chemistry").build());
 
-		Teacher amy = teacherRepository.findById(Long.valueOf(13)).get();
+		Subject history = subjectRepository.save(Subject.builder().name("History").build());
+		Subject poWi = subjectRepository.save(Subject.builder().name("PoWi").build());
 
+		Subject sport = subjectRepository.save(Subject.builder().name("Sport").build());
+		Subject music = subjectRepository.save(Subject.builder().name("Music").build());
+		Subject art = subjectRepository.save(Subject.builder().name("Art").build());
+
+		Subject computer = subjectRepository.save(Subject.builder().name("Computer").build());
+
+		// Teachers
+		Teacher amy = teacherRepository.save(Teacher.builder().firstName("Amy").lastName("Tod").gender(Gender.FEMALE)
+				.subjects(Arrays.asList(deutsch, english)).build());
+		Teacher nick = teacherRepository.save(Teacher.builder().firstName("Nick").lastName("Pattar")
+				.gender(Gender.FEMALE).subjects(Arrays.asList(deutsch, math)).build());
+
+		// LessonTimes
 		for (DayOfWeek day : DayOfWeek.values()) {
 			if (day != DayOfWeek.SATURDAY && day != DayOfWeek.SUNDAY) {
 				for (int i = 1; i < 11; i++) {
@@ -161,13 +206,8 @@ public class LoadData implements ApplicationRunner {
 			}
 
 		}
-		LessonTime firstHour = lessonTimeRepository.findById(Long.valueOf(15)).get();
-		LessonTime secondHourOnMonday = lessonTimeRepository.findById(Long.valueOf(16)).get();
-
-		log.info("Preload: " + lessonRepository
-				.save(Lesson.builder().lessonTime(firstHour).teacher(amy).subject(deutsch).grade(grade1).build()));
-		log.info("Preload: " + lessonRepository.save(
-				Lesson.builder().lessonTime(secondHourOnMonday).teacher(amy).subject(english).grade(grade1).build()));
+		LessonTime firstHourOnMonday = lessonTimeRepository.findByDayOfWeekAndHour(DayOfWeek.MONDAY, 1).get();
+		LessonTime firstHourOnTuesday = lessonTimeRepository.findByDayOfWeekAndHour(DayOfWeek.TUESDAY, 1).get();
 
 	}
 

@@ -41,9 +41,17 @@ export class LessonService {
         return this.http.get(this.url + '/search/findByTeacher?teacher=' + grade + '&&projection=lessonProjection');
     }
 
+    getLessonsForLessonTime(lessonTime) {
+        return this.http.get(this.url + '/search/findByLessonTime?lessonTime=' + lessonTime + '&&projection=lessonProjection');
+    }
+
     saveLesson(lesson: Lesson) {
         const newLesson: Lesson = new Lesson();
-        newLesson.grade = lesson.grade;
+        if (lesson.grade._links?.self?.href) {
+            newLesson.grade = lesson.grade._links.self.href;
+        } else {
+            newLesson.grade = lesson.grade;
+        }
         newLesson.teacher = lesson.teacher._links.self.href;
         newLesson.subject = lesson.subject._links.self.href;
         newLesson.lessonTime = lesson.lessonTime._links.self.href;
