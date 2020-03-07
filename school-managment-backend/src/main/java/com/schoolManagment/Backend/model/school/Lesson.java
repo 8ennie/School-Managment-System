@@ -1,10 +1,14 @@
 package com.schoolManagment.Backend.model.school;
 
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,6 +39,12 @@ public class Lesson {
 	
 	@ManyToOne
 	private Subject subject;
+	
+	@Temporal(TemporalType.DATE)
+	private Date startDate;
+	
+	@Temporal(TemporalType.DATE)
+	private Date endDate;
 	
 	
 	
