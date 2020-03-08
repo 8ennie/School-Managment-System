@@ -9,7 +9,6 @@
                 <input pInputText type="text" placeholder="Contains" class="ui-column-filter" style="width: 100%;"
                     (input)="dt.filter($event.target.value, 'lastName', 'contains')">
             </th>
-            <th>Birthday</th>
             <th style="width: 8em; text-align: center;">
                 <a [routerLink]="'/teachers/new'">
                     <button pButton type="button" icon="pi pi-plus"></button>
@@ -21,7 +20,6 @@
         <tr>
             <td>{{teacher.firstName}}</td>
             <td>{{teacher.lastName}}</td>
-            <td>{{teacher.birthday}}</td>
             <td style="text-align: center;">
                 <button class="justify-content-center" (click)="teacherDetails(teacher)" pButton type="button"
                     icon="pi pi-search"></button>

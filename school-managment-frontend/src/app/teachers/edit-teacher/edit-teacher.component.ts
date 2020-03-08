@@ -7,6 +7,7 @@ import { TeacherService } from '../teacher.service';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
     selector: 'app-edit-teacher',
@@ -24,6 +25,7 @@ export class EditTeacherComponent implements OnInit {
         subjects: new FormControl('')
     });
 
+    createUserForTeacher = true;
 
     allSubjects = [];
     subjects = [];
@@ -33,7 +35,8 @@ export class EditTeacherComponent implements OnInit {
         private teacherService: TeacherService,
         private route: ActivatedRoute,
         private router: Router,
-        private messageService: MessageService) { }
+        private messageService: MessageService,
+        private authService: AuthService) { }
 
     ngOnInit(): void {
         this.subjectService.getAllSubjects().pipe(
@@ -79,14 +82,24 @@ export class EditTeacherComponent implements OnInit {
             this.teacherService.saveTeacher(this.teacherForm.value).subscribe(newTeacher => {
                 const url = newTeacher._links.self.href;
                 this.teacherService.getTeacher(url.substring(url.lastIndexOf('/') + 1)).subscribe(nT => {
-                    console.log(nT);
-                    
                     this.teacherService.addTeacher(nT);
                     this.messageService.add({
                         severity: 'success',
                         summary: 'Successfull Creation',
                         detail: 'Teacher was added successfully'
                     });
+                    if(this.createUserForTeacher){
+                        console.log(nT);
+                        
+                        this.authService.registerTeacher(nT).subscribe(()=>{
+                            this.messageService.add({
+                                severity: 'success',
+                                summary: 'Successfull Created User',
+                                detail: 'Created a user for ' + nT.lastName
+                            });
+                        });
+                    }
+
                     this.router.navigate(['/teachers']);
                 });
             });

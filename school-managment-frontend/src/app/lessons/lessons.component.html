@@ -57,7 +57,7 @@
                     {{day}}
                 </div>
             </div>
-    
+
             <div *ngFor="let hour of houres">
                 <div class="row" style="min-height: 85px;">
                     <div class="card" style=" max-width: 210px;width: 75px; text-align: center;"> {{hour}} </div>
@@ -70,10 +70,14 @@
                 </div>
             </div>
         </div>
-        <div class="col card">
-            <app-lessons-details [model] = "teacher ? 't': 'c'"></app-lessons-details>
+        <div>
+
+            <button (click)="hideDetails = !hideDetails">{{hideDetails ? 'Hide Details' : 'Show Details'}}</button>
+
+            <div class="col card" *ngIf="hideDetails">
+                <app-lessons-details [model]="teacher ? 't': 'c'"></app-lessons-details>
+            </div>
         </div>
+
     </div>
 </div>
-
-

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { User } from './user.model';
+import { Teacher } from '../teachers/teacher.model';
 
 const AUTH_API = 'http://localhost:8080/api/auth/';
 
@@ -32,6 +33,11 @@ export class AuthService {
       password: user.password
     }, httpOptions);
   }
+
+  registerTeacher(teacher:Teacher): Observable<any> {
+    return this.http.post(AUTH_API + 'signup/teacher', teacher, httpOptions);
+  }
+
 
   isAthenticated() {
     return !!this.tokenStorage.getToken();

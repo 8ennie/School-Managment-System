@@ -11,18 +11,19 @@ import { EditTeacherComponent } from './teachers/edit-teacher/edit-teacher.compo
 import { TeacherResolverService } from './teachers/teacher-resolver.service';
 import { ClassesComponent } from './classes/classes.component';
 import { LessonsComponent } from './lessons/lessons.component';
+import { Role } from './auth/role.model';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'auth', component: AuthComponent },
-  { path: 'students/new', component: EditStudentComponent, canActivate: [AuthGuard] },
-  { path: 'students/:id', component: EditStudentComponent, canActivate: [AuthGuard] },
-  { path: 'students', component: StudentsComponent, canActivate: [AuthGuard], resolve: [StudentsResolverService] },
-  { path: 'teachers/:id', component: EditTeacherComponent, canActivate: [AuthGuard] },
-  { path: 'teachers/new', component: EditTeacherComponent, canActivate: [AuthGuard] },
-  { path: 'teachers', component: TeachersComponent, canActivate: [AuthGuard], resolve: [TeacherResolverService] },
-  { path: 'classes', component: ClassesComponent, canActivate: [AuthGuard] },
-  { path: 'lessons', component: LessonsComponent, canActivate: [AuthGuard] },
+  { path: 'students/new', component: EditStudentComponent, canActivate: [AuthGuard], data: { roles: [Role.ROLE_ADMIN] } },
+  { path: 'students/:id', component: EditStudentComponent, canActivate: [AuthGuard], data: { roles: [Role.ROLE_ADMIN, Role.ROLE_TEACHER] } },
+  { path: 'students', component: StudentsComponent, canActivate: [AuthGuard], data: { roles: [Role.ROLE_ADMIN, Role.ROLE_TEACHER] }, resolve: [StudentsResolverService] },
+  { path: 'teachers/new', component: EditTeacherComponent, canActivate: [AuthGuard], data: { roles: [Role.ROLE_ADMIN] } },
+  { path: 'teachers/:id', component: EditTeacherComponent, canActivate: [AuthGuard], data: { roles: [Role.ROLE_ADMIN, Role.ROLE_TEACHER] } },
+  { path: 'teachers', component: TeachersComponent, canActivate: [AuthGuard], resolve: [TeacherResolverService], data: { roles: [Role.ROLE_ADMIN, Role.ROLE_TEACHER] } },
+  { path: 'classes', component: ClassesComponent, canActivate: [AuthGuard], data: { roles: [Role.ROLE_ADMIN, Role.ROLE_TEACHER] } },
+  { path: 'lessons', component: LessonsComponent, canActivate: [AuthGuard], data: { roles: [Role.ROLE_ADMIN, Role.ROLE_TEACHER] } },
 
 ];
 

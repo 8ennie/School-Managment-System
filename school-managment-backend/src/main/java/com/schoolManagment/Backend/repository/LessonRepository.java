@@ -22,4 +22,8 @@ public interface LessonRepository extends JpaRepository<Lesson,Long>{
 	Optional<List<Lesson>> findByTeacher(@PathVariable("teacher")Teacher teacher);
 	
 	Optional<List<Lesson>> findByLessonTime(@PathVariable("lessonTime")LessonTime lessonTime);
+	
+	Optional<List<Lesson>> findByLessonTimeAndTeacher(LessonTime lessonTime, Teacher teacher);
+	
+	Optional<List<Lesson>> findByLessonTimeAndGrade(LessonTime lessonTime, Grade grade);
 }

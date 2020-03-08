@@ -18,7 +18,6 @@
                     dataKey="_links.self"
                     (onChange)="filter($event, dt)"></p-multiSelect>
             </th>
-            <th>Birthday</th>
             <th style="width: 8em; text-align: center;">
                 <a [routerLink]="'/students/new'">
                     <button pButton type="button" icon="pi pi-plus"></button>
@@ -31,7 +30,6 @@
             <td>{{studnet.firstName}}</td>
             <td>{{studnet.lastName}}</td>
             <td>{{studnet.grade?.name}}</td>
-            <td>{{studnet.birthday}}</td>
             <td style="text-align: center;">
                 <button class="justify-content-center" (click)="studnetDetails(studnet)" pButton type="button"
                     icon="pi pi-search"></button>

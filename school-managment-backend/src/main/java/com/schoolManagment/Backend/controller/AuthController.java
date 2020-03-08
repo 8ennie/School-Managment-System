@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.schoolManagment.Backend.model.adminestration.ERole;
 import com.schoolManagment.Backend.model.adminestration.Role;
 import com.schoolManagment.Backend.model.adminestration.User;
+import com.schoolManagment.Backend.model.school.Teacher;
 import com.schoolManagment.Backend.payload.request.LoginRequest;
 import com.schoolManagment.Backend.payload.request.SignupRequest;
 import com.schoolManagment.Backend.payload.response.JwtResponse;
@@ -71,6 +72,10 @@ public class AuthController {
 												 userDetails.getEmail(), 
 												 roles));
 	}
+	
+	
+	
+	
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
@@ -91,7 +96,36 @@ public class AuthController {
 							 signUpRequest.getEmail(),
 							 encoder.encode(signUpRequest.getPassword()));
 
-		Set<String> strRoles = signUpRequest.getRole();
+		Set<Role> roles = setRoles(signUpRequest.getRole());
+
+		user.setRoles(roles);
+		userRepository.save(user);
+
+		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+	}
+	
+	
+	@PostMapping("/signup/teacher")
+	public ResponseEntity<?> registerTeacher(@RequestBody Teacher teacher) {
+		System.out.println(teacher);
+		User user = new User(teacher.getId().toString(), 
+				 teacher.getFirstName() + "." + teacher.getLastName() + "@fcsf.de",
+				 encoder.encode(teacher.getFirstName() + teacher.getId()));
+		
+		Role teacherRole = roleRepository.findByName(ERole.ROLE_TEACHER).get();
+		Set<Role> roles = new HashSet<>();
+		roles.add(teacherRole);
+		
+		user.setRoles(roles);
+		userRepository.save(user);
+		
+		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+	}
+
+
+
+
+	private Set<Role> setRoles(Set<String> strRoles) {
 		Set<Role> roles = new HashSet<>();
 
 		if (strRoles == null) {
@@ -126,10 +160,6 @@ public class AuthController {
 				}
 			});
 		}
-
-		user.setRoles(roles);
-		userRepository.save(user);
-
-		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+		return roles;
 	}
 }

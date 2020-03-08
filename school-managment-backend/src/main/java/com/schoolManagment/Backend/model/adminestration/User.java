@@ -8,6 +8,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.schoolManagment.Backend.model.school.Person;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,6 +47,9 @@ public class User {
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	
 	private Set<Role> roles = new HashSet<>();
+	
+	@OneToOne
+	private Person person;
 
 	public User(String username, String email, String password) {
 		this.username = username;

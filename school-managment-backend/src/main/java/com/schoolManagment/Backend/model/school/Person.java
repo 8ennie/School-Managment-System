@@ -5,8 +5,10 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import com.schoolManagment.Backend.model.adminestration.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 public class Person {
-
+	
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -28,6 +30,9 @@ public class Person {
 	
 	private String lastName;
 	
+	@OneToOne
+	private User user;
+	
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 
@@ -36,4 +41,9 @@ public class Person {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
+
+
+	
+	
+	
 }
