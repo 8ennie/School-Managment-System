@@ -9,9 +9,10 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.schoolManagment.Backend.model.school.LessonTime;
+import com.schoolManagment.Backend.projection.LessonTimeProjection;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RepositoryRestResource()
+@RepositoryRestResource(excerptProjection = LessonTimeProjection.class)
 public interface LessonTimeRepository extends JpaRepository<LessonTime, Long>{
 	Optional<List<LessonTime>>findByHour(int hour);
 	

@@ -1,11 +1,13 @@
 package com.schoolManagment.Backend.projection;
 
+import java.util.Date;
+
 import org.springframework.data.rest.core.config.Projection;
 
-import com.schoolManagment.Backend.model.school.Lesson;
+import com.schoolManagment.Backend.model.school.LessonInstance;
 
-@Projection(name = "lessonProjection", types = {Lesson.class})
-public interface LessonProjection {
+@Projection(name = "lessonInstanceProjection", types = {LessonInstance.class})
+public interface LessonInstanceProjection {
 
 	Long getId();
 	
@@ -17,5 +19,7 @@ public interface LessonProjection {
 	
 	SubjectProjection getSubject();
 	
+	Date getDate();
 	
+	String getInfo();
 }

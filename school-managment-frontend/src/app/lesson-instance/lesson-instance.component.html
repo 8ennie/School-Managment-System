@@ -1,12 +1,12 @@
-<div class="card" (dblclick)="editMode = !editMode" *ngIf="lessonInstance.id && !editMode">
+<div class="card" (dblclick)="editMode = !editMode" *ngIf="lessonInstance.id && !editMode" style="width: 150px;">
     <p>Class: {{lessonInstance.grade.name}}</p>
     <p>Subject: {{lessonInstance.subject.name}}</p>
 </div>
-<div class="card" (dblclick)="onClick()" *ngIf="!lessonInstance.id && !editMode">
+<div class="card" *ngIf="!lessonInstance.id && !editMode">
     <p class="m-2">No Classes</p>
 </div>
 
-<div class="card" (dblclick)="onClick()" *ngIf="editMode">
+<div class="card" *ngIf="editMode">
     <form [formGroup]="lessonInstanceForm" (ngSubmit)="onSubmit()" class="container">
         <p>Class: {{lessonInstance.grade.name}}</p>
         <p>Subject: {{lessonInstance.subject.name}}</p>

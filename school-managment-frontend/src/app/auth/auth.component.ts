@@ -40,6 +40,8 @@ export class AuthComponent implements OnInit {
     const credentials = { username: form.value.username, password: form.value.password };
     this.authService.login(credentials).subscribe(
       data => {
+        console.log(data);
+        
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUser(data);
 
@@ -58,7 +60,7 @@ export class AuthComponent implements OnInit {
       err => {
         this.messageService.add({ severity: 'error', summary: 'Error Message', detail: err.error.message });
         this.errorMessage = err.error.message;
-        form.value.password = '';
+        form.reset({ username: form.value.username, password: ''}) ;
         this.isLoginFailed = true;
       }
     );

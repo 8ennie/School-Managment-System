@@ -20,5 +20,6 @@ export class HateoasEntity {
         self: {
             href: string;
         };
+        
     };
 }

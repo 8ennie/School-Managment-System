@@ -4,4 +4,6 @@ export class LessonInstance extends Lesson {
 
     info: string;
 
+    date:string;
+
 }

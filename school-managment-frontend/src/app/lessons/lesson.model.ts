@@ -11,7 +11,7 @@ export class Lesson extends HateoasEntity {
     public id: number;
     public grade;
     public subject;
-    public teacher: Teacher;
+    public teacher;
     public lessonTime;
 
 }

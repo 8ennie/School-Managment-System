@@ -1,24 +1,25 @@
 <div class="row">
-    <div class="d-flex justify-content-center mt-5 container col ml-5 mr-5">
-        <div style="max-width: 1200px;" class="mr-5">
-            <div class="row">
-                <div>{{day}}</div>
-                <!-- <div class="p-2 card" style="width: 75px; text-align: center;"> Houres </div>
-                <div *ngFor="let day of days" class="p-2 card" style="min-width: 210px; text-align: center;">
-                    {{day}}
-                </div> -->
+    <div class="d-flex justify-content-center  mt-5  ml-5 mr-5">
+        <div>
+            <div class="d-flex justify-content-center card mb-3">
+                <div class="row d-flex" >
+                    <button (click)="minusDay()" ><</button>
+                    <div class="mr-3 ml-3">
+                        <div class="card pr-2 pl-2" style="text-align: center;">{{date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear()}}</div>
+                        <div class="card" style="text-align: center;">{{days[date.getDay()]}}</div>
+                    </div> 
+                    <button (click)="plusDay()" >></button>
+                </div>
             </div>
-
+            
             <div *ngFor="let hour of houres">
                 <div class="row" style="min-height: 85px;">
-                    <div class="card" style=" max-width: 210px;width: 75px; text-align: center;"> {{hour}} </div>
-                    <app-lesson-instance 
-                    [config]="{day:day, hour:hour, class:class, teacher: teacher}">
+                    <div class="card" style=" max-width: 210px;width: 25px; text-align: center;"> {{hour}} </div>
+                    <app-lesson-instance [config]="{day:day, hour:hour, class:class, teacher: teacher}">
                     </app-lesson-instance>
                 </div>
                 <div *ngIf="hour%2 === 0" class="row d-flex justify-content-center card" style="text-align: center;">
-                    <div class="card" style="max-width: 210px; width: 75px; text-align: center;">
-                        {{'break' | translate}} </div>
+                    {{'break' | translate}}
                 </div>
             </div>
         </div>

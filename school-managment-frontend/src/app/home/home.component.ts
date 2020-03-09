@@ -22,12 +22,25 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.date = new Date();
-    const teacehrId = this.authService.getUser().person?.id;
+    this.updateLessons();
+  }
+
+  updateLessons(){
+    const teacehrId = this.authService.getUser()?.person?.id;
     if (teacehrId) {
       this.lessonnInstanceService.getLessonInstancesForTeacherAndDate(teacehrId, this.date);
     }
-
-
   }
+
+  plusDay(){
+    this.date.setDate(this.date.getDate() + 1);
+    this.updateLessons();
+  }
+
+  minusDay(){
+    this.date.setDate(this.date.getDate() - 1);
+    this.updateLessons();
+  }
+
 
 }

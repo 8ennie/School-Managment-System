@@ -12,7 +12,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class LessonInstanceComponent implements OnInit {
 
 
-  @Input() config: { day: string, hour: number, class: string, teacher: string };
+  @Input() config: { date: string, hour: number, class: string, teacher: string };
 
   lessonInstance: LessonInstance = new LessonInstance();
 
@@ -25,21 +25,39 @@ export class LessonInstanceComponent implements OnInit {
 
   ngOnInit(): void {
     this.lessonInstanceService.lessonInstances.forEach(l => {
-      if (l.lessonTime.hour === this.config.hour) {
-        this.lessonInstance = l;
-      }
+      this.setLesson(l);
     });
     this.lessonInstanceService.lessonsInstancesChanged.subscribe(data => {
+      this.lessonInstance = new LessonInstance();
       data.forEach(l => {
-        if (l.lessonTime.hour === this.config.hour) {
-          this.lessonInstance = l;
-        }
+        this.setLesson(l);
       });
     });
   }
 
-  onSubmit(){
-    this.lessonInstance.info = this.lessonInstanceForm.value.info;
+  setLesson(l) {
+    if (l.lessonTime.hour === this.config.hour) {
+      this.lessonInstance = l;
+      if (l.info) {
+        this.lessonInstanceForm.patchValue(l);
+      }
+    }
+  }
+
+  onSubmit() {
+
+    const newLessonInstance: LessonInstance = new LessonInstance();
+    this.lessonInstance.id = null;
+    newLessonInstance.info = this.lessonInstanceForm.value.info;
+    newLessonInstance.teacher = this.lessonInstance.teacher._links.self.href.replace('{?projection}', '');
+    newLessonInstance.grade = this.lessonInstance.grade._links.self.href.replace('{?projection}', '');
+    newLessonInstance.subject = this.lessonInstance.subject._links.self.href.replace('{?projection}', '');
+    newLessonInstance.lessonTime = this.lessonInstance.lessonTime._links.self.href.replace('{?projection}', '');
+    const date: Date = this.lessonInstanceService.date;
+    newLessonInstance.date = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+    this.lessonInstanceService.saveLessonInnstance(newLessonInstance).subscribe(data => {
+      console.log(data);
+    });
   }
 
 }
