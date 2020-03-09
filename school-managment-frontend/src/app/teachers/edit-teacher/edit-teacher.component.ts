@@ -31,7 +31,8 @@ export class EditTeacherComponent implements OnInit {
     subjects = [];
     gender: string;
 
-    constructor(private subjectService: SubjectService,
+    constructor(
+        private subjectService: SubjectService,
         private teacherService: TeacherService,
         private route: ActivatedRoute,
         private router: Router,
@@ -66,9 +67,11 @@ export class EditTeacherComponent implements OnInit {
                     this.teacherService.getTeacher(this.id).subscribe(updatedTeacher => {
                         this.teacherService.changeTeacher(updatedTeacher);
                         this.teacherForm.reset(updatedTeacher);
-                        this.teacherForm.patchValue({subjects: updatedTeacher.subjects.map(subject =>
-                            subject = subject._links.self.href.replace('{?projection}', '')
-                        )});
+                        this.teacherForm.patchValue({
+                            subjects: updatedTeacher.subjects.map(subject =>
+                                subject = subject._links.self.href.replace('{?projection}', '')
+                            )
+                        });
                         this.messageService.add({
                             severity: 'success',
                             summary: 'Successfull Change',
@@ -88,10 +91,8 @@ export class EditTeacherComponent implements OnInit {
                         summary: 'Successfull Creation',
                         detail: 'Teacher was added successfully'
                     });
-                    if(this.createUserForTeacher){
-                        console.log(nT);
-                        
-                        this.authService.registerTeacher(nT).subscribe(()=>{
+                    if (this.createUserForTeacher) {
+                        this.authService.registerTeacher(nT).subscribe(() => {
                             this.messageService.add({
                                 severity: 'success',
                                 summary: 'Successfull Created User',

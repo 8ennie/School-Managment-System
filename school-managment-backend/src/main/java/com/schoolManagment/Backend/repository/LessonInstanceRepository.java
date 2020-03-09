@@ -14,7 +14,7 @@ import com.schoolManagment.Backend.model.school.Teacher;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RepositoryRestResource()
-public interface LessonInsatnceRepository extends JpaRepository<LessonInstance, Long> {
+public interface LessonInstanceRepository extends JpaRepository<LessonInstance, Long> {
 
 	Optional<List<LessonInstance>> findByDate(Date date);
 

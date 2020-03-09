@@ -37,12 +37,19 @@ export class LessonService {
         return this.http.get(this.url + '/search/findByGrade?grade=' + grade + '&&projection=lessonProjection');
     }
 
-    getLessonsForTeacher(grade) {
-        return this.http.get(this.url + '/search/findByTeacher?teacher=' + grade + '&&projection=lessonProjection');
+    getLessonsForTeacher(teacher) {
+        return this.http.get(this.url + '/search/findByTeacher?teacher=' + teacher + '&&projection=lessonProjection');
     }
 
     getLessonsForLessonTime(lessonTime) {
         return this.http.get(this.url + '/search/findByLessonTime?lessonTime=' + lessonTime + '&&projection=lessonProjection');
+    }
+
+    getLessonsForTeacherAndDay(teacher: string, day: string) {
+        return this.http.get(this.url + '/search/findByLessonTimeDayOfWeekAndTeacher'
+            + '?dayOfWeek=' + day
+            + '&&teacher=' + teacher
+            + '&&projection=lessonProjection');
     }
 
     saveLesson(lesson: Lesson) {

@@ -69,7 +69,8 @@ public class AuthController {
 		return ResponseEntity.ok(new JwtResponse(jwt, 
 												 userDetails.getId(), 
 												 userDetails.getUsername(), 
-												 userDetails.getEmail(), 
+												 userDetails.getEmail(),
+												 userDetails.getPerson(),
 												 roles));
 	}
 	
@@ -117,7 +118,8 @@ public class AuthController {
 		roles.add(teacherRole);
 		
 		user.setRoles(roles);
-		userRepository.save(user);
+		user.setPerson(teacher);
+		User newUser = userRepository.save(user);
 		
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}

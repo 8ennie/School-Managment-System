@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.schoolManagment.Backend.model.adminestration.User;
+import com.schoolManagment.Backend.model.school.Person;
 
 
 public class UserDetailsImpl implements UserDetails {
@@ -20,18 +21,21 @@ public class UserDetailsImpl implements UserDetails {
 	private String username;
 
 	private String email;
+	
+	private Person person;
 
 	@JsonIgnore
 	private String password;
 
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserDetailsImpl(Long id, String username, String email, String password,
+	public UserDetailsImpl(Long id, String username, String email, String password, Person person,
 			Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.person = person;
 		this.authorities = authorities;
 	}
 
@@ -45,6 +49,7 @@ public class UserDetailsImpl implements UserDetails {
 				user.getUsername(), 
 				user.getEmail(),
 				user.getPassword(), 
+				user.getPerson(),
 				authorities);
 	}
 
@@ -59,6 +64,10 @@ public class UserDetailsImpl implements UserDetails {
 
 	public String getEmail() {
 		return email;
+	}
+	
+	public Person getPerson() {
+		return person;
 	}
 
 	@Override

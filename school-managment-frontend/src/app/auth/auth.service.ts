@@ -34,7 +34,7 @@ export class AuthService {
     }, httpOptions);
   }
 
-  registerTeacher(teacher:Teacher): Observable<any> {
+  registerTeacher(teacher: Teacher): Observable<any> {
     return this.http.post(AUTH_API + 'signup/teacher', teacher, httpOptions);
   }
 

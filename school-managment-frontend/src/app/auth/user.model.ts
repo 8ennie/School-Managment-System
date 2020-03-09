@@ -6,6 +6,7 @@ export class User {
         public email: string,
         public id: string,
         public roles: Role[],
+        private person,
         private _token: string,
         private _tokenExpirationDate: Date
       ) {}

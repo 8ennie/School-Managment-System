@@ -10,6 +10,7 @@ import { ContextMenuModule } from 'primeng/contextmenu';
 import {MenuModule} from 'primeng/menu';
 import {CheckboxModule} from 'primeng/checkbox';
 import {SelectButtonModule} from 'primeng/selectbutton';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import {SelectButtonModule} from 'primeng/selectbutton';
         ContextMenuModule,
         MenuModule,
         CheckboxModule,
-        SelectButtonModule
+        InputTextareaModule
 
     ],
     exports: [
@@ -36,7 +37,7 @@ import {SelectButtonModule} from 'primeng/selectbutton';
         ContextMenuModule,
         MenuModule,
         CheckboxModule,
-        SelectButtonModule
+        InputTextareaModule
     ],
     providers: [MessageService]
 })

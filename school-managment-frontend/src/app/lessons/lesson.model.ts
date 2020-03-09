@@ -3,13 +3,15 @@ import { Teacher } from '../teachers/teacher.model';
 
 export class Lesson extends HateoasEntity {
 
-    id: number;
 
-    grade;
+    constructor(
+        ) {
+        super();
+    }
+    public id: number;
+    public grade;
+    public subject;
+    public teacher: Teacher;
+    public lessonTime;
 
-    subject;
-
-    teacher: Teacher;
-
-    lessonTime;
 }

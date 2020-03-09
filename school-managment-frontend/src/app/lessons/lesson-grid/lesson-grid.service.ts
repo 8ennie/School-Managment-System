@@ -1,4 +1,4 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Lesson } from '../lesson.model';
 import { LessonService } from '../lesson.service';
 import { Subject } from 'rxjs';
@@ -11,7 +11,7 @@ export class LessonGridService {
 
     private listLessons: Lesson[] = [];
 
-    getListLesson(){
+    getListLesson() {
         return this.listLessons.slice();
     }
 

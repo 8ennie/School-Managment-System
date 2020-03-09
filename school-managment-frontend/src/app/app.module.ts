@@ -29,6 +29,7 @@ import { InsertDirective } from './_directives/insert-point.directive';
 import { DropBoxComponent } from './lessons/drop-box/drop-box.component';
 import { httpErrorInterceptorProviders } from './_helper/http-error.interceptor';
 import { LessonsDetailsComponent } from './lessons/lessons-details/lessons-details.component';
+import { LessonInstanceComponent } from './lesson-instance/lesson-instance.component';
 
 
 
@@ -49,7 +50,8 @@ import { LessonsDetailsComponent } from './lessons/lessons-details/lessons-detai
     DropTargetDirective,
     InsertDirective,
     DropBoxComponent,
-    LessonsDetailsComponent
+    LessonsDetailsComponent,
+    LessonInstanceComponent
   ],
   imports: [
     FormsModule,
