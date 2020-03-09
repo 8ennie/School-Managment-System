@@ -9,13 +9,13 @@
             </div>
             <div class="d-flex justify-content-center">
                 <form (ngSubmit)="onSubmit(form)" #form="ngForm">
-                    <h2 class="d-flex justify-content-center" style="margin-top: 100px; margin-bottom: 25px;">Login</h2>
+                    <h2 class="d-flex justify-content-center" style="margin-top: 100px; margin-bottom: 25px;">{{'login' | translate }}</h2>
                     <div class="form-group">
                         <div class="input-group mb-3">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="pi pi-id-card"></i></span>
                             </div>
-                            <input type="text" class="form-control" name="username" placeholder="username" ngModel
+                            <input type="text" class="form-control" name="username" [attr.placeholder]="'username' | translate" ngModel
                                 required #username="ngModel" />
                         </div>
 
@@ -29,7 +29,7 @@
                                 <span class="input-group-text"><i class="pi pi-key"></i></span>
                             </div>
                             <input type="password" class="form-control" name="password" ngModel required minlength="6"
-                                #password="ngModel" placeholder="password" />
+                                #password="ngModel" [attr.placeholder]="'password' | translate"/>
                         </div>
                         <div class="alert alert-danger" role="alert" *ngIf="form.submitted && password.invalid">
                             <div *ngIf="password.errors.required">Password is required</div>
@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary btn-block" type="submit">
-                            Login
+                            {{'login' | translate }}
                         </button>
                     </div>
 

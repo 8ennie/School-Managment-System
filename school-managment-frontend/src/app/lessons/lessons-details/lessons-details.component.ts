@@ -21,8 +21,6 @@ export class LessonsDetailsComponent implements OnInit {
   allClasses: { name: string, amount: number }[] = [];
 
   ngOnInit(): void {
-    console.log(this.model);
-    
     this.lessons = this.lessonGridService.getListLesson();
     this.calculateStates();
     this.lessonGridService.lessonsChanged.subscribe(l => {

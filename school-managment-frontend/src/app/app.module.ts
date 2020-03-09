@@ -1,11 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { PrimeNGModule } from './primeNG.module';
@@ -59,10 +61,28 @@ import { LessonsDetailsComponent } from './lessons/lessons-details/lessons-detai
     BrowserAnimationsModule,
     PrimeNGModule,
     DragDropModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpTranslateLoader,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [authInterceptorProviders, httpErrorInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-
+  constructor(
+    public translate: TranslateService
+  ) {
+    translate.addLangs(['en', 'de']);
+    translate.setDefaultLang('de');
+  }
 }
+
+export function httpTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, '/assets/translations/', '.json');
+}
+
+

@@ -128,6 +128,12 @@
             }
           }
         }
+      },
+      "i18n": {
+        "sourceLocale": "de",
+        "locales": {
+          "de": "src/assets/translations/message.de.xlf"
+        }
       }
     }
   },

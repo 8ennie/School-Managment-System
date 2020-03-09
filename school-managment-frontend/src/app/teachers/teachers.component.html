@@ -1,11 +1,11 @@
 <p-table #dt [value]="teachers">
     <ng-template pTemplate="header">
         <tr>
-            <th>First Name
+            <th>{{'first-name' | translate}}
                 <input pInputText type="text" placeholder="Contains" class="ui-column-filter" style="width: 100%;"
                     (input)="dt.filter($event.target.value, 'firstName', 'contains')">
             </th>
-            <th>Last Name
+            <th>{{'last-name' | translate}}
                 <input pInputText type="text" placeholder="Contains" class="ui-column-filter" style="width: 100%;"
                     (input)="dt.filter($event.target.value, 'lastName', 'contains')">
             </th>

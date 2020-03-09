@@ -34,13 +34,13 @@
 <div class="mt-5 container">
     <div class="row">
         <div class="col d-flex ">
-            <h3>Choose a Class: </h3>
+            <h3>{{'choose-a-class' | translate}}: </h3>
             <p-dropdown [options]="allGrades" [(ngModel)]="class" placeholder="Choose Class" [showClear]="true"
                 class="ml-3" (onChange)="onGradeChange($event)" [group]="true">
             </p-dropdown>
         </div>
         <div class="col d-flex ">
-            <h3>Choose a Teacher: </h3>
+            <h3>{{'choose-a-teacher' | translate}}: </h3>
             <p-dropdown [options]="allTeachers" [(ngModel)]="teacher" placeholder="Choose Teacher" [showClear]="true"
                 class="ml-3" (onChange)="onTeacherChange($event)">
             </p-dropdown>
@@ -66,13 +66,13 @@
                     </div>
                 </div>
                 <div *ngIf="hour%2 === 0" class="row d-flex justify-content-center card" style="text-align: center;">
-                    <div class="card" style="max-width: 210px; width: 75px; text-align: center;"> Break </div>
+                    <div class="card" style="max-width: 210px; width: 75px; text-align: center;"> {{'break' | translate}} </div>
                 </div>
             </div>
         </div>
         <div>
 
-            <button (click)="hideDetails = !hideDetails">{{hideDetails ? 'Hide Details' : 'Show Details'}}</button>
+            <button (click)="hideDetails = !hideDetails">{{(hideDetails ? 'hide-details'  : 'show-details')| translate}}</button>
 
             <div class="col card" *ngIf="hideDetails">
                 <app-lessons-details [model]="teacher ? 't': 'c'"></app-lessons-details>

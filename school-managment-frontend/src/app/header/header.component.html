@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" [routerLink]="''" i18n>Shool Managment</a>
+        <a class="navbar-brand" [routerLink]="''" >{{'header.header' | translate }}</a>
 
         <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
             &#9776;
@@ -10,34 +10,48 @@
             <ul ngbNav class="navbar-nav">
                 <li ngbNavItem>
                     <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated && (isAdmin || isTeacher)"
-                        [routerLink]="[ 'classes' ]" (click)="isMenuCollapsed = true" i18n>Classes</a>
+                        [routerLink]="[ 'classes' ]" (click)="isMenuCollapsed = true"
+                        >{{'classes' | translate }}</a>
                 </li>
                 <li ngbNavItem>
                     <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated && (isAdmin || isTeacher)"
-                        [routerLink]="['students']" (click)="isMenuCollapsed = true" i18n>Students</a>
+                        [routerLink]="['students']" (click)="isMenuCollapsed = true"
+                        >{{'students' | translate }}</a>
                 </li>
                 <li ngbNavItem>
                     <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated && (isAdmin || isTeacher)"
-                        [routerLink]="['teachers']" (click)="isMenuCollapsed = true" i18n>Teachers</a>
+                        [routerLink]="['teachers']" (click)="isMenuCollapsed = true">{{'teachers' | translate }}</a>
                 </li>
                 <li ngbNavItem>
-                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated && (isAdmin || isTeacher || isStudent)"
-                        [routerLink]="['lessons']" (click)="isMenuCollapsed = true" i18n>Lessons</a>
+                    <a ngbNavLink routerLinkActive="active"
+                        *ngIf="isAuthenticated && (isAdmin || isTeacher || isStudent)" [routerLink]="['lessons']"
+                        (click)="isMenuCollapsed = true" >{{'lessons' | translate }}</a>
                 </li>
             </ul>
 
             <ul ngbNav class="navbar-nav ml-auto">
                 <li ngbDropdown class="nav-item">
-                    <a href (click)="false" class="nav-link" ngbDropdownToggle
-                        *ngIf="isAuthenticated">{{user.username}}</a>
+                    <a (click)="false" class="nav-link" ngbDropdownToggle *ngIf="isAuthenticated">{{user.username}}</a>
                     <div ngbDropdownMenu>
                         <a ngbDropdownItem [routerLink]="'auth'" class="dropdown-item" (click)="onLogout()"
-                            i18n>Logout</a>
+                            >{{'logout' | translate }}</a>
                     </div>
                 </li>
                 <li ngbNavItem>
                     <a ngbNavLink routerLinkActive="active" *ngIf="!isAuthenticated" [routerLink]="'auth'"
-                        (click)="isMenuCollapsed = true" i18n>Log In</a>
+                        (click)="isMenuCollapsed = true" >{{'login' | translate }}</a>
+                </li>
+                <li ngNavItem>
+                    <div ngbDropdown>
+                        <a id="chooseLang" (click)="false" class="nav-link"
+                            ngbDropdownToggle>{{translate.currentLang ? 'Lang (' + translate.currentLang + ')': 'Lang'}} </a>
+                        <div ngbDropdownMenu aria-labelledby="chooseLang">
+                            <ng-container *ngFor="let language of translate.getLangs()">
+                                <a ngbDropdownItem *ngIf="language != translate.currentLang"
+                                    (click)="switchLang(language)">{{language}}</a>
+                            </ng-container>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>

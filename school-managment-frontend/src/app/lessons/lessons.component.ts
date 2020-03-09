@@ -17,6 +17,7 @@ export class LessonsComponent implements OnInit {
   allTeachers = [];
   class;
   teacher;
+  hideDetails;
 
   constructor(
     private lessonGridService: LessonGridService,

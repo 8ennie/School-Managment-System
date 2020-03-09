@@ -235,53 +235,53 @@
           <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="268b41f6f3940d2d5d3d13c281fe374d55862ca0" datatype="html">
+      <trans-unit id="header" datatype="html">
         <source>Shool Managment</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/header/header.component.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1172ffb28e42ff5ae0d36af63448744a3af23d41" datatype="html">
+      <trans-unit id="classes" datatype="html">
         <source>Classes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/header/header.component.html</context>
           <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="69f2c202c62cee82a032906b5c0c36ef1fb07540" datatype="html">
+      <trans-unit id="students" datatype="html">
         <source>Students</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/header/header.component.html</context>
           <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="0af4a91d71f8f086f2d094df6a9a4b19272416b5" datatype="html">
+      <trans-unit id="teachers" datatype="html">
         <source>Teachers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/header/header.component.html</context>
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="fef78c62f2cde71483f2b0d9eef73e67d1299662" datatype="html">
+      <trans-unit id="lessons" datatype="html">
         <source>Lessons</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/header/header.component.html</context>
           <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="bb694b49d408265c91c62799c2b3a7e3151c824d" datatype="html">
+      <trans-unit id="logout" datatype="html">
         <source>Logout</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/header/header.component.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="dcd47f4d6b26b045a1b041b2fc73123bc0cfc118" datatype="html">
+      <trans-unit id="login" datatype="html">
         <source>Log In</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/header/header.component.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
     </body>

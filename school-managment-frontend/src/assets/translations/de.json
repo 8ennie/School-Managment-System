@@ -1,0 +1,23 @@
+{
+    "students": "Schüler",
+    "lessons": "Untericht",
+    "teachers": "Lehrer",
+    "classes": "Klassen",
+    "subjects": "Fächer",
+    "header.header": "Schulverwaltung",
+    "logout": "Abmelden",
+    "login": "Anmelden",
+    "username": "Benutzername",
+    "password":"Password",
+    "last-name":"Nachname",
+    "first-name":"Vorname",
+    "contains":"Beinhaltet",
+    "choose-a-class":"Wähle eine Klass",
+    "choose-class":"Klasse",
+    "choose-a-teacher":"Wähle einen Lehrer",
+    "choose-teacher":"Lehrer",
+    "break":"Pause",
+    "show-details":"Details Anzeigen",
+    "hide-details":"Details Ausblende",
+    "details":"Details"
+}

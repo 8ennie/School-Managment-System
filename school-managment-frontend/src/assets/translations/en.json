@@ -1,0 +1,23 @@
+{
+    "students": "Students",
+    "lessons": "Lessons",
+    "teachers": "Teachers",
+    "classes": "Calsses",
+    "subjects": "Subjects",
+    "header.header": "School Managment",
+    "logout": "Logout",
+    "login": "Login",
+    "username": "username",
+    "password":"password",
+    "last-name":"Last Name",
+    "first-name":"First Name",
+    "contains":"Contains",
+    "choose-a-class":"Choose a Class",
+    "choose-class":"Choose Class",
+    "choose-a-teacher":"Choose a Teacher",
+    "choose-teacher":"Choose Teacher",
+    "break":"Break",
+    "show-details":"Show Details",
+    "hide-details":"Hide Details",
+    "details":"Details"
+}

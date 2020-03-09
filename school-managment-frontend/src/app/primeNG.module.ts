@@ -9,6 +9,7 @@ import { MessageService } from 'primeng/api';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import {MenuModule} from 'primeng/menu';
 import {CheckboxModule} from 'primeng/checkbox';
+import {SelectButtonModule} from 'primeng/selectbutton';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {CheckboxModule} from 'primeng/checkbox';
         ToastModule,
         ContextMenuModule,
         MenuModule,
-        CheckboxModule
+        CheckboxModule,
+        SelectButtonModule
 
     ],
     exports: [
@@ -33,7 +35,8 @@ import {CheckboxModule} from 'primeng/checkbox';
         ToastModule,
         ContextMenuModule,
         MenuModule,
-        CheckboxModule
+        CheckboxModule,
+        SelectButtonModule
     ],
     providers: [MessageService]
 })

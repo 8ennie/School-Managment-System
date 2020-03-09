@@ -3,6 +3,7 @@ import { AuthService } from '../auth/auth.service';
 import { Subscription } from 'rxjs';
 import { User } from '../auth/user.model';
 import { Role } from '../auth/role.model';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -14,19 +15,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   user: User;
   isAuthenticated = false;
-  roles: Role[] = this.authService.getUser().roles;
+  roles: Role[];
   userSub: Subscription;
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private translate: TranslateService) { }
   isMenuCollapsed;
 
   ngOnInit() {
     this.isAuthenticated = this.authService.isAthenticated();
     this.user = this.authService.getUser();
+    if (this.authService.getUser()) {
+      this.roles = this.authService.getUser().roles;
+    }
     this.userSub = this.authService.userChanges.subscribe((user: User) => {
       this.isAuthenticated = this.authService.isAthenticated();
       if (user !== null) {
         this.user = user;
-
+        this.roles = this.authService.getUser().roles;
       }
     });
   }
@@ -39,13 +45,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userSub.unsubscribe();
   }
 
-  isAdmin(){
+  isAdmin() {
     return this.roles.includes(Role.ROLE_ADMIN);
   }
-  isTeacher(){
+  isTeacher() {
     return this.roles.includes(Role.ROLE_ADMIN);
   }
-  isStudent(){
+  isStudent() {
     return this.roles.includes(Role.ROLE_ADMIN);
+  }
+
+  switchLang(lang: string) {
+    this.translate.use(lang);
   }
 }
