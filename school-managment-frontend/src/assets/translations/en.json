@@ -19,5 +19,9 @@
     "break":"Break",
     "show-details":"Show Details",
     "hide-details":"Hide Details",
-    "details":"Details"
+    "details":"Details",
+    "class":"Class",
+    "subject":"Subject",
+    "no-class":"No Class",
+    "save":"Save"
 }

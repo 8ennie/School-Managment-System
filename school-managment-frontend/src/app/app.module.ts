@@ -63,13 +63,13 @@ import { LessonInstanceComponent } from './lesson-instance/lesson-instance.compo
     BrowserAnimationsModule,
     PrimeNGModule,
     DragDropModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: httpTranslateLoader,
-        deps: [HttpClient]
-      }
-    })
+     TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        })
   ],
   providers: [authInterceptorProviders, httpErrorInterceptorProviders],
   bootstrap: [AppComponent]
@@ -83,7 +83,7 @@ export class AppModule {
   }
 }
 
-export function httpTranslateLoader(http: HttpClient) {
+export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '/assets/translations/', '.json');
 }
 

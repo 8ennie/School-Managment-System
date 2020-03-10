@@ -5,6 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.schoolManagment.Backend.model.school.help.Grade;
+import com.schoolManagment.Backend.model.school.help.LessonTime;
+import com.schoolManagment.Backend.model.school.help.Quater;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,5 +38,8 @@ public class Lesson {
 
 	@ManyToOne
 	private Subject subject;
+	
+	@ManyToOne
+	private Quater quater;
 
 }

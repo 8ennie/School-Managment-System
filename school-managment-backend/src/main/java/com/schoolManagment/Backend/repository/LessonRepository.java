@@ -9,10 +9,10 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.schoolManagment.Backend.model.school.Grade;
 import com.schoolManagment.Backend.model.school.Lesson;
-import com.schoolManagment.Backend.model.school.LessonTime;
 import com.schoolManagment.Backend.model.school.Teacher;
+import com.schoolManagment.Backend.model.school.help.Grade;
+import com.schoolManagment.Backend.model.school.help.LessonTime;
 import com.schoolManagment.Backend.projection.LessonProjection;
 
 @CrossOrigin(origins = "*", maxAge = 3600)

@@ -9,6 +9,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import com.schoolManagment.Backend.model.adminestration.User;
+import com.schoolManagment.Backend.model.school.help.Gender;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

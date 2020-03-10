@@ -1,4 +1,4 @@
-package com.schoolManagment.Backend.model.school;
+package com.schoolManagment.Backend.model.school.help;
 
 public enum Gender {
 

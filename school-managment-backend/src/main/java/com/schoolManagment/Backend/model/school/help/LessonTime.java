@@ -1,4 +1,4 @@
-package com.schoolManagment.Backend.model.school;
+package com.schoolManagment.Backend.model.school.help;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;

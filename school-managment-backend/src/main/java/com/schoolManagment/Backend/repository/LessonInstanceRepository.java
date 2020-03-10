@@ -9,9 +9,9 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import com.schoolManagment.Backend.model.school.Grade;
 import com.schoolManagment.Backend.model.school.LessonInstance;
 import com.schoolManagment.Backend.model.school.Teacher;
+import com.schoolManagment.Backend.model.school.help.Grade;
 import com.schoolManagment.Backend.projection.LessonInstanceProjection;
 
 @CrossOrigin(origins = "*", maxAge = 3600)

@@ -19,5 +19,9 @@
     "break":"Pause",
     "show-details":"Details Anzeigen",
     "hide-details":"Details Ausblende",
-    "details":"Details"
+    "details":"Details",
+    "class":"Klasse",
+    "subject":"Fach",
+    "no-class":"Keine Klasse",
+    "save":"Speichern"
 }

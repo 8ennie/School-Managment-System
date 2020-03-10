@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.rest.core.config.Projection;
 
-import com.schoolManagment.Backend.model.school.Gender;
 import com.schoolManagment.Backend.model.school.Teacher;
+import com.schoolManagment.Backend.model.school.help.Gender;
 
 
 @Projection(name = "teacherProjection", types = {Teacher.class})
