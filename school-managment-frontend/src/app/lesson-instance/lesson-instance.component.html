@@ -1,6 +1,7 @@
 <div class="card" (dblclick)="editMode = !editMode" *ngIf="lessonInstance.id && !editMode" style="width: 150px;">
     <p>{{'class' | translate }}: {{lessonInstance.grade.name}}</p>
     <p>{{'subject' | translate }}: {{lessonInstance.subject.name}}</p>
+    <button mat-raised-button (click)="openDialog()">Edit</button>
 </div>
 <div class="card" *ngIf="!lessonInstance.id && !editMode">
     <p class="m-2">{{'no-class' | translate }}</p>

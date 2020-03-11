@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { LessonInstance } from './lesson-instance.model';
 import { LessonInstanceService } from './lesson-instancnce.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { LessonInstanceDetailsDialogComponent } from './lesson-instance-details-dialog/lesson-instance-details-dialog.component';
 
 
 @Component({
@@ -16,7 +18,9 @@ export class LessonInstanceComponent implements OnInit {
 
   lessonInstance: LessonInstance = new LessonInstance();
 
-  constructor(private lessonInstanceService: LessonInstanceService) { }
+  constructor(
+    private lessonInstanceService: LessonInstanceService,
+    public dialog: MatDialog) { }
 
   lessonInstanceForm = new FormGroup({
     teacher: new FormControl('', [Validators.required]),
@@ -57,6 +61,18 @@ export class LessonInstanceComponent implements OnInit {
     newLessonInstance.date = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
     this.lessonInstanceService.saveLessonInnstance(newLessonInstance).subscribe(data => {
       console.log(data);
+    });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(LessonInstanceDetailsDialogComponent, {
+      width: '250px',
+      data: LessonInstance
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.lessonInstance = result;
     });
   }
 

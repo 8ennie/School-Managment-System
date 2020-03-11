@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -30,6 +31,7 @@ import { DropBoxComponent } from './lessons/drop-box/drop-box.component';
 import { httpErrorInterceptorProviders } from './_helper/http-error.interceptor';
 import { LessonsDetailsComponent } from './lessons/lessons-details/lessons-details.component';
 import { LessonInstanceComponent } from './lesson-instance/lesson-instance.component';
+import { LessonInstanceDetailsDialogComponent } from './lesson-instance/lesson-instance-details-dialog/lesson-instance-details-dialog.component';
 
 
 
@@ -51,7 +53,8 @@ import { LessonInstanceComponent } from './lesson-instance/lesson-instance.compo
     InsertDirective,
     DropBoxComponent,
     LessonsDetailsComponent,
-    LessonInstanceComponent
+    LessonInstanceComponent,
+    LessonInstanceDetailsDialogComponent,
   ],
   imports: [
     FormsModule,
@@ -63,13 +66,14 @@ import { LessonInstanceComponent } from './lesson-instance/lesson-instance.compo
     BrowserAnimationsModule,
     PrimeNGModule,
     DragDropModule,
-     TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        })
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    MatDialogModule,
   ],
   providers: [authInterceptorProviders, httpErrorInterceptorProviders],
   bootstrap: [AppComponent]

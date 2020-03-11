@@ -13,6 +13,7 @@ import {SelectButtonModule} from 'primeng/selectbutton';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 
 
+
 @NgModule({
     imports: [
         DataViewModule,
@@ -24,7 +25,8 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
         ContextMenuModule,
         MenuModule,
         CheckboxModule,
-        InputTextareaModule
+        InputTextareaModule,
+       
 
     ],
     exports: [
@@ -37,7 +39,8 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
         ContextMenuModule,
         MenuModule,
         CheckboxModule,
-        InputTextareaModule
+        InputTextareaModule,
+
     ],
     providers: [MessageService]
 })
