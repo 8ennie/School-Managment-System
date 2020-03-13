@@ -23,5 +23,15 @@
     "class":"Klasse",
     "subject":"Fach",
     "no-class":"Keine Klasse",
-    "save":"Speichern"
+    "save":"Speichern",
+    "close":"Schließen",
+    "teacher":"Lehrer",
+    "info":"Info",
+    "profile":"Meine Seite",
+    "list-of-leave-days":"Fehltage",
+    "add":"Hintufügen",
+    "date":"Datum",
+    "type":"Type",
+    "description":"Bescheibung",
+    "delete":"Löschen"
 }

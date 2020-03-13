@@ -16,6 +16,7 @@ import com.schoolManagment.Backend.model.adminestration.ERole;
 import com.schoolManagment.Backend.model.adminestration.Role;
 import com.schoolManagment.Backend.model.adminestration.User;
 import com.schoolManagment.Backend.model.school.Lesson;
+import com.schoolManagment.Backend.model.school.LessonInstance;
 import com.schoolManagment.Backend.model.school.Student;
 import com.schoolManagment.Backend.model.school.Subject;
 import com.schoolManagment.Backend.model.school.Teacher;
@@ -24,6 +25,7 @@ import com.schoolManagment.Backend.model.school.help.Gender;
 import com.schoolManagment.Backend.model.school.help.Grade;
 import com.schoolManagment.Backend.model.school.help.LessonTime;
 import com.schoolManagment.Backend.repository.GradeRepository;
+import com.schoolManagment.Backend.repository.LessonInstanceRepository;
 import com.schoolManagment.Backend.repository.LessonRepository;
 import com.schoolManagment.Backend.repository.LessonTimeRepository;
 import com.schoolManagment.Backend.repository.RoleRepository;
@@ -58,6 +60,9 @@ public class LoadData implements ApplicationRunner {
 
 	@Autowired
 	private LessonRepository lessonRepository;
+	
+	@Autowired
+	private LessonInstanceRepository lessonInstanceRepository;
 
 	@Autowired
 	private LessonTimeRepository lessonTimeRepository;
@@ -65,16 +70,15 @@ public class LoadData implements ApplicationRunner {
 	@Autowired
 	PasswordEncoder encoder;
 
+	@SuppressWarnings("unused")
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 
 		// Roles
-		log.info("Preload: " + roleRepository.save(new Role(ERole.ROLE_ADMIN)));
-		log.info("Preload: " + roleRepository.save(new Role(ERole.ROLE_USER)));
-		log.info("Preload: " + roleRepository.save(new Role(ERole.ROLE_STUDENT)));
-		log.info("Preload: " + roleRepository.save(new Role(ERole.ROLE_TEACHER)));
-		Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-				.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+		Role adminRole = roleRepository.save(new Role(ERole.ROLE_ADMIN));
+		Role userRole = roleRepository.save(new Role(ERole.ROLE_USER));
+		Role studnentRole = roleRepository.save(new Role(ERole.ROLE_STUDENT));
+		Role teacherRole = roleRepository.save(new Role(ERole.ROLE_TEACHER));
 
 		// Users
 		User admin = new User("admin", "admin@admin.com", encoder.encode("adminadmin"));
@@ -84,7 +88,8 @@ public class LoadData implements ApplicationRunner {
 		log.info("Preload: " + userRepository.save(admin));
 
 		// Grade
-		Grade grade1a = gradeRepository.save(Grade.builder().name("1a").educationalStage(EducationalStage.ELEMENTARY).build());
+		Grade grade1a = gradeRepository
+				.save(Grade.builder().name("1a").educationalStage(EducationalStage.ELEMENTARY).build());
 		gradeRepository.save(Grade.builder().name("1b").educationalStage(EducationalStage.ELEMENTARY).build());
 		gradeRepository.save(Grade.builder().name("2a").educationalStage(EducationalStage.ELEMENTARY).build());
 		gradeRepository.save(Grade.builder().name("2b").educationalStage(EducationalStage.ELEMENTARY).build());
@@ -119,17 +124,16 @@ public class LoadData implements ApplicationRunner {
 		gradeRepository.save(Grade.builder().name("13a").educationalStage(EducationalStage.HIGH).build());
 		gradeRepository.save(Grade.builder().name("13b").educationalStage(EducationalStage.HIGH).build());
 
-
 		// Students
 		log.info("Preload: " + studentRepository.save(
 				Student.builder().grade(grade1a).firstName("Alice").lastName("Gray").gender(Gender.FEMALE).build()));
 		log.info("Preload: " + studentRepository.save(
 				Student.builder().grade(grade1a).firstName("Simon").lastName("Great").gender(Gender.MALE).build()));
-		log.info("Preload: " + studentRepository
-				.save(Student.builder().grade(grade1a).firstName("Bobby").lastName("Gras").gender(Gender.MALE).build()));
+		log.info("Preload: " + studentRepository.save(
+				Student.builder().grade(grade1a).firstName("Bobby").lastName("Gras").gender(Gender.MALE).build()));
 
 		// Subjects
-		Subject deutsch = subjectRepository.save(Subject.builder().name("German").build());
+		Subject german = subjectRepository.save(Subject.builder().name("German").build());
 		Subject english = subjectRepository.save(Subject.builder().name("Englisch").build());
 		Subject french = subjectRepository.save(Subject.builder().name("French").build());
 		Subject latin = subjectRepository.save(Subject.builder().name("Latin").build());
@@ -149,9 +153,15 @@ public class LoadData implements ApplicationRunner {
 
 		// Teachers
 		Teacher amy = teacherRepository.save(Teacher.builder().firstName("Amy").lastName("Tod").gender(Gender.FEMALE)
-				.subjects(Arrays.asList(deutsch, english)).build());
+				.subjects(Arrays.asList(german, english)).build());
+		User amyUser = new User("amy", "amy@aschollmanagment.com", encoder.encode("amy"));
+		Set<Role> amyRoles = new HashSet<>();
+		amyRoles.add(teacherRole);
+		amyUser.setRoles(amyRoles);
+		amyUser.setPerson(amy);
+		userRepository.save(amyUser);
 		Teacher nick = teacherRepository.save(Teacher.builder().firstName("Nick").lastName("Pattar")
-				.gender(Gender.FEMALE).subjects(Arrays.asList(deutsch, math)).build());
+				.gender(Gender.FEMALE).subjects(Arrays.asList(german, math)).build());
 
 		// LessonTimes
 		for (DayOfWeek day : DayOfWeek.values()) {
@@ -207,8 +217,13 @@ public class LoadData implements ApplicationRunner {
 
 		}
 		LessonTime firstHourOnMonday = lessonTimeRepository.findByDayOfWeekAndHour(DayOfWeek.MONDAY, 1).get();
+		LessonTime secondHourOnMonday = lessonTimeRepository.findByDayOfWeekAndHour(DayOfWeek.MONDAY, 2).get();
 		LessonTime firstHourOnTuesday = lessonTimeRepository.findByDayOfWeekAndHour(DayOfWeek.TUESDAY, 1).get();
+		LessonTime secondHourOnTuesday = lessonTimeRepository.findByDayOfWeekAndHour(DayOfWeek.THURSDAY, 2).get();
 
+		Lesson g1a = Lesson.builder().subject(german).teacher(amy).grade(grade1a).lessonTime(firstHourOnTuesday).build();
+		lessonRepository.save(g1a);
+		
 	}
 
 }

@@ -62,7 +62,7 @@
                 <div class="row" style="min-height: 85px;">
                     <div class="card" style=" max-width: 210px;width: 75px; text-align: center;"> {{hour}} </div>
                     <div *ngFor="let day of days" class="card" style=" max-width: 210px;">
-                        <app-drop-box [config]="{day:day, hour:hour, class:class, teacher: teacher}"></app-drop-box>
+                        <app-drop-box [config]="{day:day, hour:hour, class:class, teacher: teacher, allowEdit: allowEdit}"></app-drop-box>
                     </div>
                 </div>
                 <div *ngIf="hour%2 === 0" class="row d-flex justify-content-center card" style="text-align: center;">

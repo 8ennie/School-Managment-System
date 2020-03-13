@@ -13,4 +13,6 @@ export class Teacher {
     // HelperFields
     fullName?: string;
     optionLable?;
+
+    officialName?: string = this.gender === 'MALE' ? 'Mr. ' : 'Ms. ' + this.lastName;
 }

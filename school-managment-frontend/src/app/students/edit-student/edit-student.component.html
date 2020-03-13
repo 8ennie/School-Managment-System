@@ -30,7 +30,7 @@
                                 <div class="input-group">
                                     <div class="input-group-text">Gender</div>
                                 </div>
-                                <div class="btn-group btn-group-toggle" ngbRadioGroup formControlName="gender">
+                                <div class="btn-group btn-group-toggle" ngbRadioGroup formControlName="gender" *ngIf="!editMode">
                                     <label class="btn-primary form-control" ngbButtonLabel>
                                         <input type="radio" ngbButton value="MALE"> Male
                                     </label>
@@ -38,6 +38,7 @@
                                         <input type="radio" ngbButton value="FEMALE"> Female
                                     </label>
                                 </div>
+                                <input type="text" class="form-control" formControlName="gender" *ngIf="editMode">
                             </div>
                         </div>
                         <div class="form-group">
@@ -51,11 +52,11 @@
 
                         </div>
                         <div class="text-center">
-                            <button type="submit"
+                            <button type="submit" *ngIf="allowEdit"
                                 class="btn btn-info btn-block rounded-0 py-2">{{editMode ? 'Change ':'Create New '}}
                                 Student</button>
-                            <button type="button" class="btn btn-danger btn-block rounded-0 py-2" *ngIf="editMode"
-                                (click)="onDelete()">Delete</button>
+                            <button type="button" class="btn btn-danger btn-block rounded-0 py-2" *ngIf="editMode && allowEdit"
+                                (click)="onDelete()" >Delete</button>
                             <button type="button" class="btn btn-info btn-block rounded-0 py-2"
                                 (click)="onCancel()">Cancel</button>
                         </div>

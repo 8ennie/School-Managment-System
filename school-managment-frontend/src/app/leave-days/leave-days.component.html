@@ -1,0 +1,73 @@
+<p-table [columns]="cols" [value]="leaveDays" selectionMode="single" [(selection)]="leaveDay"
+    (onRowSelect)="onRowSelect($event)" [rows]="15">
+    <ng-template pTemplate="caption">
+        <div class="d-flex">
+            <div>
+                {{'list-of-leave-days' | translate }}
+            </div>
+            <div style="text-align:left" class="ml-auto">
+                <button type="button" pButton icon="pi pi-plus" (click)="showDialogToAdd()"
+                    label="{{'add' | translate }}"></button>
+            </div>
+        </div>
+
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{col.header | translate}}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+
+</p-table>
+
+<p-dialog header="Leave Days" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true" showEffect="fade"
+    [modal]="true" [style]="{width: '300px'}">
+        <div class="ui-g ui-fluid" *ngIf="leaveDay">
+
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="date">{{'date' | translate }}:</label>
+                </div>
+                <div class="ui-g-8">
+                    <input name="date" type="date" id="date" [(ngModel)]="leaveDay.date" />
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="type">{{'type' | translate }}:</label>
+                </div>
+                <div class="ui-g-8">
+                    <p-dropdown name="type" [options]="leaveDayTypes" [(ngModel)]="leaveDay.type"
+                        ></p-dropdown>
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="description">{{'description' | translate }}:</label>
+                </div>
+                <div class="ui-g-8">
+                    <textarea pInputTextarea name="description" id="description"
+                        [(ngModel)]="leaveDay.description"></textarea>
+                </div>
+            </div>
+
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button *ngIf="!newleaveDay" type="button" pButton icon="pi pi-times" (click)="delete()"
+                    label="{{'delete' | translate }}"></button>
+                <button type="button" pButton icon="pi pi-check" (click)="save()"
+                    label="{{'save' | translate }}"></button>
+            </div>
+        </p-footer>
+</p-dialog>

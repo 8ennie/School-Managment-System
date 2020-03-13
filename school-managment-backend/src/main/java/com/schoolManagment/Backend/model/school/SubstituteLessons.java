@@ -1,28 +1,26 @@
 package com.schoolManagment.Backend.model.school;
 
-import java.util.List;
-
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@Data
-public class Teacher extends Person{
+public class SubstituteLessons extends LessonInstance {
 
-	@ManyToMany
-	private List<Subject> subjects;
+	@ManyToOne
+	private Teacher substituteTeacher;
 	
+	@ManyToOne
+	private LeaveDay leaveDay;
+	
+	private String task;
 	
 }

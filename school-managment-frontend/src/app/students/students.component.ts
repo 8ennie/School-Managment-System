@@ -4,6 +4,7 @@ import { Student } from './student.model';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ClassService } from '../classes/class.service';
+import { AuthService } from '../auth/auth.service';
 
 
 @Component({
@@ -18,9 +19,16 @@ export class StudentsComponent implements OnInit, OnDestroy {
   students: Student[];
   grades = [];
   subscription: Subscription;
-  constructor(private studentService: StudentService, private router: Router, private gradeService: ClassService) { }
+  allowEdit = false;
+  constructor(
+    private studentService: StudentService,
+    private router: Router,
+    private gradeService: ClassService,
+    private authService: AuthService
+    ) { }
 
   ngOnInit() {
+    this.allowEdit = this.authService.hasRole('ROLE_ADMIN');
     this.subscription = this.studentService.studentChanged
       .subscribe(
         (students: Student[]) => {
@@ -29,7 +37,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
       );
     this.students = this.studentService.studentList;
     this.gradeService.getAllClasses().subscribe(grades => {
-      this.grades = grades._embedded.grades;  
+      this.grades = grades._embedded.grades;
     });
 
   }

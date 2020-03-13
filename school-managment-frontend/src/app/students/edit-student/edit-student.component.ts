@@ -7,6 +7,7 @@ import { ClassService } from 'src/app/classes/class.service';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { MessageService } from 'primeng/api';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-edit-student',
@@ -14,25 +15,32 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./edit-student.component.css']
 })
 export class EditStudentComponent implements OnInit {
+
+
+  id: number;
+  editMode = false;
+  allowEdit = false;
+  grades = [];
   studentForm = new FormGroup({
-    firstName: new FormControl('', Validators.required),
+    firstName: new FormControl({ value: '', Validators: [Validators.required] }),
     lastName: new FormControl('', Validators.required),
     gender: new FormControl('MALE', Validators.required),
     grade: new FormControl('')
   });
-
-  id: number;
-  editMode = false;
-
-  grades = [];
   constructor(
     private route: ActivatedRoute,
     private studnetService: StudentService,
     private router: Router,
     private gradeService: ClassService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private authService: AuthService,
+  ) { }
 
   ngOnInit() {
+    this.allowEdit = this.authService.hasRole('ROLE_ADMIN');
+    if (!this.allowEdit) {
+      this.studentForm.disable();
+    }
     this.gradeService.getAllClasses().pipe(
       map(data => data._embedded.grades)).
       subscribe(grades => {

@@ -27,10 +27,5 @@ public class Student extends Person {
 	@JoinColumn(name = "grade_id")
 	private Grade grade;
 		
-
-	public Student (String firstName, String lastName, Grade grade) {
-		super(firstName, lastName);
-		this.grade = grade;
-	}
 	
 }

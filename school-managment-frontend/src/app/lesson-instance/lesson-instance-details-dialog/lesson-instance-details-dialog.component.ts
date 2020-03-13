@@ -1,6 +1,8 @@
-import { Component, Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { LessonInstance } from '../lesson-instance.model';
+import { NgForm } from '@angular/forms';
+
 
 @Component({
   selector: 'app-lesson-instance-details-dialog',
@@ -9,13 +11,18 @@ import { LessonInstance } from '../lesson-instance.model';
 })
 export class LessonInstanceDetailsDialogComponent {
 
-  constructor(
-    private dialogRef: MatDialogRef<LessonInstanceDetailsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public lessonInnstance: LessonInstance) { }
+  lessonInstance: LessonInstance = new LessonInstance();
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
+    this.lessonInstance = config.data.lessonInstance;
   }
 
+  close() {
+    this.ref.close(this.lessonInstance);
+  }
+
+  onSubmit(lessonInstanceForm: NgForm) {
+    this.ref.close(this.lessonInstance);
+  }
 
 }

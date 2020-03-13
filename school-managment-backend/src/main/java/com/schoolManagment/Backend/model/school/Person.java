@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.schoolManagment.Backend.model.adminestration.User;
 import com.schoolManagment.Backend.model.school.help.Gender;
 
@@ -37,13 +38,6 @@ public class Person {
 	
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
-
-	
-	public Person (String firstName, String lastName) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
-
 
 	
 	

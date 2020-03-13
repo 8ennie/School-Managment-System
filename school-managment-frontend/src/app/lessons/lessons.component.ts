@@ -1,8 +1,9 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LessonGridService } from './lesson-grid/lesson-grid.service';
 import { map, take } from 'rxjs/operators';
 import { ClassService } from '../classes/class.service';
 import { TeacherService } from '../teachers/teacher.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-lessons',
@@ -18,15 +19,17 @@ export class LessonsComponent implements OnInit {
   class;
   teacher;
   hideDetails;
+  allowEdit = false;
 
   constructor(
     private lessonGridService: LessonGridService,
     private classService: ClassService,
-    private teacherService: TeacherService
-
+    private teacherService: TeacherService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
+    this.allowEdit = this.authService.hasRole('ROLE_ADMIN');
     this.classService.getAllClasses().pipe(
       map(data => data._embedded.grades)).
       subscribe(classes => {

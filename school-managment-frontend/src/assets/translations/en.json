@@ -23,5 +23,15 @@
     "class":"Class",
     "subject":"Subject",
     "no-class":"No Class",
-    "save":"Save"
+    "save":"Save",
+    "close":"Close",
+    "teacher":"Teacher",
+    "info":"Info",
+    "profile":"My Profile",
+    "list-of-leave-days":"List of Leave Days",
+    "add":"Add",
+    "date":"Datum",
+    "type":"Type",
+    "description":"Description",
+    "delete":"Delete"
 }

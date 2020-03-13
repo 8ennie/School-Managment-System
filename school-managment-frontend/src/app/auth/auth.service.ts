@@ -51,7 +51,15 @@ export class AuthService {
     return this.tokenStorage.getUser();
   }
 
+  getRoles(): string[] {
+    return this.tokenStorage.getUser().roles;
+  }
+
   updateUser() {
     this.userChanges.next(this.getUser());
+  }
+
+  hasRole(role: string): boolean {
+    return this.getRoles().includes(role);
   }
 }

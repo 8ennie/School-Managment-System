@@ -10,7 +10,7 @@
                     (input)="dt.filter($event.target.value, 'lastName', 'contains')">
             </th>
             <th style="width: 8em; text-align: center;">
-                <a [routerLink]="'/teachers/new'">
+                <a [routerLink]="'/teachers/new'" *ngIf="allowEdit">
                     <button pButton type="button" icon="pi pi-plus"></button>
                 </a>
             </th>

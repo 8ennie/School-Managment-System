@@ -5,6 +5,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { LessonGridService } from '../lesson-grid/lesson-grid.service';
 import { Subscription } from 'rxjs';
 import { Lesson } from '../lesson.model';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
     selector: 'app-drop-box',
@@ -14,10 +15,11 @@ export class DropBoxComponent implements OnInit, OnDestroy {
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
         private lessonGridService: LessonGridService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private authService: AuthService,
     ) { }
 
-    @Input() config: { day: string, hour: number, class: string, teacher: string };
+    @Input() config: { day: string, hour: number, class: string, teacher: string, allowEdit: boolean };
 
     @ViewChild(InsertDirective, { static: true }) inCom: InsertDirective;
 
@@ -30,6 +32,7 @@ export class DropBoxComponent implements OnInit, OnDestroy {
     private lesson: Lesson;
 
     ngOnInit() {
+        this.hide = !this.config.allowEdit;
         this.items = [
             {
                 label: 'Remove',

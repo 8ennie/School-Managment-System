@@ -3,6 +3,7 @@ import { TeacherService } from './teacher.service';
 import { Teacher } from './teacher.model';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-teachers',
@@ -13,10 +14,15 @@ export class TeachersComponent implements OnInit, OnDestroy {
 
   teachers: Teacher[] = [];
   subscription: Subscription;
-  constructor(private teacherService: TeacherService,
-    private router: Router) { }
+  allowEdit = false;
+
+  constructor(
+    private teacherService: TeacherService,
+    private router: Router,
+    private authService: AuthService) { }
 
   ngOnInit() {
+    this.allowEdit = this.authService.hasRole('ROLE_ADMIN');
     this.subscription = this.teacherService.teacherChanged
       .subscribe(
         (teachers: Teacher[]) => {
@@ -31,7 +37,7 @@ export class TeachersComponent implements OnInit, OnDestroy {
     this.router.navigate(['/teachers', studentId.slice(-1)[0]]);
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 }

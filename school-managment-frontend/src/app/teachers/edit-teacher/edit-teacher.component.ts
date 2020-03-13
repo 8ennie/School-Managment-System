@@ -30,6 +30,7 @@ export class EditTeacherComponent implements OnInit {
     allSubjects = [];
     subjects = [];
     gender: string;
+    allowEdit = false;
 
     constructor(
         private subjectService: SubjectService,
@@ -40,6 +41,10 @@ export class EditTeacherComponent implements OnInit {
         private authService: AuthService) { }
 
     ngOnInit(): void {
+        this.allowEdit = this.authService.hasRole('ROLE_ADMIN');
+        if (!this.allowEdit) {
+            this.teacherForm.disable();
+        }
         this.subjectService.getAllSubjects().pipe(
             map(data => data._embedded.subjects)).
             subscribe(subjects => {

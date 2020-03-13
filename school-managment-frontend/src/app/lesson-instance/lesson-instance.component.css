@@ -1,0 +1,4 @@
+.ui-dialog-titlebar{
+    display: flex;
+    justify-content: center;
+}

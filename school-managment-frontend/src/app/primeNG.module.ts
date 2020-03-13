@@ -7,10 +7,13 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ContextMenuModule } from 'primeng/contextmenu';
-import {MenuModule} from 'primeng/menu';
-import {CheckboxModule} from 'primeng/checkbox';
-import {SelectButtonModule} from 'primeng/selectbutton';
-import {InputTextareaModule} from 'primeng/inputtextarea';
+import { MenuModule } from 'primeng/menu';
+import { CheckboxModule } from 'primeng/checkbox';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import {DialogModule} from 'primeng/dialog';
+import {CalendarModule} from 'primeng/calendar';
 
 
 
@@ -26,8 +29,9 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
         MenuModule,
         CheckboxModule,
         InputTextareaModule,
-       
-
+        DynamicDialogModule,
+        DialogModule,
+        CalendarModule
     ],
     exports: [
         DataViewModule,
@@ -40,7 +44,9 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
         MenuModule,
         CheckboxModule,
         InputTextareaModule,
-
+        DynamicDialogModule,
+        DialogModule,
+        CalendarModule
     ],
     providers: [MessageService]
 })

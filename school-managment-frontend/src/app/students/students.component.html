@@ -19,7 +19,7 @@
                     (onChange)="filter($event, dt)"></p-multiSelect>
             </th>
             <th style="width: 8em; text-align: center;">
-                <a [routerLink]="'/students/new'">
+                <a [routerLink]="'/students/new'" *ngIf="allowEdit">
                     <button pButton type="button" icon="pi pi-plus"></button>
                 </a>
             </th>

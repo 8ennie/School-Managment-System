@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -32,6 +32,9 @@ import { httpErrorInterceptorProviders } from './_helper/http-error.interceptor'
 import { LessonsDetailsComponent } from './lessons/lessons-details/lessons-details.component';
 import { LessonInstanceComponent } from './lesson-instance/lesson-instance.component';
 import { LessonInstanceDetailsDialogComponent } from './lesson-instance/lesson-instance-details-dialog/lesson-instance-details-dialog.component';
+import { SubstitutionsComponent } from './substitutions/substitutions.component';
+import { LeaveDaysComponent } from './leave-days/leave-days.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -55,6 +58,9 @@ import { LessonInstanceDetailsDialogComponent } from './lesson-instance/lesson-i
     LessonsDetailsComponent,
     LessonInstanceComponent,
     LessonInstanceDetailsDialogComponent,
+    SubstitutionsComponent,
+    LeaveDaysComponent,
+    ProfileComponent,
   ],
   imports: [
     FormsModule,
@@ -75,7 +81,13 @@ import { LessonInstanceDetailsDialogComponent } from './lesson-instance/lesson-i
     }),
     MatDialogModule,
   ],
-  providers: [authInterceptorProviders, httpErrorInterceptorProviders],
+  entryComponents: [
+    LessonInstanceDetailsDialogComponent
+  ],
+  providers: [
+    authInterceptorProviders,
+    httpErrorInterceptorProviders,
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

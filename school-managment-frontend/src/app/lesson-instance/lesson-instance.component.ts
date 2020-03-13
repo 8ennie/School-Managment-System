@@ -2,14 +2,15 @@ import { Component, OnInit, Input } from '@angular/core';
 import { LessonInstance } from './lesson-instance.model';
 import { LessonInstanceService } from './lesson-instancnce.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { LessonInstanceDetailsDialogComponent } from './lesson-instance-details-dialog/lesson-instance-details-dialog.component';
+import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog/';
 
 
 @Component({
   selector: 'app-lesson-instance',
   templateUrl: './lesson-instance.component.html',
-  styleUrls: ['./lesson-instance.component.css']
+  styleUrls: ['./lesson-instance.component.css'],
+  providers: [DialogService]
 })
 export class LessonInstanceComponent implements OnInit {
 
@@ -20,7 +21,7 @@ export class LessonInstanceComponent implements OnInit {
 
   constructor(
     private lessonInstanceService: LessonInstanceService,
-    public dialog: MatDialog) { }
+    public dialogService: DialogService) { }
 
   lessonInstanceForm = new FormGroup({
     teacher: new FormControl('', [Validators.required]),
@@ -49,7 +50,6 @@ export class LessonInstanceComponent implements OnInit {
   }
 
   onSubmit() {
-
     const newLessonInstance: LessonInstance = new LessonInstance();
     this.lessonInstance.id = null;
     newLessonInstance.info = this.lessonInstanceForm.value.info;
@@ -64,15 +64,23 @@ export class LessonInstanceComponent implements OnInit {
     });
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(LessonInstanceDetailsDialogComponent, {
-      width: '250px',
-      data: LessonInstance
-    });
+  show() {
+    const ddc: DynamicDialogConfig = new DynamicDialogConfig();
+    ddc.data = {
+      lessonInstance: this.lessonInstance,
+    };
+    const date: Date = this.lessonInstanceService.date;
+    const dateString = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+    ddc.header = 'Date: ' + dateString + ' | ' +
+      'Hour:  ' + this.lessonInstance.lessonTime.hour;
+    ddc.closable = false;
+    ddc.width = '70%';
+    const ref = this.dialogService.open(LessonInstanceDetailsDialogComponent, ddc);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.lessonInstance = result;
+    ref.onClose.subscribe((lessonInstance: LessonInstance) => {
+      if (lessonInstance) {
+        this.lessonInstance = lessonInstance;
+      }
     });
   }
 

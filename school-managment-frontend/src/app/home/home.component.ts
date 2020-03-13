@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Lesson } from '../lessons/lesson.model';
-import { AuthService } from '../auth/auth.service';
-import { LessonInstanceService } from '../lesson-instance/lesson-instancnce.service';
+
 
 @Component({
   selector: 'app-home',
@@ -11,36 +9,11 @@ import { LessonInstanceService } from '../lesson-instance/lesson-instancnce.serv
 })
 export class HomeComponent implements OnInit {
 
-  date: Date;
-  lessons: Lesson[] = [];
 
-  days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  houres = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  constructor(private lessonnInstanceService: LessonInstanceService, private authService: AuthService) {
-
+  ngOnInit(): void {
+   
   }
 
-  ngOnInit() {
-    this.date = new Date();
-    this.updateLessons();
-  }
-
-  updateLessons(){
-    const teacehrId = this.authService.getUser()?.person?.id;
-    if (teacehrId) {
-      this.lessonnInstanceService.getLessonInstancesForTeacherAndDate(teacehrId, this.date);
-    }
-  }
-
-  plusDay(){
-    this.date.setDate(this.date.getDate() + 1);
-    this.updateLessons();
-  }
-
-  minusDay(){
-    this.date.setDate(this.date.getDate() - 1);
-    this.updateLessons();
-  }
 
 
 }
