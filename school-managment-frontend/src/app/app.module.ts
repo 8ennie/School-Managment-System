@@ -35,6 +35,7 @@ import { LessonInstanceDetailsDialogComponent } from './lesson-instance/lesson-i
 import { SubstitutionsComponent } from './substitutions/substitutions.component';
 import { LeaveDaysComponent } from './leave-days/leave-days.component';
 import { ProfileComponent } from './profile/profile.component';
+import { LessonInstanceListComponent } from './lesson-instance/lesson-instance-list/lesson-instance-list.component';
 
 
 
@@ -61,6 +62,7 @@ import { ProfileComponent } from './profile/profile.component';
     SubstitutionsComponent,
     LeaveDaysComponent,
     ProfileComponent,
+    LessonInstanceListComponent,
   ],
   imports: [
     FormsModule,

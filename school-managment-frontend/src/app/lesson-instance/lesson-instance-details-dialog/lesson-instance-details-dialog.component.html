@@ -1,50 +1,79 @@
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6 pb-5">
-            <form #lessonInstanceForm (ngSubmit)="onSubmit(lessonInstanceForm)">
-                <div class="card-body p-3">
-                    <div class="form-group">
-                        <div class="input-group mb-2">
-                            <div class="input-group-prepend" style="width: 75px;">
-                                <div class="input-group-text" style="width: 75px;">{{'class' | translate }}:</div>
+<p-scrollPanel [style]="{width: '100%', maxHeight: '400px'}">
+    <div class="container justify-content-center">
+        <div class="">
+            <div class="">
+                <form #lessonInstanceForm (ngSubmit)="onSubmit(lessonInstanceForm)">
+                    <div class="card-body">
+                        <div class="row p-grid">
+                            <div class="form-group p-col">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend" style="width: 75px;">
+                                        <div class="input-group-text" style="width: 75px;">{{'class' | translate }}:
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control" disabled="true"
+                                        value={{lessonInstance.grade.name}}>
+                                </div>
                             </div>
-                            <input type="text" class="form-control" disabled="true" value={{lessonInstance.grade.name}}>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group mb-2">
-                            <div class="input-group-prepend" style="width: 75px;">
-                                <div class="input-group-text" style="width: 75px;">{{'subject' | translate }}:</div>
+                            <div class="form-group p-col">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend" style="width: 75px;">
+                                        <div class="input-group-text" style="width: 75px;">{{'subject' | translate }}:
+                                        </div>
+                                    </div>
+                                    <input class="form-control" disabled="true" value={{lessonInstance.subject.name}}>
+                                </div>
                             </div>
-                            <input class="form-control" disabled="true" value={{lessonInstance.subject.name}}>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group mb-2">
-                            <div class="input-group-prepend" style="width: 75px;">
-                                <div class="input-group-text" style="width: 75px;">{{'teacher' | translate }}:</div>
+                        <div class="row p-grid">
+                            <div class="form-group p-col">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend" style="width: 75px;">
+                                        <div class="input-group-text" style="width: 75px;">{{'teacher' | translate }}:
+                                        </div>
+                                    </div>
+                                    <input class="form-control" disabled="true"
+                                        [value]="(lessonInstance.teacher.gender === 'MALE' ? 'Mr. ' : 'Ms. ') + lessonInstance.teacher.lastName">
+                                </div>
                             </div>
-                            <input class="form-control" disabled="true" [value]="(lessonInstance.teacher.gender === 'MALE' ? 'Mr. ' : 'Ms. ') + lessonInstance.teacher.lastName">
+                            <div class="form-group p-col">
+                                <div class="input-group mb-2" *ngIf="isSubLesson">
+                                    <div class="input-group-prepend" style="width: 75px;">
+                                        <div class="input-group-text" style="width: 75px;">{{'teacher' | translate }}:
+                                        </div>
+                                    </div>
+                                    <input class="form-control" disabled="true"
+                                        [value]="(lessonInstance.teacher.gender === 'MALE' ? 'Mr. ' : 'Ms. ') + lessonInstance.teacher.lastName">
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-
-                    <div class="form-group">
-                        <div class="input-group mb-2">
-                            <div class="input-group-prepend" style="width: 75px;">
-                                <div class="input-group-text" style="width: 75px;">{{'info' | translate }}:</div>
+                        <div class="form-group">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend" style="width: 75px;">
+                                    <div class="input-group-text" style="width: 75px;">{{'info' | translate }}:</div>
+                                </div>
+                                <textarea name="info" class="form-control" [(ngModel)]="lessonInstance.info"></textarea>
                             </div>
-                            <textarea name="info" class="form-control" [ngModel]="lessonInstance.info"></textarea>
+                        </div>
+                        <div class="form-group" *ngIf="isSubLesson">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend" style="width: 75px;">
+                                    <div class="input-group-text" style="width: 75px;">{{'task' | translate }}:</div>
+                                </div>
+                                <textarea name="task" class="form-control" [(ngModel)]="lessonInstance.task"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button class="btn btn-primary mr-2" type="button"
+                                (click)="close()">{{'close' | translate }}</button>
+                            <button class="btn btn-success" type="submit">{{'save' | translate }}</button>
+
                         </div>
                     </div>
-
-                    <div class="text-center">
-                        <button class="btn btn-primary mr-2"type="button" (click)="close()">{{'close' | translate }}</button>
-                        <button class="btn btn-success"type="submit">{{'save' | translate }}</button>
-                        
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+</p-scrollPanel>

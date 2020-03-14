@@ -21,7 +21,6 @@ import lombok.experimental.SuperBuilder;
 public class LessonInstance extends Lesson{
 
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date date;
 	
 	private String info;

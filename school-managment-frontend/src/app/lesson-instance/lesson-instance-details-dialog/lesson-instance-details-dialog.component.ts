@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { LessonInstance } from '../lesson-instance.model';
-import { NgForm } from '@angular/forms';
+import { SubLesson } from '../sub-lesson-instance.model';
 
 
 @Component({
@@ -11,17 +10,20 @@ import { NgForm } from '@angular/forms';
 })
 export class LessonInstanceDetailsDialogComponent {
 
-  lessonInstance: LessonInstance = new LessonInstance();
+  lessonInstance: SubLesson = new SubLesson();
+
+  isSubLesson: boolean = false;
 
   constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
     this.lessonInstance = config.data.lessonInstance;
+    this.isSubLesson = config.data.isSubLesson;
   }
 
   close() {
-    this.ref.close(this.lessonInstance);
+    this.ref.close();
   }
 
-  onSubmit(lessonInstanceForm: NgForm) {
+  onSubmit() {
     this.ref.close(this.lessonInstance);
   }
 

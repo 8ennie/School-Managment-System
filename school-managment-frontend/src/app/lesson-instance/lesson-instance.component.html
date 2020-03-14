@@ -1,17 +1,8 @@
-<div class="card" (dblclick)="editMode = !editMode" *ngIf="lessonInstance.id && !editMode" style="width: 150px;">
-    <p>{{'class' | translate }}: {{lessonInstance.grade.name}}</p>
-    <p>{{'subject' | translate }}: {{lessonInstance.subject.name}}</p>
+<div class="card" *ngIf="lessonInstance && !editMode" style="min-width: 150px;">
+    <span>{{'class' | translate }}: {{lessonInstance.grade?.name}}</span>
+    <span>{{'subject' | translate }}: {{lessonInstance.subject?.name}}</span>
     <button mat-raised-button (click)="show()">Edit</button>
 </div>
-<div class="card" *ngIf="!lessonInstance.id && !editMode">
-    <p class="m-2">{{'no-class' | translate }}</p>
-</div>
-
-<div class="card" *ngIf="editMode">
-    <form [formGroup]="lessonInstanceForm" (ngSubmit)="onSubmit()" class="container">
-        <p>{{'class' | translate }}: {{lessonInstance.grade.name}}</p>
-        <p>{{'subject' | translate }}: {{lessonInstance.subject.name}}</p>
-        <textarea pInputTextarea formControlName="info"></textarea>
-        <button type="submit">{{'save' | translate }}</button>
-    </form>
+<div class="card" *ngIf="!lessonInstance && !editMode">
+    <p class="m-2" style="text-align: center;">{{'no-class' | translate }}</p>
 </div>

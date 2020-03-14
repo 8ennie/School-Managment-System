@@ -14,6 +14,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import {DialogModule} from 'primeng/dialog';
 import {CalendarModule} from 'primeng/calendar';
+import {VirtualScrollerModule} from 'primeng/virtualscroller';
+import {ScrollPanelModule} from 'primeng/scrollpanel';
 
 
 
@@ -31,7 +33,9 @@ import {CalendarModule} from 'primeng/calendar';
         InputTextareaModule,
         DynamicDialogModule,
         DialogModule,
-        CalendarModule
+        CalendarModule,
+        VirtualScrollerModule,
+        ScrollPanelModule,
     ],
     exports: [
         DataViewModule,
@@ -46,7 +50,9 @@ import {CalendarModule} from 'primeng/calendar';
         InputTextareaModule,
         DynamicDialogModule,
         DialogModule,
-        CalendarModule
+        CalendarModule,
+        VirtualScrollerModule,
+        ScrollPanelModule,
     ],
     providers: [MessageService]
 })

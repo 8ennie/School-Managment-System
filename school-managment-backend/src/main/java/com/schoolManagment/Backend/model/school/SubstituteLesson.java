@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class SubstituteLessons extends LessonInstance {
+public class SubstituteLesson extends LessonInstance {
 
 	@ManyToOne
 	private Teacher substituteTeacher;

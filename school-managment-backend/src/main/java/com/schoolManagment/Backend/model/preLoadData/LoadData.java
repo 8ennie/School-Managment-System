@@ -219,10 +219,18 @@ public class LoadData implements ApplicationRunner {
 		LessonTime firstHourOnMonday = lessonTimeRepository.findByDayOfWeekAndHour(DayOfWeek.MONDAY, 1).get();
 		LessonTime secondHourOnMonday = lessonTimeRepository.findByDayOfWeekAndHour(DayOfWeek.MONDAY, 2).get();
 		LessonTime firstHourOnTuesday = lessonTimeRepository.findByDayOfWeekAndHour(DayOfWeek.TUESDAY, 1).get();
-		LessonTime secondHourOnTuesday = lessonTimeRepository.findByDayOfWeekAndHour(DayOfWeek.THURSDAY, 2).get();
+		LessonTime secondHourOnTuesday = lessonTimeRepository.findByDayOfWeekAndHour(DayOfWeek.TUESDAY, 2).get();
 
-		Lesson g1a = Lesson.builder().subject(german).teacher(amy).grade(grade1a).lessonTime(firstHourOnTuesday).build();
-		lessonRepository.save(g1a);
+		Lesson ga1t = Lesson.builder().subject(german).teacher(amy).grade(grade1a).lessonTime(firstHourOnTuesday).build();
+		lessonRepository.save(ga1t);
+		Lesson ga2t = Lesson.builder().subject(german).teacher(amy).grade(grade1a).lessonTime(secondHourOnTuesday).build();
+		lessonRepository.save(ga2t);
+		
+		Lesson ga1m = Lesson.builder().subject(english).teacher(amy).grade(grade1a).lessonTime(firstHourOnMonday).build();
+		lessonRepository.save(ga1m);
+		Lesson ga2m = Lesson.builder().subject(english).teacher(amy).grade(grade1a).lessonTime(secondHourOnMonday).build();
+		lessonRepository.save(ga2m);
+		
 		
 	}
 

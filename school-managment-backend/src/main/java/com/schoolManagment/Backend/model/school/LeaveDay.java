@@ -37,7 +37,6 @@ public class LeaveDay {
 	private String description;
 	
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date date;
 	
 	@ManyToOne
