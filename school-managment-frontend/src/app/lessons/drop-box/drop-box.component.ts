@@ -24,7 +24,7 @@ export class DropBoxComponent implements OnInit, OnDestroy {
     @ViewChild(InsertDirective, { static: true }) inCom: InsertDirective;
 
     hide = false;
-
+    allowEdit = false;
     items: MenuItem[];
     private vrc: ViewContainerRef;
     private lessonSub = new Subscription();
@@ -32,7 +32,7 @@ export class DropBoxComponent implements OnInit, OnDestroy {
     private lesson: Lesson;
 
     ngOnInit() {
-        this.hide = !this.config.allowEdit;
+        this.allowEdit = this.config.allowEdit;
         this.items = [
             {
                 label: 'Remove',

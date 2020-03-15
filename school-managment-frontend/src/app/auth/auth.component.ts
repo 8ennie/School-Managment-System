@@ -40,8 +40,6 @@ export class AuthComponent implements OnInit {
     const credentials = { username: form.value.username, password: form.value.password };
     this.authService.login(credentials).subscribe(
       data => {
-        console.log(data);
-        
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUser(data);
 
@@ -51,10 +49,11 @@ export class AuthComponent implements OnInit {
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
         this.messageService.add({ severity: 'success', summary: 'Successful Login', detail: 'Logged in as ' + this.roles + '.' });
-        if (this.return !== '') {
+        
+        if (this.return && this.return !== '') {
           this.router.navigateByUrl(this.return);
         } else {
-          this.router.navigate(['/students']);
+          this.router.navigate(['profile']);
         }
       },
       err => {

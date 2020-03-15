@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +24,9 @@ public interface SubstituteLessonRepository extends JpaRepository<SubstituteLess
 	Optional<List<SubstituteLesson>> findByDate(@DateTimeFormat(pattern="yyyy-MM-dd") Date date);
 
 	Optional<List<SubstituteLesson>> findByDateAndTeacher(@DateTimeFormat(pattern="yyyy-MM-dd") Date date, Teacher teacher);
+	
+	@Query("select subLes from SubstituteLesson subLes where subLes.date = ?1 and (subLes.teacher = ?2 or subLes.substituteTeacher = ?2)")
+	Optional<List<SubstituteLesson>> findByDateAndTeacherOrSubstituteTeacher(@DateTimeFormat(pattern="yyyy-MM-dd") Date date, Teacher teacher);
 
 	Optional<List<SubstituteLesson>> findByDateAndGrade(@DateTimeFormat(pattern="yyyy-MM-dd") Date date, Grade grade);
 	

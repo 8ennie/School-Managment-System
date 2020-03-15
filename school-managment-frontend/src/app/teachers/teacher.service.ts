@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Teacher } from './teacher.model';
 import { environment } from 'src/environments/environment';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class TeacherService {
 
-    teacherList: Teacher[] = [];
-    teacherChanged = new Subject<Teacher[]>();
+    url:string = environment.apiUrl + 'teachers';
+
+    teacherChanged = new BehaviorSubject<Teacher[]>([]);
 
     constructor(private http: HttpClient) { }
 
@@ -17,47 +18,38 @@ export class TeacherService {
         if (teacher.subjects.length === 0) {
             teacher.subjects = null;
         }
-        return this.http.post<Teacher>(environment.apiUrl + 'teachers', teacher);
+        return this.http.post<Teacher>(this.url, teacher).pipe(tap((teacher:Teacher) => {
+            const teacherList = this.teacherChanged.value;
+            teacherList.push(teacher);
+            this.sendUpdate(teacherList);
+        }));
     }
 
-    fetchTeacher() {
-        this.http.get<any>(environment.apiUrl + 'teachers').pipe(map(data => data._embedded.teachers)).subscribe((teachers: Teacher[]) => {
-            this.teacherList = teachers;
-            teachers.forEach(t => t.fullName = t.firstName + ' ' + t.lastName);
-            this.sendUpdate();
-        });
+    getTeachers(){
+        return this.http.get<any>(environment.apiUrl + 'teachers').pipe(tap(data => {
+            this.sendUpdate(data._embedded.teachers);
+        }));
     }
 
     getTeacher(id: number) {
-        return this.http.get<Teacher>(environment.apiUrl + 'teachers/' + id + '?projection=teacherProjection')
-        .pipe(tap(t => t.fullName = t.firstName + ' ' + t.lastName));
+        return this.http.get<Teacher>(environment.apiUrl + 'teachers/' + id + '?projection=teacherProjection');
     }
 
-    sendUpdate() {
-        this.teacherChanged.next(this.teacherList.slice());
+    sendUpdate(teachers:Teacher[]) {
+        teachers.forEach(t => t.fullName = t.firstName + ' ' + t.lastName);
+        this.teacherChanged.next(teachers);       
     }
 
     editTeacher(id: number, teacher: Teacher) {
         return this.http.patch(environment.apiUrl + 'teachers/' + id, teacher);
     }
 
-    getTeachers() {
-        if (this.teacherList.length < 1) {
-            this.fetchTeacher();
-        }
-        return this.teacherList.slice();
-    }
-
-    addTeacher(teacher: Teacher) {
-        this.teacherList.push(teacher);
-        this.sendUpdate();
-    }
-
     changeTeacher(teacher: Teacher) {
-        for (let _i = 0; _i < this.teacherList.length; _i++) {
-            if (this.teacherList[_i]._links.self.href === teacher._links.self.href) {
-                this.teacherList[_i] = teacher;
-                this.sendUpdate();
+        const teacherList = this.teacherChanged.value;
+        for (let _i = 0; _i < teacherList.length; _i++) {
+            if (teacherList[_i]._links.self.href === teacher._links.self.href) {
+                teacherList[_i] = teacher;
+                this.sendUpdate(teacherList);
                 break;
             }
         }
@@ -65,17 +57,14 @@ export class TeacherService {
 
     deleteTeacher(id: number) {
         return this.http.delete(environment.apiUrl + 'teachers/' + id).pipe(tap(() => {
-            this.removeTeacher(id);
+            let teacherList = this.teacherChanged.value;
+            teacherList = teacherList.filter(obj => obj.id !== id);
+            this.sendUpdate(teacherList);
         }));
     }
 
-    removeTeacher(id: number) {
-        for (let _i = 0; _i < this.teacherList.length; _i++) {
-            if (this.teacherList[_i].id === Number(id)) {
-                this.teacherList.splice(_i, 1);
-                this.sendUpdate();
-                break;
-            }
-        }
+    getAvailableTeachers(date:Date){
+
     }
+
 }

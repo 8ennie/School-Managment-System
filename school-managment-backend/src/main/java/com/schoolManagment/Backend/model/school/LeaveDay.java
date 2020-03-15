@@ -11,14 +11,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.schoolManagment.Backend.model.school.help.LeaveType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @Entity
 @Data
@@ -30,16 +29,17 @@ public class LeaveDay {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	@Enumerated(EnumType.STRING)
 	private LeaveType type;
-	
+
 	private String description;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date date;
-	
+
 	@ManyToOne
+	@JsonBackReference
 	private Person person;
-	
+
 }

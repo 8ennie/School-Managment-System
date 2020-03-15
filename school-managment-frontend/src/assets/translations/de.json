@@ -22,7 +22,7 @@
     "details":"Details",
     "class":"Klasse",
     "subject":"Fach",
-    "no-class":"Keine Klasse",
+    "no-class":"Keinen Untericht",
     "save":"Speichern",
     "close":"Schließen",
     "teacher":"Lehrer",
@@ -33,5 +33,9 @@
     "date":"Datum",
     "type":"Type",
     "description":"Bescheibung",
-    "delete":"Löschen"
+    "delete":"Löschen",
+    "substitute-teacher":"Vertretung",
+    "choose-a-date":"Wähle ein Datum",
+    "task":"Aufgabe",
+    "substitutions":"Vertretung"
 }

@@ -49,10 +49,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return this.roles.includes(Role.ROLE_ADMIN);
   }
   isTeacher() {
-    return this.roles.includes(Role.ROLE_ADMIN);
+    return this.roles.includes(Role.ROLE_TEACHER);
   }
   isStudent() {
-    return this.roles.includes(Role.ROLE_ADMIN);
+    return this.roles.includes(Role.ROLE_STUDENT);
   }
 
   switchLang(lang: string) {

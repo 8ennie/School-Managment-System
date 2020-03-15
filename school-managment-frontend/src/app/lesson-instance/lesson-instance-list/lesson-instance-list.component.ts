@@ -1,6 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { LessonInstanceService } from '../lesson-instancnce.service';
-import { AuthService } from 'src/app/auth/auth.service';
 import { LeaveDayService } from 'src/app/leave-days/leave-day.service';
 import { LeaveDay } from 'src/app/leave-days/leave-day.model';
 import { Subscription } from 'rxjs';
@@ -8,54 +7,68 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-lesson-instance-list',
   templateUrl: './lesson-instance-list.component.html',
-  styleUrls: ['./lesson-instance-list.component.css']
+  styleUrls: ['./lesson-instance-list.component.css'],
+  providers:[LessonInstanceService]
 })
-export class LessonInstanceListComponent implements OnInit , OnDestroy{
+export class LessonInstanceListComponent implements OnInit, OnDestroy {
+
+  @Input() changeDateHeader: boolean = true;
+
+  @Input() date: Date = new Date();
+
+  @Input() person: {id:number};
+
+  @Input() subLessonList: boolean = false;
+
   ngOnDestroy(): void {
-    this.leaveDaySubscription.unsubscribe();
+    if(this.newLeaveDaySubscription){
+      this.newLeaveDaySubscription.unsubscribe();
+    }
   }
 
   absent = false;
-  date: Date;
-  teacehrId: number;
   days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   houres = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
+  leaveDays: LeaveDay[] = [];
+  newLeaveDaySubscription: Subscription;
 
-  leaveDays:LeaveDay[] = [];
-
-  leaveDaySubscription:Subscription;
   constructor(
     private lessonnInstanceService: LessonInstanceService,
-    private authService: AuthService,
     private leaveDayService: LeaveDayService
   ) { }
 
   ngOnInit(): void {
-    this.date = new Date();
     if (this.date.getDay() === 0) {
       this.updateDate(1);
     } else if (this.date.getDay() === 6) {
       this.updateDate(2);
     }
-    this.teacehrId = this.authService.getUser()?.person?.id;
-    this.updateLessons();
-    this.leaveDaySubscription = this.leaveDayService.leaveDaysForTeacherChange.subscribe((leaveDays) => {
-      this.leaveDays = leaveDays;
-      this.updateLessons();
-    });
+    if (this.changeDateHeader) {
+      this.leaveDayService.getLeaveDaysForPerson(this.person.id).subscribe((leaveDays: { _embedded }) => {
+        this.leaveDays = leaveDays._embedded.leaveDays;
+        this.updateLessons();
+      });
+      // this.newLeaveDaySubscription = this.leaveDayService.newLeaveDay.subscribe(leaveDay => {
+      //   console.log(leaveDay);
+      //   if(leaveDay){
+  
+      //   }
+      // });  
+    }
+   
   }
 
   updateLessons() {
-    if (this.leaveDays.map(ld => new Date(ld.date).toDateString()).includes(this.date.toDateString())) {
+    if (this.leaveDays.map(ld => new Date(ld.date).toDateString()).includes(this.date.toDateString()) || this.subLessonList) {
       this.absent = true;
       this.lessonnInstanceService.isSubDay = true;
     } else {
       this.absent = false;
       this.lessonnInstanceService.isSubDay = false;
     }
-    if (this.teacehrId) {
-      this.lessonnInstanceService.getLessonInstancesForTeacherAndDate(this.teacehrId, this.date);
+    if (this.person.id) {
+      this.lessonnInstanceService.getLessonInstancesForTeacherAndDate(this.person.id, this.date);
     }
   }
 

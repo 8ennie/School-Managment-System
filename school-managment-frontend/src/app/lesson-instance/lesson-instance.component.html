@@ -1,5 +1,20 @@
-<div class="card" *ngIf="lessonInstance && !editMode" style="min-width: 150px;">
-    <span>{{'class' | translate }}: {{lessonInstance.grade?.name}}</span>
+<div class="card" *ngIf="lessonInstance && !editMode" style="min-width: 150px;" [ngStyle]="{'background-color': (lessonInstance.substituteTeacher?.id === config.person?.id)? 'orange':'inherit'}">
+    <div class="row">
+        <span class="col">{{'class' | translate }}: {{lessonInstance.grade?.name}} </span>
+        <div class="col">
+            <i class="pi pi-user-minus" style="color: red; font-size: 1.6em;"
+                *ngIf="(!lessonInstance.substituteTeacher && !lessonInstance.allowInndependantlyWork) && isSubLesson"></i>
+            <i class="pi pi-user" style="color: rgb(28, 202, 12); font-size: 1.6em"
+                *ngIf="lessonInstance.substituteTeacher  && isSubLesson"></i>
+            <i class="pi pi-user" style="color: orange; font-size: 1.6em"
+                *ngIf="lessonInstance.allowInndependantlyWork && isSubLesson"></i>
+            <i class="pi pi-pencil" style="color: red; font-size: 1.6em"
+                *ngIf="!lessonInstance.task && isSubLesson"></i>
+            <i class="pi pi-pencil" style="color: rgb(28, 202, 12); font-size: 1.6em"
+                *ngIf="lessonInstance.task && isSubLesson"></i>
+            <i class="pi pi-info-circle" style="color: navy; font-size: 1.6em" *ngIf="lessonInstance.info"></i>
+        </div>
+    </div>
     <span>{{'subject' | translate }}: {{lessonInstance.subject?.name}}</span>
     <button mat-raised-button (click)="show()">Edit</button>
 </div>

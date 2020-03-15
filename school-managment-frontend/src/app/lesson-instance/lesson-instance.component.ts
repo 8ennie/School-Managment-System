@@ -1,12 +1,13 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { LessonInstance } from './lesson-instance.model';
 import { LessonInstanceService } from './lesson-instancnce.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LessonInstanceDetailsDialogComponent } from './lesson-instance-details-dialog/lesson-instance-details-dialog.component';
+
+
 import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog/';
 import { Subscription } from 'rxjs';
 import { SubLessonService } from './sub-lesson-instance.service';
 import { SubLesson } from './sub-lesson-instance.model';
+import { LessonInstanceDetailsDialogComponent } from './lesson-instance-details-dialog/lesson-instance-details-dialog.component';
 
 
 @Component({
@@ -22,9 +23,9 @@ export class LessonInstanceComponent implements OnInit, OnDestroy {
   }
 
 
-  @Input() config: { date: string, hour: number, class: string, teacher: string };
+  @Input() config: { date: Date, hour: number, class: string, person:{} };
 
-  lessonInstance: LessonInstance;
+  lessonInstance: SubLesson;
   lessonInstanceSubscription: Subscription;
   isSubLesson: boolean = false;
 
@@ -36,15 +37,21 @@ export class LessonInstanceComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-
-    this.lessonInstanceSubscription = this.lessonInstanceService.lessonsInstancesChanged.subscribe(data => {
+    console.log(this.config);
+    
+    this.lessonInstanceSubscription = this.lessonInstanceService.lessonsInstancesChanged.subscribe((data: SubLesson[]) => {
       this.isSubLesson = this.lessonInstanceService.isSubDay;
-        this.lessonInstance = null;
-        data.forEach(l => {
-          if (l.lessonTime.hour === this.config.hour) {
-            this.lessonInstance = l;
+      this.lessonInstance = null;
+      data.forEach(l => {
+        if (l.lessonTime.hour === this.config.hour) {
+          if (l.task) {
+            this.isSubLesson = true;
+          } else {
+            this.isSubLesson = this.lessonInstanceService.isSubDay;
           }
-        });
+          this.lessonInstance = l;
+        }
+      });
     });
 
   }
@@ -62,6 +69,10 @@ export class LessonInstanceComponent implements OnInit, OnDestroy {
     if (this.isSubLesson) {
       const newSubLesson = newLessonInstance as SubLesson;
       newSubLesson.task = (this.lessonInstance as SubLesson).task;
+      newSubLesson.substituteTeacher = (this.lessonInstance as SubLesson).substituteTeacher ?
+        (this.lessonInstance as SubLesson).substituteTeacher._links.self.href.replace('{?projection}', '')
+        : null;
+      newSubLesson.allowInndependantlyWork = (this.lessonInstance as SubLesson).allowInndependantlyWork;
       if (this.lessonInstance._links?.self?.href) {
         newLessonInstance.id = newLessonInstance.id;
         newLessonInstance._links = this.lessonInstance._links;

@@ -11,28 +11,22 @@ export class LeaveDayService {
 
     url: string = environment.apiUrl + 'leaveDays/';
 
-    leaveDaysForTeacherChange: BehaviorSubject<LeaveDay[]> = new BehaviorSubject([]);
+    newLeaveDay: Subject<LeaveDay> = new Subject();
+
+    leaveDayChange: BehaviorSubject<LeaveDay[]> = new BehaviorSubject([]);
 
     constructor(
         private http: HttpClient
     ) { }
 
-    getLeaveDaysForTeacher(teacherId: number) {
-        const teacherUrl = environment.apiUrl + 'persons/' + teacherId;
-        return this.http.get(this.url + 'search/findByPerson?person=' + teacherUrl).pipe(tap((leaveDays: { _embedded }) => {
-            this.leaveDaysForTeacherChange.next(leaveDays._embedded.leaveDays);
-        }));
-    }
-
-    isSubDay(date: Date) {
-        return this.leaveDaysForTeacherChange.value.map(ldft => ldft.date).includes(date);
+    getLeaveDaysForPerson(personId: number) {
+        const personUrl = environment.apiUrl + 'persons/' + personId;
+        return this.http.get(this.url + 'search/findByPerson?person=' + personUrl);
     }
 
     saveLeaveDay(leaveDay) {
-        return this.http.post(this.url, leaveDay).pipe(tap((leaveDay:LeaveDay) => {
-            const leaveDays:LeaveDay[] = this.leaveDaysForTeacherChange.value;
-            leaveDays.push(leaveDay);
-            this.leaveDaysForTeacherChange.next(leaveDays);
+        return this.http.post(this.url, leaveDay).pipe(tap((leaveDay: LeaveDay) => {
+         this.newLeaveDay.next(leaveDay);
         }));
     }
 
@@ -41,11 +35,7 @@ export class LeaveDayService {
     }
 
     deleteLeaveDay(leaveDayUrl: string) {
-        return this.http.delete(leaveDayUrl).pipe(tap(() => {
-            let leaveDays:LeaveDay[] = this.leaveDaysForTeacherChange.value;
-            leaveDays = leaveDays.filter(obj => obj._links.self.href !== leaveDayUrl);
-            this.leaveDaysForTeacherChange.next(leaveDays);
-        }));;
+        return this.http.delete(leaveDayUrl);
     }
 
     updateLeaveDay(leaveDay: LeaveDay) {
@@ -53,6 +43,20 @@ export class LeaveDayService {
     }
 
     getLeaveDayByUrl(leaveDayUrl: string) {
-        return this.http.get(leaveDayUrl);
+        return this.http.get(leaveDayUrl + '?projection=leaveDayProjection');
+    }
+
+    getLeaveDays() {
+        return this.http.get(this.url).pipe(tap((leaveDays: { _embedded }) => {
+            //this.leaveDayChange.next(leaveDays._embedded.leaveDays);
+        }));
+    }
+
+    getLeaveDaysForDate(date: Date) {
+        return this.http.get(
+            this.url
+            + 'search/findByDate'
+            + '?date=' + date.getFullYear().toString() + '-' + (date.getMonth() + 1) + '-' + date.getDate().toString()
+        );
     }
 }

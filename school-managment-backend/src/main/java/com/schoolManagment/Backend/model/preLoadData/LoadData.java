@@ -3,6 +3,7 @@ package com.schoolManagment.Backend.model.preLoadData;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,19 +16,24 @@ import org.springframework.stereotype.Component;
 import com.schoolManagment.Backend.model.adminestration.ERole;
 import com.schoolManagment.Backend.model.adminestration.Role;
 import com.schoolManagment.Backend.model.adminestration.User;
+import com.schoolManagment.Backend.model.school.LeaveDay;
 import com.schoolManagment.Backend.model.school.Lesson;
 import com.schoolManagment.Backend.model.school.LessonInstance;
+import com.schoolManagment.Backend.model.school.Person;
 import com.schoolManagment.Backend.model.school.Student;
 import com.schoolManagment.Backend.model.school.Subject;
 import com.schoolManagment.Backend.model.school.Teacher;
 import com.schoolManagment.Backend.model.school.help.EducationalStage;
 import com.schoolManagment.Backend.model.school.help.Gender;
 import com.schoolManagment.Backend.model.school.help.Grade;
+import com.schoolManagment.Backend.model.school.help.LeaveType;
 import com.schoolManagment.Backend.model.school.help.LessonTime;
 import com.schoolManagment.Backend.repository.GradeRepository;
+import com.schoolManagment.Backend.repository.LeaveDayRepository;
 import com.schoolManagment.Backend.repository.LessonInstanceRepository;
 import com.schoolManagment.Backend.repository.LessonRepository;
 import com.schoolManagment.Backend.repository.LessonTimeRepository;
+import com.schoolManagment.Backend.repository.PersonRepository;
 import com.schoolManagment.Backend.repository.RoleRepository;
 import com.schoolManagment.Backend.repository.StudentRepository;
 import com.schoolManagment.Backend.repository.SubjectRepository;
@@ -68,6 +74,13 @@ public class LoadData implements ApplicationRunner {
 	private LessonTimeRepository lessonTimeRepository;
 
 	@Autowired
+	private LeaveDayRepository leaveDayRepository;
+	
+	@Autowired
+	private PersonRepository personRepository;
+
+	
+	@Autowired
 	PasswordEncoder encoder;
 
 	@SuppressWarnings("unused")
@@ -81,10 +94,13 @@ public class LoadData implements ApplicationRunner {
 		Role teacherRole = roleRepository.save(new Role(ERole.ROLE_TEACHER));
 
 		// Users
+		Person bennie = Person.builder().firstName("Benjamin").lastName("Wiemann").gender(Gender.MALE).build();
+		personRepository.save(bennie);
 		User admin = new User("admin", "admin@admin.com", encoder.encode("adminadmin"));
 		Set<Role> roles = new HashSet<>();
 		roles.add(adminRole);
 		admin.setRoles(roles);
+		admin.setPerson(bennie);
 		log.info("Preload: " + userRepository.save(admin));
 
 		// Grade
@@ -161,7 +177,7 @@ public class LoadData implements ApplicationRunner {
 		amyUser.setPerson(amy);
 		userRepository.save(amyUser);
 		Teacher nick = teacherRepository.save(Teacher.builder().firstName("Nick").lastName("Pattar")
-				.gender(Gender.FEMALE).subjects(Arrays.asList(german, math)).build());
+				.gender(Gender.MALE).subjects(Arrays.asList(german, math)).build());
 
 		// LessonTimes
 		for (DayOfWeek day : DayOfWeek.values()) {
@@ -231,7 +247,8 @@ public class LoadData implements ApplicationRunner {
 		Lesson ga2m = Lesson.builder().subject(english).teacher(amy).grade(grade1a).lessonTime(secondHourOnMonday).build();
 		lessonRepository.save(ga2m);
 		
-		
+		LeaveDay ld = LeaveDay.builder().date(new Date()).description("This is a bad Day").type(LeaveType.SICK).person(amy).build();
+		leaveDayRepository.save(ld);
 	}
 
 }

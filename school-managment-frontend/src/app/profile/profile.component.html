@@ -1,6 +1,6 @@
 <div class="p-grid">
     <div class="d-flex justify-content-center  mt-5  ml-5 mr-5 p-col-2" style="min-width: 250px;">
-        <app-lesson-instance-list></app-lesson-instance-list>
+        <app-lesson-instance-list [person]="this.authService.getUser()?.person"></app-lesson-instance-list>
     </div>
     <div class="d-flex justify-content-center  mt-5  ml-5 mr-5 p-col-8">
         <app-leave-days></app-leave-days>

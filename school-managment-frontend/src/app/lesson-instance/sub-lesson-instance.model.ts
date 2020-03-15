@@ -6,10 +6,12 @@ export class SubLesson extends LessonInstance{
     
     public task;
 
-    public substituteTeacher:Teacher;
+    public substituteTeacher;
 
-    public leaveDay:LeaveDay;
+    public leaveDay;
 
-    public _embedded:LessonInstance;
+    public _embedded;
+
+    public allowInndependantlyWork;
 
 }

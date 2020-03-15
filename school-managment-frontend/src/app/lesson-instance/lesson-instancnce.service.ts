@@ -7,6 +7,8 @@ import { BehaviorSubject } from 'rxjs';
 import { LeaveDay } from '../leave-days/leave-day.model';
 import { SubLessonService } from './sub-lesson-instance.service';
 import { SubLesson } from './sub-lesson-instance.model';
+import { TeacherService } from '../teachers/teacher.service';
+import { Teacher } from '../teachers/teacher.model';
 
 @Injectable({ providedIn: 'root' })
 export class LessonInstanceService {
@@ -20,14 +22,14 @@ export class LessonInstanceService {
 
     techerLeaveDays: LeaveDay[];
 
-
+    allTeachers:Teacher[];
 
     constructor(
         private http: HttpClient,
         private lessonService: LessonService,
-        private subLessonInstanceService: SubLessonService
-    ) {
-    }
+        private subLessonInstanceService: SubLessonService,
+        private teacherService:TeacherService,
+    ) {}
     private getLessons(teacherUrl, day) {
         const promise = new Promise<LessonInstance[]>((resolve) => {
             this.lessonService.getLessonsForTeacherAndDay(teacherUrl, day.toUpperCase()).subscribe((data: { _embedded }) =>
@@ -44,7 +46,11 @@ export class LessonInstanceService {
                 '&&teacher=' + teacherUrl +
                 '&&projection=lessonInstanceProjection').subscribe(
                     (data: { _embedded }) => {
-                        resolve(data._embedded.lessonInstances)
+                        if(data._embedded.lessonInstances){
+                            resolve(data._embedded.lessonInstances)
+                        }else{
+                            resolve([]);
+                        }
                     },
                     () => resolve([]));
         });
@@ -71,7 +77,6 @@ export class LessonInstanceService {
             Promise.all([this.getLessonInstances(teacherUrl, date), this.getLessons(teacherUrl, this.days[date.getDay()])]).then(r => {
                 const lessonInstances: LessonInstance[] = r[0];
                 const lessons = r[1];
-                if (this.isSubDay) {
                     this.subLessonInstanceService.getSubLessonsForTeacherAndDateAsPromise(teacherUrl, date).then(sli => {
                         const subLessonInstances = sli;
                         if (lessons) {
@@ -93,20 +98,20 @@ export class LessonInstanceService {
                         this.lessonsInstancesChanged.next(subLessonInstances);
                         resolve(subLessonInstances);
                     });
-                } else {
-                    if (lessons) {
-                        lessons.forEach(lesson => {
-                            if (!lessonInstances.some(lI => lI.lessonTime.hour === lesson.lessonTime.hour)) {
-                                lesson.id = null;
-                                lesson._links.self = null;
-                                lessonInstances.push(lesson);
-                            }
-                        });
-                    }
-                    this.lessonsInstancesChanged.next(lessonInstances);
-                    resolve(lessonInstances);
-                }
             });
+        });
+        return promise;
+    }
+
+    getAvailableTeachers(){
+        const promise = new Promise<Teacher[]>((resolve) => {
+            if(this.allTeachers){
+                resolve(this.allTeachers);
+            }else{
+                this.teacherService.getTeachers().subscribe((teachers:Teacher[]) => {
+                    resolve(teachers);
+                });
+            }
         });
         return promise;
     }

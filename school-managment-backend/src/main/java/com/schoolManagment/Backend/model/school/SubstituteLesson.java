@@ -23,4 +23,6 @@ public class SubstituteLesson extends LessonInstance {
 	
 	private String task;
 	
+	private boolean allowInndependantlyWork;
+	
 }

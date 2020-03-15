@@ -88,9 +88,8 @@ export class EditTeacherComponent implements OnInit {
             });
         } else {
             this.teacherService.saveTeacher(this.teacherForm.value).subscribe(newTeacher => {
-                const url = newTeacher._links.self.href;
-                this.teacherService.getTeacher(url.substring(url.lastIndexOf('/') + 1)).subscribe(nT => {
-                    this.teacherService.addTeacher(nT);
+                const url:string = newTeacher._links.self.href;
+                this.teacherService.getTeacher(+url.substring(url.lastIndexOf('/') + 1)).subscribe(nT => {
                     this.messageService.add({
                         severity: 'success',
                         summary: 'Successfull Creation',

@@ -9,23 +9,28 @@
         <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
             <ul ngbNav class="navbar-nav">
                 <li ngbNavItem>
-                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated && (isAdmin || isTeacher)"
+                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated && (isAdmin() || isTeacher())"
                         [routerLink]="[ 'classes' ]" (click)="isMenuCollapsed = true"
                         >{{'classes' | translate }}</a>
                 </li>
                 <li ngbNavItem>
-                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated && (isAdmin || isTeacher)"
+                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated && (isAdmin() || isTeacher())"
                         [routerLink]="['students']" (click)="isMenuCollapsed = true"
                         >{{'students' | translate }}</a>
                 </li>
                 <li ngbNavItem>
-                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated && (isAdmin || isTeacher)"
+                    <a ngbNavLink routerLinkActive="active" *ngIf="isAuthenticated && (isAdmin() || isTeacher())"
                         [routerLink]="['teachers']" (click)="isMenuCollapsed = true">{{'teachers' | translate }}</a>
                 </li>
                 <li ngbNavItem>
                     <a ngbNavLink routerLinkActive="active"
-                        *ngIf="isAuthenticated && (isAdmin || isTeacher || isStudent)" [routerLink]="['lessons']"
+                        *ngIf="isAuthenticated && (isAdmin() || isTeacher() || isStudent())" [routerLink]="['lessons']"
                         (click)="isMenuCollapsed = true" >{{'lessons' | translate }}</a>
+                </li>
+                <li ngbNavItem>
+                    <a ngbNavLink routerLinkActive="active"
+                        *ngIf="isAuthenticated && (isAdmin())" [routerLink]="['substitutions']"
+                        (click)="isMenuCollapsed = true" >{{'substitutions' | translate }}</a>
                 </li>
             </ul>
 

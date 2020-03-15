@@ -17,7 +17,7 @@ export class LessonGridComponent implements OnInit {
 
   @Input() lesson: Lesson;
 
-  @Input() config: { day: string, hour: number, class: string, teacher: string };
+  @Input() config: { day: string, hour: number, class: string, teacher: string , allowEdit:boolean};
 
   @Output() lessonChange = new EventEmitter<Lesson>();
 
@@ -96,7 +96,7 @@ export class LessonGridComponent implements OnInit {
     } else {
       this.setSubjectObtions();
     }
-    this.allTeachers = this.teacherService.getTeachers();
+    this.allTeachers = this.teacherService.teacherChanged.value;
     if (this.allTeachers.length < 1) {
       this.teacherService.teacherChanged.pipe(take(1)).subscribe((data: []) => {
         this.allTeachers = data;
@@ -200,8 +200,10 @@ export class LessonGridComponent implements OnInit {
   }
 
   onClick() {
-    this.editMode = true;
-    this.initializeFilters();
+    if(this.config.allowEdit){
+      this.editMode = true;
+      this.initializeFilters();
+    }
   }
 
 }

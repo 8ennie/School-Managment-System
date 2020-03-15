@@ -24,12 +24,9 @@ export class TeachersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.allowEdit = this.authService.hasRole('ROLE_ADMIN');
     this.subscription = this.teacherService.teacherChanged
-      .subscribe(
-        (teachers: Teacher[]) => {
-          this.teachers = teachers;
-        }
-      );
-    this.teachers = this.teacherService.teacherList;
+      .subscribe((teachers: Teacher[]) => {
+        this.teachers = teachers;
+      });
   }
 
   teacherDetails(teacher) {

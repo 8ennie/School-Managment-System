@@ -1,1 +1,117 @@
-<p>substitutions works!</p>
+<div class="col d-flex justify-content-center mt-3">
+    <h3>{{'choose-a-date' | translate}}: </h3>
+    <p-calendar name="date" [(ngModel)]="date" appendTo="body" [disabledDays]="[0,6]" class="ml-3" [showIcon]="true"
+        (onSelect)="dateChange($event)">
+    </p-calendar>
+</div>
+
+<p-table [value]="leaveDays" selectionMode="single" [(selection)]="leaveDay" (onRowSelect)="onRowSelect($event)"
+    [rows]="15">
+    <ng-template pTemplate="caption">
+        <div class="d-flex">
+            <div>
+                {{'list-of-leave-days' | translate }}
+            </div>
+            <div style="text-align:left" class="ml-auto">
+                <button type="button" pButton icon="pi pi-plus" (click)="showDialogToAdd()"
+                    label="{{'add' | translate }}"></button>
+            </div>
+        </div>
+
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th [pSortableColumn]="date" *ngIf="!date">
+                {{'date' | translate}}
+                <p-sortIcon [field]="date"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="teacher">
+                {{'teacher' | translate}}
+                <p-sortIcon [field]="teacher"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="type">
+                {{'type' | translate}}
+                <p-sortIcon [field]="type"></p-sortIcon>
+            </th>
+            <th>
+                {{'description' | translate}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+            <td *ngIf="!date">
+                {{rowData.date}}
+            </td>
+            <td>
+                {{rowData.person.lastName}}
+            </td>
+            <td>
+                {{rowData.type}}
+            </td>
+            <td>
+                {{rowData.description}}
+            </td>
+        </tr>
+    </ng-template>
+
+</p-table>
+
+<p-dialog header="Leave Day" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true" showEffect="fade"
+    [modal]="true" [style]="{width: '300px'}">
+    <div class="ui-g ui-fluid" *ngIf="leaveDay">
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="teacher">{{'teacher' | translate }}:</label>
+            </div>
+            <div class="ui-g-8">
+                <p-dropdown name="teacher" [options]="allTeachers" [(ngModel)]="leaveDay.person"
+                    placeholder="Choose Teacher" optionLabel="fullName" dataKey="id" filter="true">
+                </p-dropdown>
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="date">{{'date' | translate }}:</label>
+            </div>
+            <div class="ui-g-8">
+                <p-calendar name="date" [(ngModel)]="leaveDay.date" appendTo="body" [disabledDays]="[0,6]">
+                </p-calendar>
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="type">{{'type' | translate }}:</label>
+            </div>
+            <div class="ui-g-8">
+                <p-dropdown name="type" [options]="leaveDayTypes" [(ngModel)]="leaveDay.type"></p-dropdown>
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="description">{{'description' | translate }}:</label>
+            </div>
+            <div class="ui-g-8">
+                <textarea pInputTextarea name="description" id="description"
+                    [(ngModel)]="leaveDay.description"></textarea>
+            </div>
+        </div>
+
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <button *ngIf="!newleaveDay" type="button" pButton icon="pi pi-times" (click)="delete()"
+                label="{{'delete' | translate }}"></button>
+            <button type="button" pButton icon="pi pi-check" (click)="save()" label="{{'save' | translate }}"></button>
+        </div>
+    </p-footer>
+</p-dialog>
+
+
+<div class="p-grid ml-2">
+    <div class="d-flex justify-content-center mt-5 ml-2 mr-2 p-col-2 card" style="min-width: 250px; padding-left: 1em;"
+        *ngFor="let leaveDay of leaveDays" >
+        <app-lesson-instance-list [person]="leaveDay.person" [changeDateHeader]="flase" [subLessonList]="true">
+        </app-lesson-instance-list>
+    </div>
+</div>

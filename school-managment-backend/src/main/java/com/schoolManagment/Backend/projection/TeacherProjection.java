@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.rest.core.config.Projection;
 
+import com.schoolManagment.Backend.model.school.LeaveDay;
 import com.schoolManagment.Backend.model.school.Teacher;
 import com.schoolManagment.Backend.model.school.help.Gender;
 
@@ -20,5 +21,7 @@ public interface TeacherProjection {
 	Gender getGender();
 	
 	List<SubjectProjection> getSubjects();
+	
+	List<LeaveDay> getLeaveDays();
 	
 }

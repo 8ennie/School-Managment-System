@@ -33,5 +33,9 @@
     "date":"Datum",
     "type":"Type",
     "description":"Description",
-    "delete":"Delete"
+    "delete":"Delete",
+    "substitute-teacher":"Substitute",
+    "choose-a-date":"Choose a Date",
+    "task":"Task",
+    "substitutions":"Substitutions"
 }

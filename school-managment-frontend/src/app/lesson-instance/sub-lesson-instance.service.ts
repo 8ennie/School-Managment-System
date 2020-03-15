@@ -14,7 +14,7 @@ export class SubLessonService {
 
 
     getSubLessonsForTeacherAndDate(teacherUrl: string, date: Date) {
-        return this.http.get(this.url + '/search/findByDateAndTeacher' +
+        return this.http.get(this.url + '/search/findByDateAndTeacherOrSubstituteTeacher' +
             '?date=' + date.getFullYear().toString() + '-' + (date.getMonth() + 1) + '-' + date.getDate().toString() +
             '&&teacher=' + teacherUrl +
             '&&projection=substituteLessonProjection');

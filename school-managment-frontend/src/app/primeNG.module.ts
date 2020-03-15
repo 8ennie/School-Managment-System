@@ -16,6 +16,7 @@ import {DialogModule} from 'primeng/dialog';
 import {CalendarModule} from 'primeng/calendar';
 import {VirtualScrollerModule} from 'primeng/virtualscroller';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
+import {ToggleButtonModule} from 'primeng/togglebutton';
 
 
 
@@ -36,6 +37,7 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
         CalendarModule,
         VirtualScrollerModule,
         ScrollPanelModule,
+        ToggleButtonModule,
     ],
     exports: [
         DataViewModule,
@@ -53,6 +55,7 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
         CalendarModule,
         VirtualScrollerModule,
         ScrollPanelModule,
+        ToggleButtonModule,
     ],
     providers: [MessageService]
 })

@@ -42,16 +42,15 @@ export class LessonsComponent implements OnInit {
           this.allGrades.filter(g => g.label.toUpperCase() === classValue.educationalStage)[0].items.push(classOption);
         });
       });
-    this.allTeachers = this.teacherService.getTeachers();
+    this.allTeachers = this.teacherService.teacherChanged.value;
     if (this.allTeachers.length < 1) {
-      this.teacherService.teacherChanged.pipe(take(1)).subscribe((data: []) => {
-        this.allTeachers = data;
+      this.teacherService.getTeachers().subscribe((teachers)=>{
+        this.allTeachers = teachers._embedded.teachers;
         this.setAllTeacher();
       });
     } else {
       this.setAllTeacher();
     }
-
   }
   setAllTeacher() {
     this.allTeachers = this.allTeachers.map(t => t = { label: t.fullName, value: t._links.self.href });

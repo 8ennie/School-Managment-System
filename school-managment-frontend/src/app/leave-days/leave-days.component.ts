@@ -12,24 +12,18 @@ import { environment } from 'src/environments/environment';
 export class LeaveDaysComponent implements OnInit {
 
   leaveDays = [];
-
   displayDialog: boolean;
-
   leaveDay: LeaveDay = new LeaveDay();
-
   selectedleaveDay;
-
   newleaveDay: boolean;
-
   cols: any[];
-
   leaveDayTypes: { label: string, value: string }[] = [];
 
   constructor(private authService: AuthService, private leaveDaysService: LeaveDayService) { }
 
   ngOnInit(): void {
     const person = this.authService.getUser().person;
-    this.leaveDaysService.getLeaveDaysForTeacher(person?.id).subscribe((leaveDays: { _embedded }) => {
+    this.leaveDaysService.getLeaveDaysForPerson(person?.id).subscribe((leaveDays: { _embedded }) => {
       this.leaveDays = leaveDays._embedded.leaveDays;
     });
 
