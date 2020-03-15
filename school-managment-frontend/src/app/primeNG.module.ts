@@ -17,7 +17,7 @@ import {CalendarModule} from 'primeng/calendar';
 import {VirtualScrollerModule} from 'primeng/virtualscroller';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
 import {ToggleButtonModule} from 'primeng/togglebutton';
-
+import {CarouselModule} from 'primeng/carousel';
 
 
 @NgModule({
@@ -38,6 +38,7 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
         VirtualScrollerModule,
         ScrollPanelModule,
         ToggleButtonModule,
+        CarouselModule
     ],
     exports: [
         DataViewModule,
@@ -56,6 +57,7 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
         VirtualScrollerModule,
         ScrollPanelModule,
         ToggleButtonModule,
+        CarouselModule
     ],
     providers: [MessageService]
 })

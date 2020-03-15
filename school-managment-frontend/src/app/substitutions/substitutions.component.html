@@ -111,7 +111,7 @@
 <div class="p-grid ml-2">
     <div class="d-flex justify-content-center mt-5 ml-2 mr-2 p-col-2 card" style="min-width: 250px; padding-left: 1em;"
         *ngFor="let leaveDay of leaveDays" >
-        <app-lesson-instance-list [person]="leaveDay.person" [changeDateHeader]="flase" [subLessonList]="true">
+        <app-lesson-instance-list [person]="leaveDay.person" [changeDateHeader]="flase" [subLessonList]="true" [date]="date" >
         </app-lesson-instance-list>
     </div>
 </div>

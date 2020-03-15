@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './substitutions.component.html',
   styleUrls: ['./substitutions.component.css']
 })
-export class SubstitutionsComponent implements OnInit, OnDestroy {
+export class SubstitutionsComponent implements OnInit {
 
 
   date: Date = new Date;
@@ -24,8 +24,6 @@ export class SubstitutionsComponent implements OnInit, OnDestroy {
 
   leaveDayTypes: { label: string, value: string }[] = [];
   allTeachers: Teacher[] = [];
-
-  allTeachersSubscription: Subscription;
 
   houres = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -45,11 +43,6 @@ export class SubstitutionsComponent implements OnInit, OnDestroy {
       newDate.setDate(newDate.getDate() + 2);
       this.date = newDate;
     }
-    
-
-    // this.leaveDaysService.getLeaveDays().subscribe((leaveDays: { _embedded }) => {
-    //   this.leaveDays = leaveDays._embedded.leaveDays;
-    // });
 
     this.getLeaveDays();
     this.leaveDaysService.getLeaveDayTypes().subscribe((ldt: { _embedded }) => {
@@ -58,11 +51,9 @@ export class SubstitutionsComponent implements OnInit, OnDestroy {
       });
       this.leaveDay.type = this.leaveDayTypes[0].value;
     });
-
-    this.allTeachersSubscription = this.teacherService.teacherChanged.subscribe((teachers: Teacher[]) => {
-      this.allTeachers = teachers;
+    this.teacherService.getTeachers().subscribe((teachers:{_embedded}) => {
+      this.allTeachers = teachers._embedded.teachers;
     });
-    this.teacherService.getTeachers().subscribe();
   }
 
   dateChange(event) {
@@ -70,8 +61,8 @@ export class SubstitutionsComponent implements OnInit, OnDestroy {
   }
 
   getLeaveDays() {
+    this.leaveDays = [];
     this.leaveDaysService.getLeaveDaysForDate(this.date).subscribe((leaveDays :{_embedded}) => {
-      console.log(leaveDays);
       this.leaveDays = leaveDays._embedded.leaveDays;
     });
   }
@@ -142,8 +133,5 @@ export class SubstitutionsComponent implements OnInit, OnDestroy {
     return leaveDay;
   }
 
-  ngOnDestroy(): void {
-    this.allTeachersSubscription.unsubscribe();
-  }
 
 }

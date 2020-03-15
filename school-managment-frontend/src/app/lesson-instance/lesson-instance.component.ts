@@ -37,8 +37,6 @@ export class LessonInstanceComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    console.log(this.config);
-    
     this.lessonInstanceSubscription = this.lessonInstanceService.lessonsInstancesChanged.subscribe((data: SubLesson[]) => {
       this.isSubLesson = this.lessonInstanceService.isSubDay;
       this.lessonInstance = null;

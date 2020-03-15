@@ -47,9 +47,9 @@ export class LessonGridComponent implements OnInit {
   isTeacherAvalibale(value) {
     const promise = new Promise<boolean>((resolve) => {
       if (this.lessonTimeLessons) {
-        this.lessonTimeLessons.forEach(l => {
-          if (value === l.teacher._links.self.href.replace('{?projection}', '')) {
-            if (this.lesson?._links?.self?.href === l._links.self.href) {
+        this.lessonTimeLessons.forEach(lessonTime => {
+          if (value === lessonTime.teacher._links.self.href.replace('{?projection}', '')) {
+            if (this.lesson?._links?.self?.href === lessonTime._links.self.href) {
               resolve(true);
             } else {
               resolve(false);

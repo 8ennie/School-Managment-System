@@ -14,7 +14,7 @@ export class LessonInstanceListComponent implements OnInit, OnDestroy {
 
   @Input() changeDateHeader: boolean = true;
 
-  @Input() date: Date = new Date();
+  @Input() date: Date;
 
   @Input() person: {id:number};
 
@@ -39,22 +39,21 @@ export class LessonInstanceListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    if (this.date.getDay() === 0) {
-      this.updateDate(1);
-    } else if (this.date.getDay() === 6) {
-      this.updateDate(2);
+    if(!this.date){
+      this.date = new Date();
+      if (this.date.getDay() === 0) {
+        this.updateDate(1);
+      } else if (this.date.getDay() === 6) {
+        this.updateDate(2);
+      }
+    }else{
+      this.updateLessons();
     }
     if (this.changeDateHeader) {
       this.leaveDayService.getLeaveDaysForPerson(this.person.id).subscribe((leaveDays: { _embedded }) => {
         this.leaveDays = leaveDays._embedded.leaveDays;
         this.updateLessons();
       });
-      // this.newLeaveDaySubscription = this.leaveDayService.newLeaveDay.subscribe(leaveDay => {
-      //   console.log(leaveDay);
-      //   if(leaveDay){
-  
-      //   }
-      // });  
     }
    
   }
