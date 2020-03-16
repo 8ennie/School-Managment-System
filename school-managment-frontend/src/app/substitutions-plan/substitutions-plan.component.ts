@@ -13,8 +13,7 @@ export class SubstitutionsPlanComponent implements OnInit {
 
   date: Date = new Date();
   leaveDays: LeaveDay[] = [];
-  houres = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
+  
   responsiveOptions;
 
   constructor(

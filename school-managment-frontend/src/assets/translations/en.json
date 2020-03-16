@@ -37,5 +37,10 @@
     "substitute-teacher":"Substitute",
     "choose-a-date":"Choose a Date",
     "task":"Task",
-    "substitutions":"Substitutions"
+    "substitutions":"Substitutions",
+    "substitutionTeacher":"Substitution Teacher",
+    "mr":"Mr. ",
+    "mrs": "Mrs. ",
+    "fetch": "Fetch",
+    "canceled": "Canceled"
 }

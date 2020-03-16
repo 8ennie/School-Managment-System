@@ -1,0 +1,37 @@
+<div *ngIf="subLesson" class="pt-2">
+    <div class="row">
+        <div class="d-flex mb-1 col">
+            <span class="pt-1 pb-1" style="min-width: 75px;">{{'class' | translate}}:</span>
+            <div class="card p-1 d-block w-100" style="text-align: center;"> {{subLesson.grade.name}}</div>
+        </div>
+        <div class="d-flex mb-1 col">
+            <span class="p-1" style="min-width: 75px;">{{'subject' | translate}}:</span>
+            <div class="card p-1 d-block w-100" style="text-align: center;"> {{subLesson.subject.name}}</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="d-flex mb-1 col" *ngIf="subLesson.substituteTeacher">
+            <span class="pt-1 pb-1" style="min-width: 75px;">{{'substitutionTeacher' | translate}}:</span>
+            <div class="card p-1 d-block w-100" style="text-align: center;">
+                {{subLesson.substituteTeacher.gender === 'MALE'? ('mr' | translate) : ('mrs' | translate)}}
+                {{subLesson.substituteTeacher.firstName.charAt(0) + '. ' + subLesson.substituteTeacher.lastName}}
+            </div>
+        </div>
+        <div class="d-flex mb-1 col" *ngIf="!subLesson.substituteTeacher && subLesson.task">
+            <span class="pt-1 pb-1" style="min-width: 75px;">{{'substitutionTeacher' | translate}}:</span>
+            <div class="card p-1 d-block w-100" style="text-align: center;">
+                {{'eva' | translate}}
+            </div>
+        </div>
+        <div class="d-flex mb-1 col" *ngIf="!subLesson.substituteTeacher && subLesson.task">
+            <span class="pt-1 pb-1" style="min-width: 75px;">{{'task' | translate}}:</span>
+            <div class="card p-1 d-block w-100" style="text-align: center;">
+                {{'fetch' | translate}}
+            </div>
+        </div>
+        <div class="d-flex mb-1 col" *ngIf="!subLesson.substituteTeacher && !subLesson.task">
+            <div class="card p-1 d-block w-100" style="text-align: center;"> {{'canceled' | translate}}</div>
+        </div>
+    </div>
+
+</div>

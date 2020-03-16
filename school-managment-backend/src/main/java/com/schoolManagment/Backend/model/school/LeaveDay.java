@@ -45,6 +45,6 @@ public class LeaveDay {
 	private Person person;
 	
 	@OneToMany
-	private List<LeaveDay> leaveDay;
+	private List<SubstituteLesson> substituteLessons;
 
 }

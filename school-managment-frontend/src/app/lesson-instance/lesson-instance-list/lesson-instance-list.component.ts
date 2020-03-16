@@ -16,7 +16,7 @@ export class LessonInstanceListComponent implements OnInit, OnDestroy {
 
   @Input() date: Date;
 
-  person: { id: number };
+  @Input() person: { id: number };
 
   @Input() subLessonList: boolean = false;
 
@@ -36,7 +36,7 @@ export class LessonInstanceListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    if (this.leaveDay) {
+    if(!this.person && this.leaveDay?.person){
       this.person = this.leaveDay.person;
     }
 

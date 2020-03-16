@@ -37,5 +37,10 @@
     "substitute-teacher":"Vertretung",
     "choose-a-date":"Wähle ein Datum",
     "task":"Aufgabe",
-    "substitutions":"Vertretung"
+    "substitutions":"Vertretung",
+    "substitutionTeacher":"Vertretung",
+    "mr":"Herr",
+    "mrs": "Frau",
+    "fetch": "Abholen",
+    "canceled": "Entfall"
 }
