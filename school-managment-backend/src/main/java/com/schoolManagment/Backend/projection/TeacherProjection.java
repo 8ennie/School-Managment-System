@@ -1,5 +1,6 @@
 package com.schoolManagment.Backend.projection;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 import org.springframework.data.rest.core.config.Projection;
@@ -23,5 +24,9 @@ public interface TeacherProjection {
 	List<SubjectProjection> getSubjects();
 	
 	List<LeaveDay> getLeaveDays();
+	
+	List<DayOfWeek> getDaysWorking();
+	
+	boolean getSubstituteTeacher();
 	
 }

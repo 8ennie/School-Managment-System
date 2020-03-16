@@ -18,11 +18,20 @@ export class EditTeacherComponent implements OnInit {
     editMode = false;
     id: number;
 
+    daysOfWeek = [
+        { label: 'Monday', value: 'MONDAY' },
+        { label: 'Tuedsay', value: 'TUESDAY' },
+        { label: 'Wednesday', value: 'WEDNESDAY' },
+        { label: 'Thursday', value: 'THURSDAY' },
+        { label: 'Friday', value: 'FRIDAY' }];
+
     teacherForm = new FormGroup({
         firstName: new FormControl('', Validators.required),
         lastName: new FormControl('', Validators.required),
         gender: new FormControl('MALE', Validators.required),
-        subjects: new FormControl('')
+        subjects: new FormControl(''),
+        substituteTeacher: new FormControl(''),
+        daysWorking: new FormControl(['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY']),
     });
 
     createUserForTeacher = true;
@@ -59,6 +68,8 @@ export class EditTeacherComponent implements OnInit {
                     editTeacher.subjects = teacher.subjects.map((sub: { _links }) =>
                         sub = sub._links.self.href.replace('{?projection}', '')
                     );
+                    console.log(editTeacher);
+                    
                     this.teacherForm.reset(editTeacher);
                 });
             }
@@ -66,6 +77,8 @@ export class EditTeacherComponent implements OnInit {
     }
 
     onSubmit() {
+        console.log(this.teacherForm.value);
+        
         if (this.editMode) {
             this.teacherService.editTeacher(this.id, this.teacherForm.value).subscribe(() => {
                 setTimeout(() => {
@@ -88,7 +101,7 @@ export class EditTeacherComponent implements OnInit {
             });
         } else {
             this.teacherService.saveTeacher(this.teacherForm.value).subscribe(newTeacher => {
-                const url:string = newTeacher._links.self.href;
+                const url: string = newTeacher._links.self.href;
                 this.teacherService.getTeacher(+url.substring(url.lastIndexOf('/') + 1)).subscribe(nT => {
                     this.messageService.add({
                         severity: 'success',

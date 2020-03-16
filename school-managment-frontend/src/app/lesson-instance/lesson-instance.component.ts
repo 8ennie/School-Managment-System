@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { SubLessonService } from './sub-lesson-instance.service';
 import { SubLesson } from './sub-lesson-instance.model';
 import { LessonInstanceDetailsDialogComponent } from './lesson-instance-details-dialog/lesson-instance-details-dialog.component';
+import { LeaveDay } from '../leave-days/leave-day.model';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class LessonInstanceComponent implements OnInit, OnDestroy {
   }
 
 
-  @Input() config: { date: Date, hour: number, class: string, person:{} };
+  @Input() config: { date: Date, hour: number, class: string, person: {}, leaveDay };
 
   lessonInstance: SubLesson;
   lessonInstanceSubscription: Subscription;
@@ -67,8 +68,9 @@ export class LessonInstanceComponent implements OnInit, OnDestroy {
     if (this.isSubLesson) {
       const newSubLesson = newLessonInstance as SubLesson;
       newSubLesson.task = (this.lessonInstance as SubLesson).task;
+      newSubLesson.leaveDay = this.config.leaveDay._links.self.href;
       newSubLesson.substituteTeacher = (this.lessonInstance as SubLesson).substituteTeacher ?
-        (this.lessonInstance as SubLesson).substituteTeacher._links.self.href.replace('{?projection}', '')
+      (this.lessonInstance as SubLesson).substituteTeacher._links.self.href.replace('{?projection}', '')
         : null;
       newSubLesson.allowInndependantlyWork = (this.lessonInstance as SubLesson).allowInndependantlyWork;
       if (this.lessonInstance._links?.self?.href) {

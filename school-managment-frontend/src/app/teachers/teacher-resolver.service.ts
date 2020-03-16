@@ -12,7 +12,9 @@ export class TeacherResolverService implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const teachers = this.teacherService.teacherChanged.value;
     if (teachers.length === 0) {
-      return this.teacherService.getTeachers().subscribe();
+      this.teacherService.getTeachers().subscribe(teacher => {
+        return teacher._embedded.teachers;
+      });
     } else {
       return teachers;
     }

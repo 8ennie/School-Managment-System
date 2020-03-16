@@ -1,6 +1,7 @@
 package com.schoolManagment.Backend.model.school;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -41,5 +43,8 @@ public class LeaveDay {
 	@ManyToOne
 	@JsonBackReference
 	private Person person;
+	
+	@OneToMany
+	private List<LeaveDay> leaveDay;
 
 }

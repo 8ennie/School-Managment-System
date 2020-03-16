@@ -12,24 +12,24 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./lesson-instance-details-dialog.component.css']
 })
 export class LessonInstanceDetailsDialogComponent implements OnInit, OnDestroy {
- 
-  teacherList:Teacher[] = [];
-  
+
+  teacherList: Teacher[] = [];
+
   lessonInstance: SubLesson;
 
   isSubLesson: boolean = false;
 
-  isAdmin:boolean = false;
+  isAdmin: boolean = false;
 
   constructor(
-    public ref: DynamicDialogRef, 
+    public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
-    public lessonInstanceService : LessonInstanceService,
-    public authService:AuthService,
-    ) {
+    public lessonInstanceService: LessonInstanceService,
+    public authService: AuthService,
+  ) {
     this.isAdmin = this.authService.hasRole('ROLE_ADMIN');
     this.lessonInstance = config.data.lessonInstance;
-    if(this.lessonInstance.substituteTeacher){
+    if (this.lessonInstance.substituteTeacher) {
       const teacher = this.lessonInstance.substituteTeacher;
       this.lessonInstance.substituteTeacher.fullName = teacher.firstName + ' ' + teacher.lastName;
     }
@@ -39,7 +39,7 @@ export class LessonInstanceDetailsDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.lessonInstanceService.getAvailableTeachers().then((teachers: any) => {
       this.teacherList = teachers._embedded.teachers;
-    } );
+    });
   }
 
   close() {
@@ -52,6 +52,6 @@ export class LessonInstanceDetailsDialogComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    
+
   }
 }

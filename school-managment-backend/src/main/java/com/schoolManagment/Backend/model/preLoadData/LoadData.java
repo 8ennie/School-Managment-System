@@ -39,6 +39,7 @@ import com.schoolManagment.Backend.repository.StudentRepository;
 import com.schoolManagment.Backend.repository.SubjectRepository;
 import com.schoolManagment.Backend.repository.TeacherRepository;
 import com.schoolManagment.Backend.repository.UserRepository;
+import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -168,7 +169,7 @@ public class LoadData implements ApplicationRunner {
 		Subject computer = subjectRepository.save(Subject.builder().name("Computer").build());
 
 		// Teachers
-		Teacher amy = teacherRepository.save(Teacher.builder().firstName("Amy").lastName("Tod").gender(Gender.FEMALE)
+		Teacher amy = teacherRepository.save(Teacher.builder().firstName("Amy").lastName("Tod").daysWorking(Arrays.asList(DayOfWeek.values())).gender(Gender.FEMALE)
 				.subjects(Arrays.asList(german, english)).build());
 		User amyUser = new User("amy", "amy@aschollmanagment.com", encoder.encode("amy"));
 		Set<Role> amyRoles = new HashSet<>();

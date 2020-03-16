@@ -22,14 +22,14 @@ export class LessonInstanceService {
 
     techerLeaveDays: LeaveDay[];
 
-    allTeachers:Teacher[];
+    allTeachers: Teacher[];
 
     constructor(
         private http: HttpClient,
         private lessonService: LessonService,
         private subLessonInstanceService: SubLessonService,
-        private teacherService:TeacherService,
-    ) {}
+        private teacherService: TeacherService,
+    ) { }
     private getLessons(teacherUrl, day) {
         const promise = new Promise<LessonInstance[]>((resolve) => {
             this.lessonService.getLessonsForTeacherAndDay(teacherUrl, day.toUpperCase()).subscribe((data: { _embedded }) =>
@@ -46,9 +46,9 @@ export class LessonInstanceService {
                 '&&teacher=' + teacherUrl +
                 '&&projection=lessonInstanceProjection').subscribe(
                     (data: { _embedded }) => {
-                        if(data._embedded.lessonInstances){
+                        if (data._embedded.lessonInstances) {
                             resolve(data._embedded.lessonInstances)
-                        }else{
+                        } else {
                             resolve([]);
                         }
                     },
@@ -77,38 +77,38 @@ export class LessonInstanceService {
             Promise.all([this.getLessonInstances(teacherUrl, date), this.getLessons(teacherUrl, this.days[date.getDay()])]).then(r => {
                 const lessonInstances: LessonInstance[] = r[0];
                 const lessons = r[1];
-                    this.subLessonInstanceService.getSubLessonsForTeacherAndDateAsPromise(teacherUrl, date).then(sli => {
-                        const subLessonInstances = sli;
-                        if (lessons) {
-                            lessons.forEach(lesson => {
-                                if (!subLessonInstances?.some(slI => slI.lessonTime.hour === lesson.lessonTime.hour)) {
-                                    if (!lessonInstances?.some(lI => lI.lessonTime.hour === lesson.lessonTime.hour)) {
-                                        lesson.id = null;
-                                        lesson._links.self = null;
-                                        subLessonInstances.push(lesson as SubLesson);
-                                    } else {
-                                        const lessonInstance: LessonInstance = lessonInstances.filter(lI => lI.lessonTime.hour === lesson.lessonTime.hour)[0] as SubLesson;
-                                        lessonInstance.id = null;
-                                        lessonInstance._links.self = null;
-                                        subLessonInstances.push(lessonInstance as SubLesson);
-                                    }
+                this.subLessonInstanceService.getSubLessonsForTeacherAndDateAsPromise(teacherUrl, date).then(sli => {
+                    const subLessonInstances = sli;
+                    if (lessons) {
+                        lessons.forEach(lesson => {
+                            if (!subLessonInstances?.some(slI => slI.lessonTime.hour === lesson.lessonTime.hour)) {
+                                if (!lessonInstances?.some(lI => lI.lessonTime.hour === lesson.lessonTime.hour)) {
+                                    lesson.id = null;
+                                    lesson._links.self = null;
+                                    subLessonInstances.push(lesson as SubLesson);
+                                } else {
+                                    const lessonInstance: LessonInstance = lessonInstances.filter(lI => lI.lessonTime.hour === lesson.lessonTime.hour)[0] as SubLesson;
+                                    lessonInstance.id = null;
+                                    lessonInstance._links.self = null;
+                                    subLessonInstances.push(lessonInstance as SubLesson);
                                 }
-                            });
-                        }
-                        this.lessonsInstancesChanged.next(subLessonInstances);
-                        resolve(subLessonInstances);
-                    });
+                            }
+                        });
+                    }
+                    this.lessonsInstancesChanged.next(subLessonInstances);
+                    resolve(subLessonInstances);
+                });
             });
         });
         return promise;
     }
 
-    getAvailableTeachers(){
+    getAvailableTeachers() {
         const promise = new Promise<Teacher[]>((resolve) => {
-            if(this.allTeachers){
+            if (this.allTeachers) {
                 resolve(this.allTeachers);
-            }else{
-                this.teacherService.getTeachers().subscribe((teachers:Teacher[]) => {
+            } else {
+                this.teacherService.getTeachers().subscribe((teachers: Teacher[]) => {
                     resolve(teachers);
                 });
             }

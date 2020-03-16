@@ -11,11 +11,14 @@ export class Teacher extends HateoasEntity {
 
     subjects: any[];
 
-    leaveDays:LeaveDay[];
+    leaveDays: LeaveDay[];
+
+    daysWorking: string[];
+
+    substituteTeacher: boolean;
 
     // HelperFields
-    fullName?: string;
+    fullName?: string = this.firstName + ' ' + this.lastName;
+    officialName?: string = this.gender === 'MALE' ? 'Mr. ' : 'Ms. ' + this.firstName.charAt(0) + this.lastName;
     optionLable?;
-
-    officialName?: string = this.gender === 'MALE' ? 'Mr. ' : 'Ms. ' + this.lastName;
 }

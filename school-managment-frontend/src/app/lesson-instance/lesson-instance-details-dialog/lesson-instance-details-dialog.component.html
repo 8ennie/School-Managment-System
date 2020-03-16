@@ -43,15 +43,18 @@
                                             {{'substitute-teacher' | translate }}:
                                         </div>
                                     </div>
-                                    <p-dropdown name="teacher" [options]="teacherList"
-                                        [(ngModel)]="lessonInstance.substituteTeacher"
-                                        [placeholder]="lessonInstance.allowInndependantlyWork ? 'EVA':'Choose Teacher'" optionLabel="fullName" dataKey="id"
-                                        filter="true" [disabled]="!isAdmin" [showClear]="true"
-                                        *ngIf="!lessonInstance.allowInndependantlyWork">
-                                    </p-dropdown>
-                                    <p-toggleButton name="evaToggle" *ngIf="!lessonInstance.substituteTeacher"
-                                        [(ngModel)]="lessonInstance.allowInndependantlyWork" onLabel="EVA"
-                                        offLabel="No EVA" onIcon="pi pi-check" offIcon="pi pi-times"></p-toggleButton>
+                                    <div class="">
+                                        <p-dropdown name="teacher" [options]="teacherList"
+                                            [(ngModel)]="lessonInstance.substituteTeacher"
+                                            [placeholder]="lessonInstance.allowInndependantlyWork ? 'EVA':'Choose Teacher'"
+                                            optionLabel="fullName" dataKey="id" filter="true" [disabled]="!isAdmin"
+                                            [showClear]="true" *ngIf="!lessonInstance.allowInndependantlyWork">
+                                        </p-dropdown>
+                                        <p-toggleButton name="evaToggle" *ngIf="!lessonInstance.substituteTeacher"
+                                            [(ngModel)]="lessonInstance.allowInndependantlyWork" onLabel="EVA"
+                                            offLabel="No EVA" onIcon="pi pi-check" offIcon="pi pi-times">
+                                        </p-toggleButton>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -37,6 +37,7 @@ import { LeaveDaysComponent } from './leave-days/leave-days.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LessonInstanceListComponent } from './lesson-instance/lesson-instance-list/lesson-instance-list.component';
 import { SubstitutionsPlanComponent } from './substitutions-plan/substitutions-plan.component';
+import { SubstitutionPlanListComponent as SubstitutionsPlanListComponent } from './substitutions-plan/substitution-plan-list/substitution-plan-list.component';
 
 
 
@@ -65,6 +66,7 @@ import { SubstitutionsPlanComponent } from './substitutions-plan/substitutions-p
     ProfileComponent,
     LessonInstanceListComponent,
     SubstitutionsPlanComponent,
+    SubstitutionsPlanListComponent,
   ],
   imports: [
     FormsModule,

@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-lesson-instance-list',
   templateUrl: './lesson-instance-list.component.html',
   styleUrls: ['./lesson-instance-list.component.css'],
-  providers:[LessonInstanceService]
+  providers: [LessonInstanceService]
 })
 export class LessonInstanceListComponent implements OnInit, OnDestroy {
 
@@ -16,15 +16,12 @@ export class LessonInstanceListComponent implements OnInit, OnDestroy {
 
   @Input() date: Date;
 
-  @Input() person: {id:number};
+  person: { id: number };
 
   @Input() subLessonList: boolean = false;
 
-  ngOnDestroy(): void {
-    if(this.newLeaveDaySubscription){
-      this.newLeaveDaySubscription.unsubscribe();
-    }
-  }
+  @Input() leaveDay: LeaveDay;
+
 
   absent = false;
   days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -39,14 +36,18 @@ export class LessonInstanceListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    if(!this.date){
+    if (this.leaveDay) {
+      this.person = this.leaveDay.person;
+    }
+
+    if (!this.date) {
       this.date = new Date();
       if (this.date.getDay() === 0) {
         this.updateDate(1);
       } else if (this.date.getDay() === 6) {
         this.updateDate(2);
       }
-    }else{
+    } else {
       this.updateLessons();
     }
     if (this.changeDateHeader) {
@@ -55,14 +56,19 @@ export class LessonInstanceListComponent implements OnInit, OnDestroy {
         this.updateLessons();
       });
     }
-   
+
   }
 
   updateLessons() {
-    if (this.leaveDays.map(ld => new Date(ld.date).toDateString()).includes(this.date.toDateString()) || this.subLessonList) {
+    if (this.leaveDays.map(ld => new Date(ld.date).toDateString()).includes(this.date.toDateString())) {
+      this.leaveDay = this.leaveDays.filter(ld => new Date(ld.date).toDateString() === this.date.toDateString())[0];
+      this.absent = true;
+      this.lessonnInstanceService.isSubDay = true;
+    } else if (this.subLessonList) {
       this.absent = true;
       this.lessonnInstanceService.isSubDay = true;
     } else {
+      this.leaveDay = null;
       this.absent = false;
       this.lessonnInstanceService.isSubDay = false;
     }
@@ -97,18 +103,26 @@ export class LessonInstanceListComponent implements OnInit, OnDestroy {
     this.updateLessons();
   }
 
-  isLeaveDay(date) {
-    let isLeaveDay = false;
-    this.leaveDays.forEach(lf => {
-      let leaveDayDate = new Date(lf.date);
-      if (date.year === leaveDayDate.getFullYear()) {
-        if (date.month === leaveDayDate.getMonth()) {
-          if (date.day === leaveDayDate.getDate()) {
-            isLeaveDay = true;
-          }
-        }
-      }
-    });
-    return isLeaveDay;
+  // isLeaveDay(date) {
+  //   let isLeaveDay = false;
+  //   this.leaveDays.forEach(lf => {
+  //     const leaveDayDate = new Date(lf.date);
+  //     if (date.year === leaveDayDate.getFullYear()) {
+  //       if (date.month === leaveDayDate.getMonth()) {
+  //         if (date.day === leaveDayDate.getDate()) {
+  //           this.leaveDay = lf;
+  //           isLeaveDay = true;
+  //         }
+  //       }
+  //     }
+  //   });
+  //   return isLeaveDay;
+  // }
+
+  ngOnDestroy(): void {
+    if (this.newLeaveDaySubscription) {
+      this.newLeaveDaySubscription.unsubscribe();
+    }
   }
+
 }

@@ -28,7 +28,7 @@
     <div *ngFor="let hour of houres">
         <div class="row" style="min-height: 85px;">
             <div class="card ml-3" style=" max-width: 210px;width: 25px; text-align: center;"> {{hour}} </div>
-            <app-lesson-instance [config]="{date:date, hour:hour, class:class, person: person}" class="col">
+            <app-lesson-instance [config]="{date:date, hour:hour, class:class, person: person, leaveDay:leaveDay}" class="col">
             </app-lesson-instance>
         </div>
         <div *ngIf="hour%2 === 0" class="row d-flex justify-content-center m-1 card" style="text-align: center;">
