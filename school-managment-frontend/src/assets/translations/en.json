@@ -42,5 +42,14 @@
     "mr":"Mr. ",
     "mrs": "Mrs. ",
     "fetch": "Fetch",
-    "canceled": "Canceled"
+    "canceled": "Canceled",
+    "manage":"Manage",
+    "plan":"Plan",
+    "monday":"Monday",
+    "tuesday":"Tuesday",
+    "wednesday":"Wednesday",
+    "thursday":"Thursday",
+    "friday":"Friday",
+    "houre":"Houre",
+    "working":"Working"
 }

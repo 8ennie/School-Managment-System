@@ -62,7 +62,7 @@ export class LessonGridService {
             if (config.class) {
                 lesson.grade = config.class;
             } else if (config.teacher) {
-                lesson.teacher._links.self.href = config.teacher;
+                lesson.teacher._links.self.href = config.teacher._links.self.href;
             }
             if (lesson.id) {
                 this.lessonService.updateLesson(lesson).subscribe(() => {

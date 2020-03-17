@@ -12,7 +12,7 @@ import { AuthService } from '../auth/auth.service';
 })
 export class LessonsComponent implements OnInit {
 
-  days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
   houres = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   allGrades = [];
   allTeachers = [];
@@ -44,12 +44,12 @@ export class LessonsComponent implements OnInit {
       });
     this.allTeachers = this.teacherService.teacherChanged.value;
     if (this.allTeachers.length < 1) {
-      this.teacherService.getTeachers().subscribe((teachers)=>{
+      this.teacherService.getTeachers().subscribe((teachers) => {
         this.allTeachers = teachers._embedded.teachers;
-        this.setAllTeacher();
+        //this.setAllTeacher();
       });
     } else {
-      this.setAllTeacher();
+      //this.setAllTeacher();
     }
   }
   setAllTeacher() {
@@ -62,7 +62,7 @@ export class LessonsComponent implements OnInit {
   }
 
   onTeacherChange(event) {
-    this.lessonGridService.featchLessonsForTeacher(event.value);
+    this.lessonGridService.featchLessonsForTeacher(this.teacher._links.self.href);
     this.class = null;
   }
 

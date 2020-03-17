@@ -6,6 +6,7 @@ import { LessonGridService } from '../lesson-grid/lesson-grid.service';
 import { Subscription } from 'rxjs';
 import { Lesson } from '../lesson.model';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Teacher } from 'src/app/teachers/teacher.model';
 
 @Component({
     selector: 'app-drop-box',
@@ -19,7 +20,7 @@ export class DropBoxComponent implements OnInit, OnDestroy {
         private authService: AuthService,
     ) { }
 
-    @Input() config: { day: string, hour: number, class: string, teacher: string, allowEdit: boolean };
+    @Input() config: { day: string, hour: number, class: string, teacher: Teacher, allowEdit: boolean };
 
     @ViewChild(InsertDirective, { static: true }) inCom: InsertDirective;
 
@@ -32,7 +33,7 @@ export class DropBoxComponent implements OnInit, OnDestroy {
     private lesson: Lesson;
 
     ngOnInit() {
-        this.allowEdit = this.config.allowEdit;
+        this.checkEditAllow();
         this.items = [
             {
                 label: 'Remove',
@@ -51,7 +52,17 @@ export class DropBoxComponent implements OnInit, OnDestroy {
             if (!present && this.vrc) {
                 this.removeLesson();
             }
+            this.checkEditAllow();
         });
+    }
+
+    checkEditAllow() {
+        this.allowEdit = this.config.allowEdit;
+        if (this.allowEdit && this.config.teacher) {
+            if (!this.config.teacher?.daysWorking.includes(this.config.day.toUpperCase())) {
+                this.allowEdit = false;
+            }
+        }
     }
 
     onDrop(event) {
@@ -66,6 +77,14 @@ export class DropBoxComponent implements OnInit, OnDestroy {
                             severity: 'error',
                             summary: 'The Teacher unavalibale',
                             detail: 'The teacher already has a class at this time'
+                        });
+                    }
+                    if (!l.teacher.daysWorking.includes(this.config.day.toUpperCase())) {
+                        tacherPressent = true;
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'The Teacher unavalibale',
+                            detail: 'The teacher doesn`t work on this day'
                         });
                     }
                 });
@@ -94,6 +113,8 @@ export class DropBoxComponent implements OnInit, OnDestroy {
             (componentRef.instance as LessonGridComponent).lesson = data;
             this.lesson = data;
         }
+        console.log(this.config);
+
         (componentRef.instance as LessonGridComponent).config = this.config;
         (componentRef.instance as LessonGridComponent).lessonChange.subscribe(lesson => {
             this.lesson = lesson;

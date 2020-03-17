@@ -2,6 +2,7 @@ package com.schoolManagment.Backend.model.school;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -24,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 public class Lesson {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne

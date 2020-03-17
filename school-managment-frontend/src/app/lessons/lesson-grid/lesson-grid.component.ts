@@ -17,7 +17,7 @@ export class LessonGridComponent implements OnInit {
 
   @Input() lesson: Lesson;
 
-  @Input() config: { day: string, hour: number, class: string, teacher: string , allowEdit:boolean};
+  @Input() config: { day: string, hour: number, class: string, teacher: Teacher, allowEdit: boolean };
 
   @Output() lessonChange = new EventEmitter<Lesson>();
 
@@ -72,10 +72,7 @@ export class LessonGridComponent implements OnInit {
         this.lesson.grade = this.config.class;
       }
       if (this.config.teacher) {
-        this.lesson.teacher = new Teacher();
-        this.lesson.teacher._links = {};
-        this.lesson.teacher._links.self = {};
-        this.lesson.teacher._links.self.href = this.config.teacher;
+        this.lesson.teacher = this.config.teacher;
       }
     } else if (!this.lesson.id) {
       this.editMode = true;
@@ -154,6 +151,7 @@ export class LessonGridComponent implements OnInit {
         this.teacherOptions.push(t);
       });
     }
+    this.teacherOptions = this.teacherOptions.filter(to => to.daysWorking.includes(this.config.day.toUpperCase()));
     this.teacherOptions.forEach(t => {
       this.isTeacherAvalibale(t._links.self.href).then(b => {
         if (b) {
@@ -200,7 +198,7 @@ export class LessonGridComponent implements OnInit {
   }
 
   onClick() {
-    if(this.config.allowEdit){
+    if (this.config.allowEdit) {
       this.editMode = true;
       this.initializeFilters();
     }

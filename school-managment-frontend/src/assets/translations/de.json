@@ -42,5 +42,14 @@
     "mr":"Herr",
     "mrs": "Frau",
     "fetch": "Abholen",
-    "canceled": "Entfall"
+    "canceled": "Entfall",
+    "manage":"Verwalten",
+    "plan":"Plan",
+    "monday":"Monatg",
+    "tuesday":"Diensatg",
+    "wednesday":"Mitwoch",
+    "thursday":"Donnerstag",
+    "friday":"Freitag",
+    "houre":"Stunde",
+    "working":"Arbeitet"
 }

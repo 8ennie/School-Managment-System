@@ -1,7 +1,16 @@
-<div class="card" [appDraggable]="{data:lesson}" *ngIf="!editMode" (dblclick)="onClick()">
-    <p>Subject: {{lesson.subject.name}}</p>
-    <p *ngIf="!config.teacher">Teacher: {{lesson.teacher.firstName}} {{lesson.teacher.lastName}}</p>
-    <p *ngIf="!config.class">Class: {{lesson.grade.name}}</p>
+<div class="card pt-1" [appDraggable]="{data:lesson}" *ngIf="!editMode" (dblclick)="onClick()">
+    <div class="d-flex mb-1 col">
+        <span class="pt-1 pb-1" style="min-width: 75px;">{{'subject' | translate}}:</span>
+        <div class="card p-1 d-block w-100" style="text-align: center;"> {{lesson.subject.name}}</div>
+    </div>
+    <div class="d-flex mb-1 col" *ngIf="!config.teacher">
+        <span class="pt-1 pb-1" style="min-width: 75px;">{{'teacher' | translate}}:</span>
+        <div class="card p-1 d-block w-100" style="text-align: center;"> {{lesson.teacher.firstName}} {{lesson.teacher.lastName}}</div>
+    </div>
+    <div class="d-flex mb-1 col" *ngIf="!config.class">
+        <span class="pt-1 pb-1" style="min-width: 75px;">{{'class' | translate}}:</span>
+        <div class="card p-1 d-block w-100" style="text-align: center;"> {{lesson.grade.name}}</div>
+    </div>
 </div>
 <div class="card" style="min-width: 140px;min-height: 80px;"
     *ngIf="editMode">

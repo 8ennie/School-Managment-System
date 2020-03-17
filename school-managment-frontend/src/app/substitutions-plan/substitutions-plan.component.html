@@ -1,10 +1,10 @@
-<div class="d-flex justify-content-center mt-2">
+<div class="d-flex justify-content-center mt-2 overflow-hidden">
     <p-carousel [value]="leaveDays" styleClass="custom-carousel" [numVisible]="4" [numScroll]="1" [circular]="true"
-        [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+        [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions" contentClass="overflow-hidden">
         <p-header>
             <h3>Vertretungsplan für: {{date.toDateString()}}</h3>
         </p-header>
-        <ng-template let-leaveDay pTemplate="item">
+        <ng-template let-leaveDay pTemplate="item" class="overflow-hidden">
             <app-substitutions-plan-list [leaveDay]="leaveDay"></app-substitutions-plan-list>
         </ng-template>
     </p-carousel>
