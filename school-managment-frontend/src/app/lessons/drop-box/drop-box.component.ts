@@ -113,8 +113,6 @@ export class DropBoxComponent implements OnInit, OnDestroy {
             (componentRef.instance as LessonGridComponent).lesson = data;
             this.lesson = data;
         }
-        console.log(this.config);
-
         (componentRef.instance as LessonGridComponent).config = this.config;
         (componentRef.instance as LessonGridComponent).lessonChange.subscribe(lesson => {
             this.lesson = lesson;

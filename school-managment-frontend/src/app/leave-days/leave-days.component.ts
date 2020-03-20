@@ -82,6 +82,8 @@ export class LeaveDaysComponent implements OnInit {
   }
 
   delete() {
+    console.log(this.leaveDay);
+    
     this.leaveDaysService.deleteLeaveDay(this.leaveDay._links.self.href).subscribe(() => {
       this.leaveDays = this.leaveDays.filter(obj => obj._links.self.href !== this.leaveDay._links.self.href);
       this.leaveDay = null;
@@ -98,7 +100,7 @@ export class LeaveDaysComponent implements OnInit {
   }
 
   cloneLeaveDay(l) {
-    const leaveDay: LeaveDay = {};
+    const leaveDay: LeaveDay = new LeaveDay;
     for (let prop in l) {
       leaveDay[prop] = l[prop];
     }

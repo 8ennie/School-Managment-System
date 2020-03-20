@@ -39,7 +39,6 @@ export class LessonInstanceListComponent implements OnInit, OnDestroy {
     if(!this.person && this.leaveDay?.person){
       this.person = this.leaveDay.person;
     }
-
     if (!this.date) {
       this.date = new Date();
       if (this.date.getDay() === 0) {
@@ -54,6 +53,16 @@ export class LessonInstanceListComponent implements OnInit, OnDestroy {
       this.leaveDayService.getLeaveDaysForPerson(this.person.id).subscribe((leaveDays: { _embedded }) => {
         this.leaveDays = leaveDays._embedded.leaveDays;
         this.updateLessons();
+      });
+      this.newLeaveDaySubscription = this.leaveDayService.newLeaveDay.subscribe((leaveDay)=>{
+        if(leaveDay.date){
+          this.leaveDays.push(leaveDay);
+          this.updateLessons();
+        }else{
+          this.leaveDays = this.leaveDays.filter(ld => ld._links.self.href !== leaveDay._links.self.href);
+          this.updateLessons();
+        }
+       
       });
     }
 
@@ -72,7 +81,7 @@ export class LessonInstanceListComponent implements OnInit, OnDestroy {
       this.absent = false;
       this.lessonnInstanceService.isSubDay = false;
     }
-    if (this.person.id) {
+    if (this.person?.id) {
       this.lessonnInstanceService.getLessonInstancesForTeacherAndDate(this.person.id, this.date);
     }
   }

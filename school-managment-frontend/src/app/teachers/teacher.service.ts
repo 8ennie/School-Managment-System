@@ -26,13 +26,13 @@ export class TeacherService {
     }
 
     getTeachers(){
-        return this.http.get<any>(environment.apiUrl + 'teachers').pipe(tap(data => {
+        return this.http.get<any>(this.url).pipe(tap(data => {
             this.sendUpdate(data._embedded.teachers);
         }));
     }
 
     getTeacher(id: number) {
-        return this.http.get<Teacher>(environment.apiUrl + 'teachers/' + id + '?projection=teacherProjection');
+        return this.http.get<Teacher>(this.url + id + '?projection=teacherProjection');
     }
 
     sendUpdate(teachers:Teacher[]) {
@@ -41,7 +41,7 @@ export class TeacherService {
     }
 
     editTeacher(id: number, teacher: Teacher) {
-        return this.http.patch(environment.apiUrl + 'teachers/' + id, teacher);
+        return this.http.patch(this.url + id, teacher);
     }
 
     changeTeacher(teacher: Teacher) {
@@ -56,15 +56,15 @@ export class TeacherService {
     }
 
     deleteTeacher(id: number) {
-        return this.http.delete(environment.apiUrl + 'teachers/' + id).pipe(tap(() => {
+        return this.http.delete(this.url + id).pipe(tap(() => {
             let teacherList = this.teacherChanged.value;
             teacherList = teacherList.filter(obj => obj.id !== id);
             this.sendUpdate(teacherList);
         }));
     }
 
-    getAvailableTeachers(date:Date){
-
+    getSubstituitionTeachers(){
+        return this.http.get(this.url + '/search/findBySubstituteTeacherTrue');
     }
 
 }

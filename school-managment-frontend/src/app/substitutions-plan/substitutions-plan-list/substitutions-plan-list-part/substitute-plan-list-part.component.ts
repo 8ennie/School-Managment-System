@@ -13,8 +13,6 @@ export class SubstitutePlanListPartComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.subLesson);
-    
   }
 
 }

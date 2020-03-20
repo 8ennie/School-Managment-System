@@ -46,14 +46,8 @@ export class LessonsComponent implements OnInit {
     if (this.allTeachers.length < 1) {
       this.teacherService.getTeachers().subscribe((teachers) => {
         this.allTeachers = teachers._embedded.teachers;
-        //this.setAllTeacher();
       });
-    } else {
-      //this.setAllTeacher();
     }
-  }
-  setAllTeacher() {
-    this.allTeachers = this.allTeachers.map(t => t = { label: t.fullName, value: t._links.self.href });
   }
 
   onGradeChange(event) {

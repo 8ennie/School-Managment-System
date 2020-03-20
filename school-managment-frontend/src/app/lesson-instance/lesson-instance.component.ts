@@ -109,8 +109,8 @@ export class LessonInstanceComponent implements OnInit, OnDestroy {
 
     ref.onClose.subscribe((lessonInstance: SubLesson) => {
       if (lessonInstance) {
-        this.lessonInstance = lessonInstance;
         this.save();
+        this.lessonInstance = lessonInstance;
       }
     });
   }

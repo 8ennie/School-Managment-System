@@ -1,6 +1,5 @@
 package com.schoolManagment.Backend.repository;
 
-import java.time.DayOfWeek;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -19,5 +18,7 @@ import com.schoolManagment.Backend.projection.TeacherProjection;
 public interface TeacherRepository extends JpaRepository<Teacher, Long>{
 
 	Optional<List<Teacher>> findByLeaveDaysDate(@DateTimeFormat(pattern="yyyy-MM-dd") Date date);
+	
+	Optional<List<Teacher>> findBySubstituteTeacherTrue();
 	
 }

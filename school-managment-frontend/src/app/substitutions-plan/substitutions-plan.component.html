@@ -1,12 +1,19 @@
-<div class="d-flex justify-content-center mt-2 overflow-hidden">
-    <p-carousel [value]="leaveDays" styleClass="custom-carousel" [numVisible]="4" [numScroll]="1" [circular]="true"
-        [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions" contentClass="overflow-hidden">
-        <p-header>
-            <h3>Vertretungsplan für: {{date.toDateString()}}</h3>
-        </p-header>
-        <ng-template let-leaveDay pTemplate="item" class="overflow-hidden">
-            <app-substitutions-plan-list [leaveDay]="leaveDay"></app-substitutions-plan-list>
-        </ng-template>
-    </p-carousel>
+<div class="d-flex justify-content-center mt-2">
+    <ng-container *ngIf="leaveDays">
+        <p-carousel [value]="leaveDays" [numVisible]="leaveDays.length < 4 ? leaveDays.length : 4" [numScroll]="1"
+            [circular]="leaveDays.length < 4 ? false : true" [autoplayInterval]="3000"
+           >
+            <p-header>
+                <h3 style="text-align: center;">Vertretungsplan für:</h3>
+                <h3 style="text-align: center;">{{date.toDateString()}}</h3>
+            </p-header>
+            <ng-template let-leaveDay pTemplate="item">
+                <div class="mr-2 ml-2"> 
+                    <app-substitutions-plan-list [leaveDay]="leaveDay"></app-substitutions-plan-list>
+                </div>
+            </ng-template>
+        </p-carousel>
+
+    </ng-container>
 
 </div>

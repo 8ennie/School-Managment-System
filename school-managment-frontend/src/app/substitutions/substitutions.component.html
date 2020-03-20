@@ -5,57 +5,95 @@
     </p-calendar>
 </div>
 
-<p-table [value]="leaveDays" selectionMode="single" [(selection)]="leaveDay" (onRowSelect)="onRowSelect($event)"
-    [rows]="15">
-    <ng-template pTemplate="caption">
-        <div class="d-flex">
-            <div>
-                {{'list-of-leave-days' | translate }}
-            </div>
-            <div style="text-align:left" class="ml-auto">
-                <button type="button" pButton icon="pi pi-plus" (click)="showDialogToAdd()"
-                    label="{{'add' | translate }}"></button>
-            </div>
-        </div>
+<div class="p-grid">
+    <div class="p-col d-flex justify-content-center m-3">
+        <p-table [value]="leaveDays" selectionMode="single" [(selection)]="leaveDay" (onRowSelect)="onRowSelect($event)"
+            [rows]="15">
+            <ng-template pTemplate="caption">
+                <div class="d-flex">
+                    <div>
+                        {{'list-of-absent-teachers' | translate }}
+                    </div>
+                    <div style="text-align:left" class="ml-auto">
+                        <button type="button" pButton icon="pi pi-plus" (click)="showDialogToAdd()"
+                            label="{{'add' | translate }}"></button>
+                    </div>
+                </div>
 
-    </ng-template>
-    <ng-template pTemplate="header" let-columns>
-        <tr>
-            <th [pSortableColumn]="date" *ngIf="!date">
-                {{'date' | translate}}
-                <p-sortIcon [field]="date"></p-sortIcon>
-            </th>
-            <th [pSortableColumn]="teacher">
-                {{'teacher' | translate}}
-                <p-sortIcon [field]="teacher"></p-sortIcon>
-            </th>
-            <th [pSortableColumn]="type">
-                {{'type' | translate}}
-                <p-sortIcon [field]="type"></p-sortIcon>
-            </th>
-            <th>
-                {{'description' | translate}}
-            </th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-        <tr [pSelectableRow]="rowData">
-            <td *ngIf="!date">
-                {{rowData.date}}
-            </td>
-            <td>
-                {{rowData.person.lastName}}
-            </td>
-            <td>
-                {{rowData.type}}
-            </td>
-            <td>
-                {{rowData.description}}
-            </td>
-        </tr>
-    </ng-template>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th [pSortableColumn]="date" *ngIf="!date">
+                        {{'date' | translate}}
+                        <p-sortIcon [field]="date"></p-sortIcon>
+                    </th>
+                    <th [pSortableColumn]="teacher">
+                        {{'teacher' | translate}}
+                        <p-sortIcon [field]="teacher"></p-sortIcon>
+                    </th>
+                    <th [pSortableColumn]="type">
+                        {{'type' | translate}}
+                        <p-sortIcon [field]="type"></p-sortIcon>
+                    </th>
+                    <th>
+                        {{'description' | translate}}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                    <td *ngIf="!date">
+                        {{rowData.date}}
+                    </td>
+                    <td>
+                        {{rowData.person.firstName + ' ' + rowData.person.lastName}}
+                    </td>
+                    <td>
+                        {{rowData.type}}
+                    </td>
+                    <td>
+                        {{rowData.description}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div class="p-col d-flex justify-content-center m-3">
+        <p-table [value]="subTeachers" [rows]="15">
+            <ng-template pTemplate="caption">
+                <div class="d-flex">
+                    <div>
+                        {{'list-of-substitute-teachers' | translate }}
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>{{'teacher' | translate}}</th>
+                    <th [pSortableColumn]="'present'">{{'present' | translate}}</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+                <tr>
+                    <td>
+                        {{rowData.firstName + ' ' + rowData.lastName}}
+                    </td>
+                    <td>
+                        <div style="text-align: center;" *ngIf="rowData.present">
+                            ✅
+                        </div>
+                        <div style="text-align: center;" *ngIf="!rowData.present">
+                            ❌
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
 
-</p-table>
+
+
 
 <p-dialog header="Leave Day" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true" showEffect="fade"
     [modal]="true" [style]="{width: '300px'}">

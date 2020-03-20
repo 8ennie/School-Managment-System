@@ -13,8 +13,6 @@ export class LeaveDayService {
 
     newLeaveDay: Subject<LeaveDay> = new Subject();
 
-    leaveDayChange: BehaviorSubject<LeaveDay[]> = new BehaviorSubject([]);
-
     constructor(
         private http: HttpClient
     ) { }
@@ -35,7 +33,11 @@ export class LeaveDayService {
     }
 
     deleteLeaveDay(leaveDayUrl: string) {
-        return this.http.delete(leaveDayUrl);
+        return this.http.delete(leaveDayUrl).pipe(tap(()=> {
+            const delLeaveDay = new LeaveDay();
+            delLeaveDay.resourceUrl = leaveDayUrl;
+            this.newLeaveDay.next(delLeaveDay);
+        }));
     }
 
     updateLeaveDay(leaveDay: LeaveDay) {
@@ -47,9 +49,7 @@ export class LeaveDayService {
     }
 
     getLeaveDays() {
-        return this.http.get(this.url).pipe(tap((leaveDays: { _embedded }) => {
-            //this.leaveDayChange.next(leaveDays._embedded.leaveDays);
-        }));
+        return this.http.get(this.url);
     }
 
     getLeaveDaysForDate(date: Date) {

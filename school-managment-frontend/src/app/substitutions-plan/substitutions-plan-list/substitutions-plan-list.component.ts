@@ -28,8 +28,6 @@ export class SubstitutionPlanListComponent implements OnInit {
     const teacherUrl = environment.apiUrl + 'teachers/' + this.leaveDay.person.id;
     this.subLessonService.getSubLessonsForTeacherAndDate(teacherUrl, new Date(this.leaveDay.date)).subscribe((sl:{_embedded}) => {
       this.subLessons = sl._embedded.substituteLessons;
-      console.log(this.subLessons);
-      
     });
   }
 

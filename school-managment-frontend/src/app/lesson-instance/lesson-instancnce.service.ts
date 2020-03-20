@@ -103,7 +103,7 @@ export class LessonInstanceService {
         return promise;
     }
 
-    getAvailableTeachers() {
+    getAllTeachers() {
         const promise = new Promise<Teacher[]>((resolve) => {
             if (this.allTeachers) {
                 resolve(this.allTeachers);

@@ -25,6 +25,8 @@ export class SubstitutionsComponent implements OnInit {
   leaveDayTypes: { label: string, value: string }[] = [];
   allTeachers: Teacher[] = [];
 
+  subTeachers: Teacher[] = [];
+
   houres = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   constructor(
@@ -53,6 +55,8 @@ export class SubstitutionsComponent implements OnInit {
     });
     this.teacherService.getTeachers().subscribe((teachers:{_embedded}) => {
       this.allTeachers = teachers._embedded.teachers;
+      this.subTeachers = this.allTeachers.filter(t => t.substituteTeacher);
+      this.subTeachers.forEach(t => t.present = t.daysWorking.includes(this.date.toLocaleDateString('en', { weekday: 'long' }).toUpperCase()));
     });
   }
 
@@ -69,7 +73,6 @@ export class SubstitutionsComponent implements OnInit {
 
   private getLeaveDay(href: string) {
     this.leaveDaysService.getLeaveDayByUrl(href).subscribe((leaveDay: LeaveDay) => {
-      console.log(leaveDay);
       this.leaveDays = this.leaveDays.filter(obj => obj._links.self.href !== leaveDay._links.self.href);
       this.leaveDay = leaveDay;
       const leaveDays = [...this.leaveDays];
@@ -95,6 +98,9 @@ export class SubstitutionsComponent implements OnInit {
   }
 
   save() {
+    if(!this.leaveDay.person){
+      return;
+    }
     const personUrl = this.leaveDay.person?._links?.self?.href;
     this.leaveDay.person = personUrl;
     if (this.leaveDay._links) {
@@ -126,7 +132,7 @@ export class SubstitutionsComponent implements OnInit {
   }
 
   cloneLeaveDay(l) {
-    const leaveDay: LeaveDay = {};
+    const leaveDay: LeaveDay = new LeaveDay();
     for (let prop in l) {
       leaveDay[prop] = l[prop];
     }

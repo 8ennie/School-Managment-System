@@ -3,6 +3,7 @@ package com.schoolManagment.Backend.model.school;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -45,7 +46,7 @@ public class LeaveDay {
 	@JsonBackReference
 	private Person person;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "leaveDay", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<SubstituteLesson> substituteLessons;
 
 }

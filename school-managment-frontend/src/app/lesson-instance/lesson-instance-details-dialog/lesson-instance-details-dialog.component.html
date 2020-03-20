@@ -43,12 +43,13 @@
                                             {{'substitute-teacher' | translate }}:
                                         </div>
                                     </div>
-                                    <div class="">
-                                        <p-dropdown name="teacher" [options]="teacherList"
+                                    <div style="width: 80%;">
+                                        <p-dropdown name="teacher" [options]="teacherOptions"
                                             [(ngModel)]="lessonInstance.substituteTeacher"
                                             [placeholder]="lessonInstance.allowInndependantlyWork ? 'EVA':'Choose Teacher'"
                                             optionLabel="fullName" dataKey="id" filter="true" [disabled]="!isAdmin"
-                                            [showClear]="true" *ngIf="!lessonInstance.allowInndependantlyWork">
+                                            [showClear]="true" *ngIf="!lessonInstance.allowInndependantlyWork"
+                                            [style]="{'width':'77%'}">
                                         </p-dropdown>
                                         <p-toggleButton name="evaToggle" *ngIf="!lessonInstance.substituteTeacher"
                                             [(ngModel)]="lessonInstance.allowInndependantlyWork" onLabel="EVA"

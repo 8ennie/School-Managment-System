@@ -1,13 +1,11 @@
 import { HateoasEntity } from '../shared/hateoas-entity';
 
-export class LeaveDay {
+export class LeaveDay extends HateoasEntity {
 
-    constructor(
-        public date?,
-        public description?,
-        public type?,
-        public person?
-    ) {
-    }
-    public _links?;
+
+    public date?;
+    public description?;
+    public type?;
+    public person?;
+
 }

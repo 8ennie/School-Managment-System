@@ -18,7 +18,6 @@
 //import com.schoolManagment.Backend.model.adminestration.User;
 //import com.schoolManagment.Backend.model.school.LeaveDay;
 //import com.schoolManagment.Backend.model.school.Lesson;
-//import com.schoolManagment.Backend.model.school.LessonInstance;
 //import com.schoolManagment.Backend.model.school.Person;
 //import com.schoolManagment.Backend.model.school.Student;
 //import com.schoolManagment.Backend.model.school.Subject;
@@ -39,7 +38,6 @@
 //import com.schoolManagment.Backend.repository.SubjectRepository;
 //import com.schoolManagment.Backend.repository.TeacherRepository;
 //import com.schoolManagment.Backend.repository.UserRepository;
-//import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 //
 //import lombok.extern.slf4j.Slf4j;
 //
