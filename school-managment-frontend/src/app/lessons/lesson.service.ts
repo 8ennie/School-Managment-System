@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Lesson } from './lesson.model';
 import { Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { RestResponse } from '../shared/restResponse';
 
 @Injectable({ providedIn: 'root' })
 export class LessonService {
@@ -16,7 +17,7 @@ export class LessonService {
     constructor(private http: HttpClient) { }
 
     fetchAllLessons() {
-        return this.http.get(this.url + '?projection=lessonProjection').pipe(tap((lessons: any) => {
+        return this.http.get(this.url + '?projection=lessonProjection').pipe(tap((lessons: RestResponse) => {
             this.lessonList = lessons._embedded.lessons;
         }));
     }

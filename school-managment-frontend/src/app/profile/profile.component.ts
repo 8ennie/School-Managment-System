@@ -15,10 +15,10 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-   
-   
   }
 
- 
+  getPerson(){
+    return this.authService.getUser()?.person;
+  }
 
 }

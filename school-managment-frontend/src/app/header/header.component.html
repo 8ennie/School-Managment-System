@@ -55,11 +55,11 @@
                 <li ngNavItem>
                     <div ngbDropdown>
                         <a id="chooseLang" (click)="false" class="nav-link"
-                            ngbDropdownToggle>{{translate.currentLang ? 'Lang (' + translate.currentLang + ')': 'Lang'}}
+                            ngbDropdownToggle>{{getCurrentLang() ? 'Lang (' + getCurrentLang() + ')': 'Lang'}}
                         </a>
                         <div ngbDropdownMenu aria-labelledby="chooseLang">
-                            <ng-container *ngFor="let language of translate.getLangs()">
-                                <a ngbDropdownItem *ngIf="language != translate.currentLang"
+                            <ng-container *ngFor="let language of getLangs()">
+                                <a ngbDropdownItem *ngIf="language != getCurrentLang()"
                                     (click)="switchLang(language)">{{language}}</a>
                             </ng-container>
                         </div>

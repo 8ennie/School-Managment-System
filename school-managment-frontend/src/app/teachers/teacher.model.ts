@@ -21,5 +21,9 @@ export class Teacher extends HateoasEntity {
     fullName?: string = this.firstName + ' ' + this.lastName;
     officialName?: string = this.gender === 'MALE' ? 'Mr. ' : 'Ms. ' + this.firstName?.charAt(0) + this.lastName;
     optionLable?;
-    present;
+    present?;
+    
+    public isPresent(day: string): boolean {
+        return this.daysWorking.includes(day.toUpperCase());
+    }
 }

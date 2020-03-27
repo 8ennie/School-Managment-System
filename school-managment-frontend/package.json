@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "dev": "lite-server"
   },
   "private": true,
   "dependencies": {
@@ -28,6 +29,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@ng-bootstrap/ng-bootstrap": "^5.2.1",
     "@ng-bootstrap/schematics": "^2.0.0-alpha.1",
+    "@ngrx/store": "^9.0.0",
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^4.0.0",
     "angular-gridster2": "^9.1.0",
@@ -50,13 +52,14 @@
     "codelyzer": "^5.0.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~4.1.0",
+    "karma": "^4.4.1",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
+    "lite-server": "^2.5.4",
     "protractor": "~5.4.0",
-    "ts-node": "~7.0.0",
+    "ts-node": "^8.7.0",
     "tslint": "~5.15.0",
     "tslint-angular": "^3.0.2",
     "typescript": "^3.7.5"

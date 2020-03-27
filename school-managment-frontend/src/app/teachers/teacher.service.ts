@@ -8,7 +8,7 @@ import { map, tap } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class TeacherService {
 
-    url:string = environment.apiUrl + 'teachers';
+    url:string = environment.apiUrl + 'teachers/';
 
     teacherChanged = new BehaviorSubject<Teacher[]>([]);
 
@@ -64,7 +64,7 @@ export class TeacherService {
     }
 
     getSubstituitionTeachers(){
-        return this.http.get(this.url + '/search/findBySubstituteTeacherTrue');
+        return this.http.get(this.url + 'search/findBySubstituteTeacherTrue');
     }
 
 }

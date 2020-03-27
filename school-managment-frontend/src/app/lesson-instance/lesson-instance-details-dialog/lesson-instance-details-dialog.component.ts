@@ -6,6 +6,8 @@ import { LessonInstanceService } from '../lesson-instancnce.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { LessonService } from 'src/app/lessons/lesson.service';
 import { Lesson } from 'src/app/lessons/lesson.model';
+import { LeaveDayService } from 'src/app/leave-days/leave-day.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -17,7 +19,7 @@ export class LessonInstanceDetailsDialogComponent implements OnInit, OnDestroy {
 
   teacherList: Teacher[] = [];
 
-  teacherOptions: Teacher[] = [];
+  teacherOptions: Teacher[] = []
 
   lessonInstance: SubLesson;
 
@@ -28,9 +30,11 @@ export class LessonInstanceDetailsDialogComponent implements OnInit, OnDestroy {
   constructor(
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
-    public lessonInstanceService: LessonInstanceService,
-    public authService: AuthService,
-    public lessonService: LessonService
+    private lessonInstanceService: LessonInstanceService,
+    private authService: AuthService,
+    private lessonService: LessonService,
+    private leaveDayService: LeaveDayService,
+    private translate: TranslateService,
   ) {
     this.isAdmin = this.authService.hasRole('ROLE_ADMIN');
     this.lessonInstance = config.data.lessonInstance;
@@ -54,7 +58,17 @@ export class LessonInstanceDetailsDialogComponent implements OnInit, OnDestroy {
     this.lessonService.getLessonsForLessonTime(this.lessonInstance.lessonTime._links.self.href.replace('{?projection}', '')).subscribe((lessons: { _embedded }) => {
       const lessonTeachers = lessons._embedded.lessons.map(l => l.teacher._links.self.href.replace('{?projection}', ''));
       tempTeacherList = tempTeacherList.filter(t => !lessonTeachers.includes(t._links.self.href));
-      this.teacherOptions = tempTeacherList;
+      this.teacherOptions = [];
+      tempTeacherList.forEach(t => {
+        if(t.substituteTeacher){
+          t.optionLable = t.fullName + ' ' + '(' + this.translate.instant('subSchortcut') +')';
+          this.teacherOptions.unshift(t);
+        }else{
+          t.optionLable = t.fullName;
+          this.teacherOptions.push(t);
+        }
+      });
+      
     });
   }
 
@@ -68,5 +82,9 @@ export class LessonInstanceDetailsDialogComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
 
+  }
+
+  test(){
+    console.log(this.lessonInstance.substituteTeacher);
   }
 }

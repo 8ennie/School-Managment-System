@@ -1,6 +1,5 @@
 package com.schoolManagment.Backend.model.school;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;

@@ -19,7 +19,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userSub: Subscription;
   constructor(
     private authService: AuthService,
-    private translate: TranslateService) { }
+    private translate: TranslateService,
+  ) { }
   isMenuCollapsed;
 
   ngOnInit() {
@@ -57,5 +58,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   switchLang(lang: string) {
     this.translate.use(lang);
+  }
+
+  getCurrentLang(){
+    return this.translate.currentLang;
+  }
+
+  getLangs(){
+    return this.translate.getLangs();
   }
 }

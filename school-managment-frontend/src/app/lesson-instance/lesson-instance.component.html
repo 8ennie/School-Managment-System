@@ -1,7 +1,13 @@
-<div class="card" *ngIf="lessonInstance && !editMode" style="min-width: 150px;" [ngStyle]="{'background-color': (lessonInstance.substituteTeacher?.id === config.person?.id)? 'orange':'inherit'}">
+<div class="card" *ngIf="lessonInstance" style="min-width: 150px;"
+    [ngStyle]="{'background-color': (isMySubLesson())? 'orange':'inherit'}">
     <div class="row">
-        <span class="col">{{'class' | translate }}: {{lessonInstance.grade?.name}} </span>
-        <div class="col">
+        
+        <div class="d-flex mb-1 mt-1 col">
+            <span class="pt-1 pb-1" style="min-width: 75px;">{{'class' | translate}}:</span>
+            <div class="card p-1 d-block w-100" style="text-align: center;"> {{lessonInstance.grade?.name}}</div>
+        </div>
+        
+        <div class="col mt-1">
             <i class="pi pi-user-minus" style="color: red; font-size: 1.6em;"
                 *ngIf="(!lessonInstance.substituteTeacher && !lessonInstance.allowInndependantlyWork) && isSubLesson"></i>
             <i class="pi pi-user" style="color: rgb(28, 202, 12); font-size: 1.6em"
@@ -15,9 +21,12 @@
             <i class="pi pi-info-circle" style="color: navy; font-size: 1.6em" *ngIf="lessonInstance.info"></i>
         </div>
     </div>
-    <span>{{'subject' | translate }}: {{lessonInstance.subject?.name}}</span>
-    <button mat-raised-button (click)="show()">Edit</button>
+    <div class="d-flex mb-1 mr-1">
+        <span class="p-1" style="min-width: 75px;">{{'subject' | translate}}:</span>
+        <div class="card p-1 d-block w-100" style="text-align: center;"> {{lessonInstance.subject?.name}}</div>
+    </div>
+    <button mat-raised-button (click)="show()" class="mr-1 ml-1">Edit</button>
 </div>
-<div class="card" *ngIf="!lessonInstance && !editMode">
+<div class="card" *ngIf="!lessonInstance">
     <p class="m-2" style="text-align: center;">{{'no-class' | translate }}</p>
 </div>

@@ -51,5 +51,8 @@
     "thursday":"Donnerstag",
     "friday":"Freitag",
     "houre":"Stunde",
-    "working":"Arbeitet"
+    "working":"Arbeitet",
+    "list-of-substitute-teachers":"Vertretungslehrer",
+    "present": "Anwesend",
+    "subSchortcut":"V"
 }

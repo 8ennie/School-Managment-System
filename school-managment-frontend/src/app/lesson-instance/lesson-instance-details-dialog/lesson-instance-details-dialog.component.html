@@ -2,7 +2,7 @@
     <div class="container justify-content-center">
         <div class="">
             <div class="">
-                <form #lessonInstanceForm (ngSubmit)="onSubmit(lessonInstanceForm)">
+                <form #lessonInstanceForm (ngSubmit)="onSubmit()">
                     <div class="card-body">
                         <div class="row p-grid">
                             <div class="form-group p-col">
@@ -47,9 +47,9 @@
                                         <p-dropdown name="teacher" [options]="teacherOptions"
                                             [(ngModel)]="lessonInstance.substituteTeacher"
                                             [placeholder]="lessonInstance.allowInndependantlyWork ? 'EVA':'Choose Teacher'"
-                                            optionLabel="fullName" dataKey="id" filter="true" [disabled]="!isAdmin"
-                                            [showClear]="true" *ngIf="!lessonInstance.allowInndependantlyWork"
-                                            [style]="{'width':'77%'}">
+                                            dataKey="id" filter="true" [disabled]="!isAdmin" [showClear]="true"
+                                            *ngIf="!lessonInstance.allowInndependantlyWork" [style]="{'width':'77%'}"
+                                            optionLabel="optionLable">
                                         </p-dropdown>
                                         <p-toggleButton name="evaToggle" *ngIf="!lessonInstance.substituteTeacher"
                                             [(ngModel)]="lessonInstance.allowInndependantlyWork" onLabel="EVA"

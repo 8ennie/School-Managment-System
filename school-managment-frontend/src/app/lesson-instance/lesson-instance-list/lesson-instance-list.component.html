@@ -8,7 +8,7 @@
                 [disabledDays]="[0,6]" 
                 (onSelect)="dateChange($event)">
                     <ng-template pTemplate="date" let-date>
-                        <span [ngStyle]="{backgroundColor: isLeaveDay(date) ? '#ed3e3e' : 'inherit'}" 
+                        <span [ngStyle]="{backgroundColor: absent ? '#ed3e3e' : 'inherit'}" 
                             style="border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;"
                             >{{date.day}}</span>
                     </ng-template>
@@ -28,7 +28,7 @@
     <div *ngFor="let hour of houres">
         <div class="row" style="min-height: 85px;">
             <div class="card ml-3" style=" max-width: 210px;width: 25px; text-align: center;"> {{hour}} </div>
-            <app-lesson-instance [config]="{date:date, hour:hour, class:class, person: person, leaveDay:leaveDay}" class="col">
+            <app-lesson-instance [config]="{date:date, hour:hour, person: person, leaveDay:leaveDay}" class="col">
             </app-lesson-instance>
         </div>
         <div *ngIf="hour%2 === 0" class="row d-flex justify-content-center m-1 card" style="text-align: center;">

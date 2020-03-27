@@ -24,7 +24,7 @@ export class LessonInstanceComponent implements OnInit, OnDestroy {
   }
 
 
-  @Input() config: { date: Date, hour: number, class: string, person: {}, leaveDay };
+  @Input() config: { date: Date, hour: number, class: string, person, leaveDay };
 
   lessonInstance: SubLesson;
   lessonInstanceSubscription: Subscription;
@@ -115,4 +115,7 @@ export class LessonInstanceComponent implements OnInit, OnDestroy {
     });
   }
 
+  isMySubLesson(){
+    return this.lessonInstance.substituteTeacher?.id === this.config.person?.id;
+  }
 }

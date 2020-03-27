@@ -23,17 +23,17 @@
             </ng-template>
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th [pSortableColumn]="date" *ngIf="!date">
+                    <th [pSortableColumn]="leaveDay.date" *ngIf="!date">
                         {{'date' | translate}}
-                        <p-sortIcon [field]="date"></p-sortIcon>
+                        <p-sortIcon [field]="leaveDay.date"></p-sortIcon>
                     </th>
-                    <th [pSortableColumn]="teacher">
+                    <th [pSortableColumn]="leaveDay.person">
                         {{'teacher' | translate}}
-                        <p-sortIcon [field]="teacher"></p-sortIcon>
+                        <p-sortIcon [field]="leaveDay.person"></p-sortIcon>
                     </th>
-                    <th [pSortableColumn]="type">
+                    <th [pSortableColumn]="leaveDay.type">
                         {{'type' | translate}}
-                        <p-sortIcon [field]="type"></p-sortIcon>
+                        <p-sortIcon [field]="leaveDay.type"></p-sortIcon>
                     </th>
                     <th>
                         {{'description' | translate}}
@@ -94,7 +94,6 @@
 
 
 
-
 <p-dialog header="Leave Day" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true" showEffect="fade"
     [modal]="true" [style]="{width: '300px'}">
     <div class="ui-g ui-fluid" *ngIf="leaveDay">
@@ -149,7 +148,7 @@
 <div class="p-grid ml-2">
     <div class="d-flex justify-content-center mt-5 ml-2 mr-2 p-col-2 card" style="min-width: 250px; padding-left: 1em;"
         *ngFor="let leaveDay of leaveDays">
-        <app-lesson-instance-list [changeDateHeader]="flase" [subLessonList]="true" [date]="date" [leaveDay]="leaveDay">
+        <app-lesson-instance-list [changeDateHeader]=false [subLessonList]=true [date]="date" [leaveDay]="leaveDay">
         </app-lesson-instance-list>
     </div>
 </div>

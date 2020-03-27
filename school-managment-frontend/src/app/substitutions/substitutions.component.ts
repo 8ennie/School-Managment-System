@@ -1,11 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LeaveDay } from '../leave-days/leave-day.model';
-import { environment } from 'src/environments/environment';
-import { AuthService } from '../auth/auth.service';
 import { LeaveDayService } from '../leave-days/leave-day.service';
 import { Teacher } from '../teachers/teacher.model';
 import { TeacherService } from '../teachers/teacher.service';
-import { Subscription } from 'rxjs';
+import { RestResponse } from '../shared/restResponse';
 
 @Component({
   selector: 'app-substitutions',
@@ -13,11 +11,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./substitutions.component.css']
 })
 export class SubstitutionsComponent implements OnInit {
+  date: Date = new Date();
 
-
-  date: Date = new Date;
-
-  leaveDays:LeaveDay[] = [];
+  leaveDays: LeaveDay[] = [];
   displayDialog: boolean;
   leaveDay: LeaveDay = new LeaveDay();
   newleaveDay: boolean;
@@ -47,13 +43,13 @@ export class SubstitutionsComponent implements OnInit {
     }
 
     this.getLeaveDays();
-    this.leaveDaysService.getLeaveDayTypes().subscribe((ldt: { _embedded }) => {
+    this.leaveDaysService.getLeaveDayTypes().subscribe((ldt: RestResponse) => {
       ldt._embedded.leaveTypes.forEach(t => {
         this.leaveDayTypes.push({ label: t, value: t });
       });
       this.leaveDay.type = this.leaveDayTypes[0].value;
     });
-    this.teacherService.getTeachers().subscribe((teachers:{_embedded}) => {
+    this.teacherService.getTeachers().subscribe((teachers: RestResponse) => {
       this.allTeachers = teachers._embedded.teachers;
       this.subTeachers = this.allTeachers.filter(t => t.substituteTeacher);
       this.subTeachers.forEach(t => t.present = t.daysWorking.includes(this.date.toLocaleDateString('en', { weekday: 'long' }).toUpperCase()));
@@ -62,11 +58,12 @@ export class SubstitutionsComponent implements OnInit {
 
   dateChange(event) {
     this.getLeaveDays();
+    this.subTeachers.forEach(t => t.present = t.daysWorking.includes(this.date.toLocaleDateString('en', { weekday: 'long' }).toUpperCase()));
   }
 
   getLeaveDays() {
     this.leaveDays = [];
-    this.leaveDaysService.getLeaveDaysForDate(this.date).subscribe((leaveDays :{_embedded}) => {
+    this.leaveDaysService.getLeaveDaysForDate(this.date).subscribe((leaveDays: { _embedded }) => {
       this.leaveDays = leaveDays._embedded.leaveDays;
     });
   }
@@ -85,7 +82,6 @@ export class SubstitutionsComponent implements OnInit {
       this.leaveDay = null;
       this.displayDialog = false;
     });
-
   }
 
   showDialogToAdd() {
@@ -98,7 +94,7 @@ export class SubstitutionsComponent implements OnInit {
   }
 
   save() {
-    if(!this.leaveDay.person){
+    if (!this.leaveDay.person) {
       return;
     }
     const personUrl = this.leaveDay.person?._links?.self?.href;
@@ -109,7 +105,6 @@ export class SubstitutionsComponent implements OnInit {
       });
     } else {
       this.leaveDaysService.saveLeaveDay(this.leaveDay).subscribe((leaveDay: LeaveDay) => {
-        
         this.getLeaveDay(leaveDay._links.self.href);
       });
     }

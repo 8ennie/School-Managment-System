@@ -16,7 +16,7 @@ export class LessonInstanceListComponent implements OnInit, OnDestroy {
 
   @Input() date: Date;
 
-  @Input() person: { id: number };
+  @Input() person;
 
   @Input() subLessonList: boolean = false;
 
@@ -62,7 +62,6 @@ export class LessonInstanceListComponent implements OnInit, OnDestroy {
           this.leaveDays = this.leaveDays.filter(ld => ld._links.self.href !== leaveDay._links.self.href);
           this.updateLessons();
         }
-       
       });
     }
 

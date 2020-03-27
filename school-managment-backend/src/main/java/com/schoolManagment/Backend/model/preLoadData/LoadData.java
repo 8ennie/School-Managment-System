@@ -65,7 +65,7 @@
 //
 //	@Autowired
 //	private LessonRepository lessonRepository;
-//	
+//
 //	@Autowired
 //	private LessonInstanceRepository lessonInstanceRepository;
 //
@@ -74,11 +74,10 @@
 //
 //	@Autowired
 //	private LeaveDayRepository leaveDayRepository;
-//	
+//
 //	@Autowired
 //	private PersonRepository personRepository;
 //
-//	
 //	@Autowired
 //	PasswordEncoder encoder;
 //
@@ -167,16 +166,17 @@
 //		Subject computer = subjectRepository.save(Subject.builder().name("Computer").build());
 //
 //		// Teachers
-//		Teacher amy = teacherRepository.save(Teacher.builder().firstName("Amy").lastName("Tod").daysWorking(Arrays.asList(DayOfWeek.values())).gender(Gender.FEMALE)
-//				.subjects(Arrays.asList(german, english)).build());
+//		Teacher amy = teacherRepository
+//				.save(Teacher.builder().firstName("Amy").lastName("Tod").daysWorking(Arrays.asList(DayOfWeek.values()))
+//						.gender(Gender.FEMALE).subjects(Arrays.asList(german, english)).build());
 //		User amyUser = new User("amy", "amy@aschollmanagment.com", encoder.encode("amy"));
 //		Set<Role> amyRoles = new HashSet<>();
 //		amyRoles.add(teacherRole);
 //		amyUser.setRoles(amyRoles);
 //		amyUser.setPerson(amy);
 //		userRepository.save(amyUser);
-//		Teacher nick = teacherRepository.save(Teacher.builder().firstName("Nick").lastName("Pattar")
-//				.gender(Gender.MALE).subjects(Arrays.asList(german, math)).build());
+//		Teacher nick = teacherRepository.save(Teacher.builder().firstName("Nick").lastName("Pattar").gender(Gender.MALE)
+//				.subjects(Arrays.asList(german, math)).build());
 //
 //		// LessonTimes
 //		for (DayOfWeek day : DayOfWeek.values()) {
@@ -236,17 +236,22 @@
 //		LessonTime firstHourOnTuesday = lessonTimeRepository.findByDayOfWeekAndHour(DayOfWeek.TUESDAY, 1).get();
 //		LessonTime secondHourOnTuesday = lessonTimeRepository.findByDayOfWeekAndHour(DayOfWeek.TUESDAY, 2).get();
 //
-//		Lesson ga1t = Lesson.builder().subject(german).teacher(amy).grade(grade1a).lessonTime(firstHourOnTuesday).build();
+//		Lesson ga1t = Lesson.builder().subject(german).teacher(amy).grade(grade1a).lessonTime(firstHourOnTuesday)
+//				.build();
 //		lessonRepository.save(ga1t);
-//		Lesson ga2t = Lesson.builder().subject(german).teacher(amy).grade(grade1a).lessonTime(secondHourOnTuesday).build();
+//		Lesson ga2t = Lesson.builder().subject(german).teacher(amy).grade(grade1a).lessonTime(secondHourOnTuesday)
+//				.build();
 //		lessonRepository.save(ga2t);
-//		
-//		Lesson ga1m = Lesson.builder().subject(english).teacher(amy).grade(grade1a).lessonTime(firstHourOnMonday).build();
+//
+//		Lesson ga1m = Lesson.builder().subject(english).teacher(amy).grade(grade1a).lessonTime(firstHourOnMonday)
+//				.build();
 //		lessonRepository.save(ga1m);
-//		Lesson ga2m = Lesson.builder().subject(english).teacher(amy).grade(grade1a).lessonTime(secondHourOnMonday).build();
+//		Lesson ga2m = Lesson.builder().subject(english).teacher(amy).grade(grade1a).lessonTime(secondHourOnMonday)
+//				.build();
 //		lessonRepository.save(ga2m);
-//		
-//		LeaveDay ld = LeaveDay.builder().date(new Date()).description("This is a bad Day").type(LeaveType.SICK).person(amy).build();
+//
+//		LeaveDay ld = LeaveDay.builder().date(new Date()).description("This is a bad Day").type(LeaveType.SICK)
+//				.person(amy).build();
 //		leaveDayRepository.save(ld);
 //	}
 //
